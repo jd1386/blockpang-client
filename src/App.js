@@ -1,7 +1,8 @@
-import React, { Component } from 'react';
-import logo from './logo.svg';
-import './App.css';
-import { hot } from 'react-hot-loader';
+import React, { Component } from "react";
+import logo from "./logo.svg";
+import "./App.css";
+import { Button, Icon, Modal } from "react-materialize";
+import { hot } from "react-hot-loader";
 
 class App extends Component {
   render() {
