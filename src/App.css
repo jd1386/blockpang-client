@@ -30,3 +30,8 @@
     transform: rotate(360deg);
   }
 }
+
+/* override button color */
+.ui.primary.button {
+  background-color: rgba(26, 170, 186, 0.95);
+}
