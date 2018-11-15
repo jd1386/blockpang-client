@@ -1,5 +1,6 @@
-import React, { Component } from "react";
-import "./App.css";
+// import React, { Component } from 'react';
+import * as React from 'react';
+import './App.css';
 import {
   Container,
   Divider,
@@ -12,8 +13,13 @@ import {
   Button,
   Menu,
   Segment
-} from "semantic-ui-react";
-import { hot } from "react-hot-loader";
+} from 'semantic-ui-react';
+import { hot } from 'react-hot-loader';
+
+type Props = {
+  foo: number,
+  bar?: string
+};
 
 class App extends Component {
   render() {
@@ -25,16 +31,17 @@ class App extends Component {
               <Image
                 size="mini"
                 src="logo.svg"
-                style={{ marginRight: "1.5em" }}
+                style={{ marginRight: '1.5em' }}
               />
               블록팡
+              {a + a}
             </Menu.Item>
             <Menu.Item as="a">Home</Menu.Item>
             <Menu.Item position="right">
               <Button as="a" inverted>
                 Log in
               </Button>
-              <Button as="a" primary style={{ marginLeft: "0.5em" }}>
+              <Button as="a" primary style={{ marginLeft: '0.5em' }}>
                 Sign up
               </Button>
             </Menu.Item>
@@ -42,22 +49,22 @@ class App extends Component {
         </Menu>
 
         <Container>
-          <Segment style={{ padding: "8em 0em" }} vertical>
+          <Segment style={{ padding: '8em 0em' }} vertical>
             <Grid container stackable verticalAlign="middle">
               <Grid.Row>
                 <Grid.Column>
-                  <Header as="h3" style={{ fontSize: "2em" }}>
+                  <Header as="h3" style={{ fontSize: '2em' }}>
                     We Help Companies and Companions
                   </Header>
-                  <p style={{ fontSize: "1.33em" }}>
+                  <p style={{ fontSize: '1.33em' }}>
                     We can give your company superpowers to do things that they
                     never thought possible. Let us delight your customers and
                     empower your needs... through pure data analytics.
                   </p>
-                  <Header as="h3" style={{ fontSize: "2em" }}>
+                  <Header as="h3" style={{ fontSize: '2em' }}>
                     We Make Bananas That Can Dance
                   </Header>
-                  <p style={{ fontSize: "1.33em" }}>
+                  <p style={{ fontSize: '1.33em' }}>
                     Yes that's right, you thought it was the stuff of dreams,
                     but even bananas can be bioengineered.
                   </p>

@@ -11,9 +11,10 @@
   },
   "scripts": {
     "start": "react-scripts start",
-    "build": "react-scripts build",
+    "build": "babel src/ -d lib/",
     "test": "react-scripts test",
-    "eject": "react-scripts eject"
+    "eject": "react-scripts eject",
+    "prepublish": "yarn run build"
   },
   "eslintConfig": {
     "extends": "react-app"
@@ -25,6 +26,9 @@
     "not op_mini all"
   ],
   "devDependencies": {
+    "babel-cli": "^6.26.0",
+    "babel-preset-flow": "^6.23.0",
+    "flow-bin": "^0.86.0",
     "react-hot-loader": "^4.0.0"
   }
 }
