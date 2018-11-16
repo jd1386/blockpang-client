@@ -19,8 +19,9 @@ class Main extends Component {
               </Grid.Column>
             </Grid.Row>
             <Grid.Row>
-              <Grid.Column textAlign="center" />
-              <MainPage.instructions />
+              <Grid.Column textAlign="center">
+                <MainPage.instructions />
+              </Grid.Column>
             </Grid.Row>
           </Grid>
         </Segment>
