@@ -1,8 +1,3 @@
-.app-logo {
-  animation: App-logo-spin infinite 20s linear;
-  height: 40vmin;
-}
-
 /* override button color */
 .ui.primary.button {
   background-color: rgba(26, 170, 186, 0.95);
