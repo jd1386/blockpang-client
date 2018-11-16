@@ -3,8 +3,14 @@ import ReactDOM from "react-dom";
 import "semantic-ui-css/semantic.min.css";
 import "./index.css";
 import App from "./App";
-
 import * as serviceWorker from "./serviceWorker";
+import WebFont from "webfontloader";
+
+WebFont.load({
+  google: {
+    families: ["Nanum Gothic", "sans-serif"]
+  }
+});
 
 ReactDOM.render(<App />, document.getElementById("root"));
 
