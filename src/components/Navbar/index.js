@@ -9,6 +9,7 @@ class Navbar extends Component {
         <Container>
           <Menu.Item as={Link} to="/" header>
             <Image
+              className="app-logo"
               size="mini"
               src="favicon.ico"
               style={{ marginRight: "1.5em" }}
