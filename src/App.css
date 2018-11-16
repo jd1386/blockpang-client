@@ -35,3 +35,7 @@
 .ui.primary.button {
   background-color: rgba(26, 170, 186, 0.95);
 }
+
+.ui.primary.button:hover {
+  background-color: #24c2d4f2;
+}
