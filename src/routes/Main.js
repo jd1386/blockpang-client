@@ -1,17 +1,8 @@
 import React, { Component } from "react";
-import {
-  Container,
-  Image,
-  Dimmer,
-  Loader,
-  Grid,
-  Header,
-  Button,
-  Segment
-} from "semantic-ui-react";
+import { Container, Grid, Header, Button, Segment } from "semantic-ui-react";
 
 class Home extends Component {
-  mainComponent = () => {
+  async mainComponent() {
     return (
       <Container>
         <Segment style={{ padding: "8em 0em" }} vertical>
@@ -47,7 +38,7 @@ class Home extends Component {
         </Segment>
       </Container>
     );
-  };
+  }
 
   render() {
     return this.mainComponent();
