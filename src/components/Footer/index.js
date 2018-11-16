@@ -1,27 +1,21 @@
 import React, { Component } from "react";
 import { Link } from "react-router-dom";
-import {
-  Container,
-  Segment,
-  Header,
-  Grid,
-  Image,
-  Button,
-  Menu
-} from "semantic-ui-react";
-import "./style.css";
+import { Container, Segment, Grid } from "semantic-ui-react";
 
 const footer = () => {
   return (
-    <div className="footer">
+    <footer>
       <Segment inverted vertical>
         <Container textAlign="center">
           <Grid.Row>
-            <p>Project BlockPang 2018</p>
+            <p>
+              Project BlockPang 2018. Visit{" "}
+              <a href="https://icon.foundation">Icon Project</a>
+            </p>
           </Grid.Row>
         </Container>
       </Segment>
-    </div>
+    </footer>
   );
 };
 

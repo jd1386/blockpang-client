@@ -14,14 +14,14 @@ class App extends React.Component {
     return (
       <Router>
         <div id="App">
+          <Navbar />
           <div className="site-content">
-            <Navbar />
             <Route exact path="/" component={Main} />
             <Route path="/login" component={Login} />
             <Route path="/admin" component={Admin} />
             <Route path="/my-page" component={MyPage} />
-            <Footer />
           </div>
+          <Footer />
         </div>
       </Router>
     );
