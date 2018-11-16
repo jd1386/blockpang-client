@@ -1,5 +1,12 @@
 import React, { Component } from "react";
-import { Container, Grid, Header, Button, Segment } from "semantic-ui-react";
+import {
+  Container,
+  Grid,
+  Header,
+  Button,
+  Segment,
+  Divider
+} from "semantic-ui-react";
 
 class Home extends Component {
   //test

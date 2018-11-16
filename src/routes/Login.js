@@ -1,39 +1,33 @@
 import React, { Component } from "react";
 import { Link } from "react-router-dom";
-import { Container, Grid, Header, Button, Segment } from "semantic-ui-react";
+import {
+  Container,
+  Grid,
+  Header,
+  Button,
+  Segment,
+  Icon
+} from "semantic-ui-react";
 
 class Login extends Component {
   render() {
     return (
       <Container>
         <Segment style={{ padding: "8em 0em" }} vertical>
-          <Grid container stackable verticalAlign="middle">
-            <Grid.Row>
+          <Grid centered columns={2}>
+            <Grid.Column textAlign="center">
               <Header as="h1">Login/Signup Page</Header>
-            </Grid.Row>
-            <Grid.Row>
+            </Grid.Column>
+
+            <Grid.Row centered columns={2}>
               <Grid.Column>
-                <Header as="h3" style={{ fontSize: "2em" }}>
-                  We Help Companies and Companions
-                </Header>
-                <p style={{ fontSize: "1.33em" }}>
-                  We can give your company superpowers to do things that they
-                  never thought possible. Let us delight your customers and
-                  empower your needs... through pure data analytics.
-                </p>
-                <Header as="h3" style={{ fontSize: "2em" }}>
-                  We Make Bananas That Can Dance
-                </Header>
-                <p style={{ fontSize: "1.33em" }}>
-                  Yes that's right, you thought it was the stuff of dreams, but
-                  even bananas can be bioengineered.
-                </p>
+                <Button icon fluid size="huge">
+                  <Icon name="google" /> Login with Gmail
+                </Button>
               </Grid.Column>
-            </Grid.Row>
-            <Grid.Row>
-              <Grid.Column textAlign="center">
-                <Button as={Link} to="/" size="huge">
-                  Check Them Out
+              <Grid.Column>
+                <Button icon fluid size="huge">
+                  <Icon name="facebook" /> Login with Facebook
                 </Button>
               </Grid.Column>
             </Grid.Row>
