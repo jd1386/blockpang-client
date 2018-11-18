@@ -5,12 +5,14 @@ import './style.css';
 
 class Navbar extends Component {
   menuChange = () => {
-    const a = JSON.parse(sessionStorage.getItem('userData'));
-    console.log('a', a.provider_pic);
+    let userData;
+    if (sessionStorage.getItem('userData'))
+      userData = JSON.parse(sessionStorage.getItem('userData'));
+
     return this.props.login ? (
       <Menu.Item position="right">
-        <Image src={a.provider_pic} avatar />
-        <span style={{ marginRight: '1.5em' }}>{a.name}</span>
+        <Image src={userData.provider_pic} avatar />
+        <span style={{ marginRight: '1.5em' }}>{userData.name}</span>
         <Button as={Link} to="/" onClick={this.props.logout} inverted>
           Logout
         </Button>
