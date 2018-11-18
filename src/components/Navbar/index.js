@@ -42,7 +42,7 @@ class Navbar extends Component {
               />
               블록팡
             </Menu.Item>
-            <Menu.Item as={Link} to="/my-page">
+            <Menu.Item as={Link} to="/mypage">
               My Page
             </Menu.Item>
             <Menu.Item as={Link} to="/admin">

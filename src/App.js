@@ -15,12 +15,10 @@ class App extends React.Component {
   };
 
   logon = () => {
-    console.log('login!!!');
     this.setState({ login: true });
   };
 
   logout = () => {
-    console.log('실행?');
     this.setState({ login: false });
     this.deleteToken();
   };
@@ -46,7 +44,7 @@ class App extends React.Component {
             <Route exact path="/" component={Main} />
             <Route path="/login" render={() => <Login logon={this.logon} />} />
             <Route path="/admin" component={Admin} />
-            <Route path="/my-page" component={MyPage} />
+            <Route path="/mypage" component={MyPage} />
           </div>
           <Footer />
         </div>
