@@ -5,11 +5,9 @@ import {
   Header,
   Button,
   Segment,
-  Divider,
   Tab,
-  Input,
-  Label,
-  Icon
+  Input
+  // Label
 } from 'semantic-ui-react';
 import './MyPage.css';
 

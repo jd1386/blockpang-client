@@ -49,19 +49,6 @@ class Navbar extends Component {
               Admin
             </Menu.Item>
             {this.menuChange()}
-            {/* <Menu.Item position="right">
-              <Button as={Link} to="/login" inverted>
-                Log in
-              </Button>
-              <Button
-                as={Link}
-                to="/login"
-                primary
-                style={{ marginLeft: '0.5em' }}
-              >
-                Sign up
-              </Button>
-            </Menu.Item> */}
           </Container>
         </Menu>
       </div>
