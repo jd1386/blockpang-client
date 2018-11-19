@@ -1,9 +1,33 @@
-import React, { Component } from "react";
-import { Link } from "react-router-dom";
-import { Container, Image, Button, Menu } from "semantic-ui-react";
-import "./style.css";
+import React, { Component } from 'react';
+import { Link } from 'react-router-dom';
+import { Container, Image, Button, Menu } from 'semantic-ui-react';
+import './style.css';
 
 class Navbar extends Component {
+  menuChange = () => {
+    let userData;
+    if (sessionStorage.getItem('userData'))
+      userData = JSON.parse(sessionStorage.getItem('userData'));
+
+    return this.props.login ? (
+      <Menu.Item position="right">
+        <Image src={userData.provider_pic} avatar />
+        <span style={{ marginRight: '1.5em' }}>{userData.name}</span>
+        <Button as={Link} to="/" onClick={this.props.logout} inverted>
+          Logout
+        </Button>
+      </Menu.Item>
+    ) : (
+      <Menu.Item position="right">
+        <Button as={Link} to="/login" inverted>
+          Log in
+        </Button>
+        <Button as={Link} to="/login" primary style={{ marginLeft: '0.5em' }}>
+          Sign up
+        </Button>
+      </Menu.Item>
+    );
+  };
   render() {
     return (
       <div>
@@ -14,29 +38,17 @@ class Navbar extends Component {
                 className="app-logo"
                 size="mini"
                 src="favicon.ico"
-                style={{ marginRight: "1.5em" }}
+                style={{ marginRight: '1.5em' }}
               />
               블록팡
             </Menu.Item>
-            <Menu.Item as={Link} to="/my-page">
+            <Menu.Item as={Link} to="/mypage">
               My Page
             </Menu.Item>
             <Menu.Item as={Link} to="/admin">
               Admin
             </Menu.Item>
-            <Menu.Item position="right">
-              <Button as={Link} to="/login" inverted>
-                Log in
-              </Button>
-              <Button
-                as={Link}
-                to="/login"
-                primary
-                style={{ marginLeft: "0.5em" }}
-              >
-                Sign up
-              </Button>
-            </Menu.Item>
+            {this.menuChange()}
           </Container>
         </Menu>
       </div>
