@@ -6,8 +6,8 @@ import './style.css';
 class Navbar extends Component {
   menuChange = () => {
     let userData;
-    if (sessionStorage.getItem('userData'))
-      userData = JSON.parse(sessionStorage.getItem('userData'));
+    if (localStorage.getItem('userData'))
+      userData = JSON.parse(localStorage.getItem('userData'));
 
     return this.props.login ? (
       <Menu.Item position="right">
