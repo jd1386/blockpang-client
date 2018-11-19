@@ -28,14 +28,14 @@ class Login extends Component {
       };
     }
     if (userData) {
-      sessionStorage.setItem('userData', JSON.stringify(userData));
+      localStorage.setItem('userData', JSON.stringify(userData));
       this.setState({ redirect: true });
     }
     this.props.logon();
   }
 
   render() {
-    if (this.state.redirect || sessionStorage.getItem('userData')) {
+    if (this.state.redirect || localStorage.getItem('userData')) {
       return <Redirect to={'/'} />;
     }
 

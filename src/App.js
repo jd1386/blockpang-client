@@ -24,11 +24,11 @@ class App extends React.Component {
   };
 
   deleteToken = () => {
-    window.sessionStorage.clear();
+    window.localStorage.clear();
   };
 
   componentDidMount() {
-    if (window.sessionStorage.getItem('userData')) {
+    if (window.localStorage.getItem('userData')) {
       this.logon();
     } else {
       this.logout();
