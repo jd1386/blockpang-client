@@ -3,7 +3,7 @@ import { Container, Grid, Header, Segment } from "semantic-ui-react";
 import MainPage from "../components/Main";
 
 class Main extends Component {
-  main() {
+  render() {
     return (
       <Container>
         <Segment style={{ padding: "8em 0em" }} vertical>
@@ -15,22 +15,18 @@ class Main extends Component {
             </Grid.Row>
             <Grid.Row>
               <Grid.Column>
-                <MainPage.board />
+                <MainPage.Board isPlayingGame={this.props.isPlayingGame} />
               </Grid.Column>
             </Grid.Row>
             <Grid.Row>
               <Grid.Column textAlign="center">
-                <MainPage.instructions />
+                <MainPage.Instruction />
               </Grid.Column>
             </Grid.Row>
           </Grid>
         </Segment>
       </Container>
     );
-  }
-
-  render() {
-    return this.main();
   }
 }
 

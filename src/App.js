@@ -1,13 +1,14 @@
-import * as React from 'react';
-import './App.css';
-import { BrowserRouter as Router, Route } from 'react-router-dom';
-import { hot } from 'react-hot-loader';
-import Navbar from './components/Navbar/';
-import Main from './routes/Main';
-import Login from './routes/Login';
-import MyPage from './routes/MyPage';
-import Admin from './routes/Admin';
-import Footer from './components/Footer/';
+import * as React from "react";
+import "./App.css";
+import { BrowserRouter as Router, Route } from "react-router-dom";
+import { hot } from "react-hot-loader";
+import Navbar from "./components/Navbar/";
+import Main from "./routes/Main";
+import Login from "./routes/Login";
+import MyPage from "./routes/MyPage";
+import Admin from "./routes/Admin";
+import Footer from "./components/Footer/";
+import Game from "./game";
 
 class App extends React.Component {
   state = {
@@ -28,7 +29,7 @@ class App extends React.Component {
   };
 
   componentDidMount() {
-    if (window.localStorage.getItem('userData')) {
+    if (window.localStorage.getItem("userData")) {
       this.login();
     } else {
       this.logout();
