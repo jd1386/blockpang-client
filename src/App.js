@@ -12,16 +12,20 @@ import Game from "./game";
 
 class App extends React.Component {
   state = {
+<<<<<<< HEAD
     login: false,
     isPlayingGame: false
+=======
+    isLoggedIn: false
+>>>>>>> dev
   };
 
-  logon = () => {
-    this.setState({ login: true });
+  login = () => {
+    this.setState({ isLoggedIn: true });
   };
 
   logout = () => {
-    this.setState({ login: false });
+    this.setState({ isLoggedIn: false });
     this.deleteToken();
   };
 
@@ -30,8 +34,13 @@ class App extends React.Component {
   };
 
   componentDidMount() {
+<<<<<<< HEAD
     if (window.localStorage.getItem("userData")) {
       this.logon();
+=======
+    if (window.localStorage.getItem('userData')) {
+      this.login();
+>>>>>>> dev
     } else {
       this.logout();
     }
@@ -41,8 +50,9 @@ class App extends React.Component {
     return (
       <Router>
         <div id="App">
-          <Navbar login={this.state.login} logout={this.logout} />
+          <Navbar isLoggedIn={this.state.isLoggedIn} logout={this.logout} />
           <div className="site-content">
+<<<<<<< HEAD
             <Route
               exact
               path="/"
@@ -50,8 +60,15 @@ class App extends React.Component {
               isPlayingGame={this.state.isPlayingGame}
             />
             <Route path="/login" render={() => <Login logon={this.logon} />} />
+=======
+            <Route exact path="/" component={Main} />
+            <Route path="/login" render={() => <Login login={this.login} />} />
+>>>>>>> dev
             <Route path="/admin" component={Admin} />
-            <Route path="/mypage" component={MyPage} />
+            <Route
+              path="/mypage"
+              render={() => <MyPage isLoggedIn={this.state.isLoggedIn} />}
+            />
           </div>
           <Footer />
         </div>
