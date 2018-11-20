@@ -1,17 +1,9 @@
-<<<<<<< HEAD
-import React from 'react';
-import ReactDOM from 'react-dom';
-import './App.css';
-import Block from './components/block';
-import Status from './components/status';
-=======
 import React from "react";
 import ReactDOM from "react-dom";
 import "./App.css";
 import { random } from "lodash";
 import Block from "./components/block";
 import Status from "./components/status";
->>>>>>> f5117a579491305d721a6130642d2c04508c7618
 
 const defaultState = () => {
   // TODO:
@@ -30,6 +22,8 @@ const defaultState = () => {
 class App extends React.Component {
   constructor(props) {
     super(props);
+    this.blockColors = ["red", "green", "blue"];
+    this.blockKeys = ["a", "s", "d"];
     this.state = defaultState();
   }
 
@@ -39,24 +33,36 @@ class App extends React.Component {
     let nextBlocks = this.state.blocks.slice(0, this.state.blocks.length);
     if (e.key === nextBlocks[nextBlocks.length - 1].key) {
       nextBlocks.pop();
-      console.log('key가 일치하네요!');
+      console.log("key가 일치하네요!");
       this.setState({ blocks: nextBlocks });
+
+      // 약간의 시간 간격을 두고 새로운 블럭을 스택 상단에 쌓는다
+      // TODO: 지금은 기본 기능만 구현한 것이므로
+      // 아래 로직은 향후 바뀔 수 있음
+      setTimeout(() => {
+        console.log("new block!");
+        this.setState({
+          blocks: [this._generateRandomBlock(), ...this.state.blocks]
+        });
+      }, 400);
     }
   };
 
+  _generateRandomBlock() {
+    let randomIndex = random(this.blockColors.length - 1);
+
+    return {
+      color: this.blockColors[randomIndex],
+      key: this.blockKeys[randomIndex]
+    };
+  }
+
   _generateDefaultBlocks() {
     // generate an array of random blocks
-    let colors = ["red", "green", "blue"];
-    let keys = ["a", "s", "d"];
     let randomBlocks = [];
 
     for (let i = 0; i < 5; i++) {
-      let randomIndex = random(colors.length - 1);
-
-      randomBlocks.push({
-        color: colors[randomIndex],
-        key: keys[randomIndex]
-      });
+      randomBlocks.push(this._generateRandomBlock());
     }
     return randomBlocks;
   }
