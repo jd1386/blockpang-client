@@ -12,9 +12,10 @@ const defaultState = () => {
   // return initial state
   return {
     boardSize: userBoardSize,
-    time: 30,
+    time: 5,
     score: 0,
-    blocks: []
+    blocks: [],
+    isPlaying: false
   };
 };
 
@@ -26,9 +27,23 @@ class App extends React.Component {
     this.state = defaultState();
   }
 
+  _tick = () => {
+    if (this.state.isPlaying) {
+      this.state.time > 0
+        ? this.setState(prevState => ({
+            time: prevState.time - 1
+          }))
+        : this.setState(prevState => ({
+            time: 0
+          }));
+    }
+  };
+
   _handleKeyDown = e => {
     console.log(e.key);
     // key 값이 일치하면, blocks 데이터를 삭제한다.
+    if (!this.state.isPlaying) this.setState({ isPlaying: true });
+
     let nextBlocks = this.state.blocks.slice(0, this.state.blocks.length);
     if (e.key === nextBlocks[nextBlocks.length - 1].key) {
       nextBlocks.pop();
@@ -83,17 +98,36 @@ class App extends React.Component {
     }));
   }
 
-  componentDidMount() {
+  componentDidMount = () => {
     this.setState({ blocks: this._generateDefaultBlocks() });
-  }
+    this.interval = setInterval(() => this._tick(), 1000);
+  };
+
+  _gameEndCheck = () => {
+    if (this.state.isPlaying && this.state.time === 0) {
+      return (
+        <div id="game-board" tabIndex="0" onKeyDown={this._handleKeyDown}>
+          <h1>YOU DEAD!</h1>
+        </div>
+      );
+    } else {
+      return (
+        <div id="game-board" tabIndex="0" onKeyDown={this._handleKeyDown}>
+          <Status time={this.state.time} score={this.state.score} />
+          <div className="blocks-container">{this._renderDefaultBlocks()}</div>
+        </div>
+      );
+    }
+  };
 
   render() {
-    return (
-      <div id="game-board" tabIndex="0" onKeyDown={this._handleKeyDown}>
-        <Status time={this.state.time} score={this.state.score} />
-        <div className="blocks-container">{this._renderDefaultBlocks()}</div>
-      </div>
-    );
+    return <div>{this._gameEndCheck()}</div>;
+    // return (
+    //   <div id="game-board" tabIndex="0" onKeyDown={this._handleKeyDown}>
+    //     <Status time={this.state.time} score={this.state.score} />
+    //     <div className="blocks-container">{this._renderDefaultBlocks()}</div>
+    //   </div>
+    // );
   }
 }
 
