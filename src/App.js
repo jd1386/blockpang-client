@@ -12,12 +12,7 @@ import Game from "./game";
 
 class App extends React.Component {
   state = {
-<<<<<<< HEAD
-    login: false,
-    isPlayingGame: false
-=======
     isLoggedIn: false
->>>>>>> dev
   };
 
   login = () => {
@@ -34,13 +29,8 @@ class App extends React.Component {
   };
 
   componentDidMount() {
-<<<<<<< HEAD
     if (window.localStorage.getItem("userData")) {
-      this.logon();
-=======
-    if (window.localStorage.getItem('userData')) {
       this.login();
->>>>>>> dev
     } else {
       this.logout();
     }
@@ -52,18 +42,8 @@ class App extends React.Component {
         <div id="App">
           <Navbar isLoggedIn={this.state.isLoggedIn} logout={this.logout} />
           <div className="site-content">
-<<<<<<< HEAD
-            <Route
-              exact
-              path="/"
-              component={Main}
-              isPlayingGame={this.state.isPlayingGame}
-            />
-            <Route path="/login" render={() => <Login logon={this.logon} />} />
-=======
             <Route exact path="/" component={Main} />
             <Route path="/login" render={() => <Login login={this.login} />} />
->>>>>>> dev
             <Route path="/admin" component={Admin} />
             <Route
               path="/mypage"
