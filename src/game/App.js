@@ -36,6 +36,12 @@ class App extends React.Component {
       console.log("key가 일치하네요!");
       this.setState({ blocks: nextBlocks });
 
+      // 점수를 업데이트한다
+      // TODO: 블록당 점수를 얼마나 할 지는 향후 변경될 수 있다
+      this.setState(prevState => ({
+        score: (prevState.score += 10)
+      }));
+
       // 약간의 시간 간격을 두고 새로운 블럭을 스택 상단에 쌓는다
       // TODO: 지금은 기본 기능만 구현한 것이므로
       // 아래 로직은 향후 바뀔 수 있음
@@ -73,6 +79,8 @@ class App extends React.Component {
       return <Block key={index} color={block.color} keyDown={block.key} />;
     });
   }
+
+  _updateScore() {}
 
   componentDidMount() {
     this.setState({ blocks: this._generateDefaultBlocks() });
