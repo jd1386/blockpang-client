@@ -1,6 +1,7 @@
 import React from "react";
 import "./App.css";
 import { random } from "lodash";
+import posed from "react-pose";
 import Block from "./components/block";
 import Status from "./components/status";
 
@@ -31,8 +32,8 @@ class App extends React.Component {
     // key 값이 일치하면, blocks 데이터를 삭제한다.
     let nextBlocks = this.state.blocks.slice(0, this.state.blocks.length);
     if (e.key === nextBlocks[nextBlocks.length - 1].key) {
-      nextBlocks.pop();
-      console.log("key가 일치하네요!");
+      let blockToDelete = nextBlocks.pop();
+      console.log(blockToDelete);
       this.setState({ blocks: nextBlocks });
 
       // 점수를 업데이트한다
