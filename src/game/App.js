@@ -1,8 +1,9 @@
-import React from "react";
-import "./App.css";
-import { random } from "lodash";
-import Block from "./components/block";
-import Status from "./components/status";
+import React from 'react';
+import './App.css';
+import { random } from 'lodash';
+import Block from './components/block';
+import Status from './components/status';
+import Gameover from './components/status/gameover';
 
 const defaultState = () => {
   // TODO:
@@ -14,25 +15,47 @@ const defaultState = () => {
     boardSize: userBoardSize,
     time: 30,
     score: 0,
-    blocks: []
+    blocks: [],
+    isPlaying: false,
+    gameoverReason: ''
   };
 };
 
 class App extends React.Component {
   constructor(props) {
     super(props);
-    this.blockColors = ["red", "green", "blue"];
-    this.blockKeys = ["a", "s", "d"];
+    this.blockColors = ['red', 'green', 'blue'];
+    this.blockKeys = ['a', 's', 'd'];
     this.state = defaultState();
   }
 
+  _tick = () => {
+    if (this.state.isPlaying) {
+      this.state.time > 0
+        ? this.setState(prevState => ({
+            time: prevState.time - 1
+          }))
+        : this.setState(prevState => ({
+            time: 0
+          }));
+    }
+    if (this.state.time <= 0) this.setState({ gameoverReason: 'timeover' });
+  };
+
   _handleKeyDown = e => {
+    let isStart;
     console.log(e.key);
     // key 값이 일치하면, blocks 데이터를 삭제한다.
+    if (!this.state.isPlaying) {
+      isStart = true;
+      this.setState({ isPlaying: true });
+    }
+    if (this.state.blocks.length === 0) return;
+
     let nextBlocks = this.state.blocks.slice(0, this.state.blocks.length);
     if (e.key === nextBlocks[nextBlocks.length - 1].key) {
       nextBlocks.pop();
-      console.log("key가 일치하네요!");
+      console.log('key가 일치하네요!');
       this.setState({ blocks: nextBlocks });
 
       // 점수를 업데이트한다
@@ -42,11 +65,13 @@ class App extends React.Component {
       // TODO: 지금은 기본 기능만 구현한 것이므로
       // 아래 로직은 향후 바뀔 수 있음
       setTimeout(() => {
-        console.log("new block!");
+        console.log('new block!');
         this.setState({
           blocks: [this._generateRandomBlock(), ...this.state.blocks]
         });
       }, 400);
+    } else if (!isStart) {
+      this._gameEnd();
     }
   };
 
@@ -83,17 +108,44 @@ class App extends React.Component {
     }));
   }
 
-  componentDidMount() {
+  _gameEnd = () => {
+    this.setState({ gameoverReason: 'miss' });
+  };
+
+  _gameRestart = e => {
+    if (e.key === 's' || e.key === 'S') {
+      this.setState((this.state = defaultState()));
+      this.setState({ blocks: this._generateDefaultBlocks() });
+    }
+  };
+  componentDidMount = () => {
     this.setState({ blocks: this._generateDefaultBlocks() });
-  }
+    this.interval = setInterval(() => this._tick(), 1000);
+  };
+
+  _gameEndCheck = () => {
+    if (
+      (this.state.isPlaying && this.state.time === 0) ||
+      this.state.gameoverReason === 'miss'
+    ) {
+      return (
+        <div id="game-board" tabIndex="0" onKeyDown={this._gameRestart}>
+          {/* <h1>YOU DEAD!</h1> */}
+          <Gameover reason={this.state.gameoverReason} />
+        </div>
+      );
+    } else {
+      return (
+        <div id="game-board" tabIndex="0" onKeyDown={this._handleKeyDown}>
+          <Status time={this.state.time} score={this.state.score} />
+          <div className="blocks-container">{this._renderDefaultBlocks()}</div>
+        </div>
+      );
+    }
+  };
 
   render() {
-    return (
-      <div id="game-board" tabIndex="0" onKeyDown={this._handleKeyDown}>
-        <Status time={this.state.time} score={this.state.score} />
-        <div className="blocks-container">{this._renderDefaultBlocks()}</div>
-      </div>
-    );
+    return <div>{this._gameEndCheck()}</div>;
   }
 }
 
