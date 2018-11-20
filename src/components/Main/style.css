@@ -1,7 +1,0 @@
-#game-board {
-  height: 80vh;
-  background-color: #ddd;
-  display: flex;
-  flex-direction: column;
-  align-content: stretch;
-}

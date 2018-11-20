@@ -1,6 +1,8 @@
 import React from "react";
 import ReactDOM from "react-dom";
+import "./App.css";
 import Block from "./components/block";
+import Status from "./components/status";
 
 const defaultState = () => {
   // check boardSize based on user's screen size
@@ -30,11 +32,23 @@ class App extends React.Component {
     this.state = defaultState();
   }
 
-  render() {
-    let blockElements = this.state.blocks.map((block, index) => {
+  _handleKeyDown(e) {
+    console.log(e.key);
+  }
+
+  _generateDefaultBlocks() {
+    return this.state.blocks.map((block, index) => {
       return <Block key={index} color={block.color} keyToPress={block.key} />;
     });
-    return blockElements;
+  }
+
+  render() {
+    return (
+      <div id="game-board" tabIndex="0" onKeyDown={this._handleKeyDown}>
+        <Status time={this.state.time} score={this.state.score} />
+        <div className="blocks-container">{this._generateDefaultBlocks()}</div>
+      </div>
+    );
   }
 }
 

@@ -1,4 +1,5 @@
 .game-status-bar {
+  margin-top: 30px;
   min-height: 12vh;
   display: flex;
   align-items: flex-start;
