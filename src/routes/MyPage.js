@@ -80,7 +80,7 @@ class MyPage extends Component {
   state = getDefaultState();
 
   render() {
-    if (!this.props.isLogin || !localStorage.getItem('userData')) {
+    if (!this.props.isLoggedIn || !localStorage.getItem('userData')) {
       return <Redirect to={'/'} />;
     }
 

@@ -11,15 +11,15 @@ import Footer from './components/Footer/';
 
 class App extends React.Component {
   state = {
-    isLogin: false
+    isLoggedIn: false
   };
 
   login = () => {
-    this.setState({ isLogin: true });
+    this.setState({ isLoggedIn: true });
   };
 
   logout = () => {
-    this.setState({ isLogin: false });
+    this.setState({ isLoggedIn: false });
     this.deleteToken();
   };
 
@@ -39,14 +39,14 @@ class App extends React.Component {
     return (
       <Router>
         <div id="App">
-          <Navbar isLogin={this.state.isLogin} logout={this.logout} />
+          <Navbar isLoggedIn={this.state.isLoggedIn} logout={this.logout} />
           <div className="site-content">
             <Route exact path="/" component={Main} />
             <Route path="/login" render={() => <Login login={this.login} />} />
             <Route path="/admin" component={Admin} />
             <Route
               path="/mypage"
-              render={() => <MyPage isLogin={this.state.isLogin} />}
+              render={() => <MyPage isLoggedIn={this.state.isLoggedIn} />}
             />
           </div>
           <Footer />

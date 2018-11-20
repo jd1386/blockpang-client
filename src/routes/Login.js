@@ -12,7 +12,7 @@ import GoogleLogin from 'react-google-login';
 
 class Login extends Component {
   state = {
-    isRedirect: false
+    isLoginSuccessful: false
   };
 
   signup(res, provider) {
@@ -29,13 +29,13 @@ class Login extends Component {
     }
     if (userData) {
       localStorage.setItem('userData', JSON.stringify(userData));
-      this.setState({ isRedirect: true });
+      this.setState({ isLoginSuccessful: true });
     }
     this.props.login();
   }
 
   render() {
-    if (this.state.isRedirect || localStorage.getItem('userData')) {
+    if (this.state.isLoginSuccessful || localStorage.getItem('userData')) {
       return <Redirect to={'/'} />;
     }
 
