@@ -8,7 +8,6 @@ import Login from "./routes/Login";
 import MyPage from "./routes/MyPage";
 import Admin from "./routes/Admin";
 import Footer from "./components/Footer/";
-import Game from "./game";
 
 class App extends React.Component {
   state = {
