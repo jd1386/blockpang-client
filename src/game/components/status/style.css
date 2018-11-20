@@ -1,0 +1,12 @@
+.game-status-bar {
+  min-height: 12vh;
+  display: flex;
+  align-items: flex-start;
+  flex-wrap: nowrap;
+  font-size: 3em;
+}
+
+.game-status-component {
+  width: 50%;
+  float: right;
+}

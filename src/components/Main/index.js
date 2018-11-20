@@ -13,6 +13,7 @@ const _handleKeyDown = e => {
 const board = () => {
   return (
     <div id="game-board" onKeyDown={e => _handleKeyDown(e)} tabIndex="0">
+      <Game.Status />
       <Game.Block color={"yellow"} keyDown={"w"} />
       <Game.Block color={"green"} keyDown={"a"} />
       <Game.Block color={"blue"} keyDown={"s"} />
