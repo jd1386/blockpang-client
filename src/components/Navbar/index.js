@@ -9,7 +9,7 @@ class Navbar extends Component {
     if (localStorage.getItem('userData'))
       userData = JSON.parse(localStorage.getItem('userData'));
 
-    return this.props.login ? (
+    return this.props.isLogin ? (
       <Menu.Item position="right">
         <Image src={userData.provider_pic} avatar />
         <span style={{ marginRight: '1.5em' }}>{userData.name}</span>
