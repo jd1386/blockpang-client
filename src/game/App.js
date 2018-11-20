@@ -37,10 +37,7 @@ class App extends React.Component {
       this.setState({ blocks: nextBlocks });
 
       // 점수를 업데이트한다
-      // TODO: 블록당 점수를 얼마나 할 지는 향후 변경될 수 있다
-      this.setState(prevState => ({
-        score: (prevState.score += 10)
-      }));
+      this._updateScore();
 
       // 약간의 시간 간격을 두고 새로운 블럭을 스택 상단에 쌓는다
       // TODO: 지금은 기본 기능만 구현한 것이므로
@@ -80,7 +77,12 @@ class App extends React.Component {
     });
   }
 
-  _updateScore() {}
+  _updateScore() {
+    // TODO: 블록당 점수를 얼마나 할 지는 향후 변경될 수 있다
+    this.setState(prevState => ({
+      score: (prevState.score += 10)
+    }));
+  }
 
   componentDidMount() {
     this.setState({ blocks: this._generateDefaultBlocks() });
