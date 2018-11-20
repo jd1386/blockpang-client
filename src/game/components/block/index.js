@@ -14,8 +14,7 @@ class Block extends Component {
         onClick={this._handleOnClick}
         style={{ background: this.props.color }}
       >
-        My color is: {this.props.color} <br />
-        My key is: {this.props.keyDown}
+        <div className="block-text">{this.props.keyDown}</div>
       </div>
     );
   }
