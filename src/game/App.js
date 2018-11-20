@@ -1,17 +1,9 @@
-<<<<<<< HEAD
 import React from 'react';
 import ReactDOM from 'react-dom';
 import './App.css';
+import { random } from 'lodash';
 import Block from './components/block';
 import Status from './components/status';
-=======
-import React from "react";
-import ReactDOM from "react-dom";
-import "./App.css";
-import { random } from "lodash";
-import Block from "./components/block";
-import Status from "./components/status";
->>>>>>> f5117a579491305d721a6130642d2c04508c7618
 
 const defaultState = () => {
   // TODO:
@@ -33,6 +25,16 @@ class App extends React.Component {
     this.state = defaultState();
   }
 
+  _tick() {
+    this.state.time > 0
+      ? this.setState(prevState => ({
+          time: prevState.time - 1
+        }))
+      : this.setState(prevState => ({
+          time: 0
+        }));
+  }
+
   _handleKeyDown = e => {
     console.log(e.key);
     // key 값이 일치하면, blocks 데이터를 삭제한다.
@@ -46,8 +48,8 @@ class App extends React.Component {
 
   _generateDefaultBlocks() {
     // generate an array of random blocks
-    let colors = ["red", "green", "blue"];
-    let keys = ["a", "s", "d"];
+    let colors = ['red', 'green', 'blue'];
+    let keys = ['a', 's', 'd'];
     let randomBlocks = [];
 
     for (let i = 0; i < 5; i++) {
@@ -70,6 +72,7 @@ class App extends React.Component {
 
   componentDidMount() {
     this.setState({ blocks: this._generateDefaultBlocks() });
+    this.interval = setInterval(() => this._tick(), 1000);
   }
 
   render() {
