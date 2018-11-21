@@ -14,7 +14,7 @@ const defaultState = () => {
   // return initial state
   return {
     boardSize: userBoardSize,
-    time: '30',
+    time: 30000,
     score: 0,
     blocks: [],
     isPlaying: false,
@@ -36,10 +36,12 @@ class App extends React.Component {
 
   _tick = () => {
     if (this.state.gameoverReason) return;
+
     if (this.state.isPlaying) {
       this.state.time > 0
         ? this.setState(prevState => ({
-            time: prevState.time - 1
+            time: prevState.time - 10
+            // time: prevState.time - 1
           }))
         : this.setState(prevState => ({
             time: 0
@@ -240,7 +242,10 @@ class App extends React.Component {
 
   componentDidMount = () => {
     this.setState({ blocks: this._generateDefaultBlocks() });
-    this.interval = setInterval(() => this._tick(), 1000);
+    // const totalSeconds = parseInt(this.state.time) * 1000;
+    // this.setState(() => ({ time: parseInt(totalSeconds) }));
+
+    this.interval = setInterval(() => this._tick(), 10);
   };
 
   render() {

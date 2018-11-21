@@ -11,3 +11,7 @@
   width: 50%;
   float: right;
 }
+
+.ui.mini.image#onlycoin {
+  display: inline;
+}
