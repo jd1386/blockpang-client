@@ -21,7 +21,7 @@ class Gameover extends Component {
       message = 'TIME OVER! If your want restart, press W KEY.';
     }
     return (
-      <div>
+      <div className="game-status-div">
         <h1>{message}</h1>
         <h1>SCORE : {this.props.score}</h1>
         {lefttime}
