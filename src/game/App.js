@@ -184,7 +184,11 @@ class App extends React.Component {
     } else {
       return (
         <div id="game-board" tabIndex="0" onKeyDown={this._handleKeyDown}>
-          <Status time={this.state.time} score={this.state.score} />
+          <Status
+            time={this.state.time}
+            prevScore={this.state.score - 10}
+            currentScore={this.state.score}
+          />
           <div className="blocks-container">{this._renderDefaultBlocks()}</div>
         </div>
       );
