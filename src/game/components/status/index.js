@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import './style.css';
 import { Spring } from 'react-spring';
-
+import { Image } from 'semantic-ui-react';
 class Status extends Component {
   formatUnitOfTime(unitOfTime) {
     return unitOfTime < 10
@@ -9,8 +9,6 @@ class Status extends Component {
       : unitOfTime.toString().substring(0, 2);
   }
   render() {
-    console.log('tt', this.props.time);
-    let time;
     let displayTime;
     const seconds = this.formatUnitOfTime(Math.floor(this.props.time / 1000));
     const milliseconds = this.formatUnitOfTime(this.props.time % 1000);
@@ -18,9 +16,7 @@ class Status extends Component {
 
     return (
       <div className="game-status-bar">
-        <div className="game-status-timer ">{displayTime} Sec</div>
-        {/* <div className="game-status-timer ">{this.props.time} Sec</div> */}
-        <div className="game-status-component">{this.props.time} Sec</div>
+        <div className="game-status-component">{displayTime} Sec</div>
         <Spring
           from={{ number: this.props.prevScore }}
           to={{ number: this.props.currentScore }}
@@ -28,6 +24,7 @@ class Status extends Component {
           {props => {
             return (
               <div className="game-status-component">
+                <Image id="onlycoin" size="mini" src="coin.gif" />
                 {Math.round(props.number)}
               </div>
             );
