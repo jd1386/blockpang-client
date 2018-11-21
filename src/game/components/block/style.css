@@ -29,6 +29,7 @@
 
 .block-text {
   text-transform: uppercase;
+  text-align: center;
   color: white;
   font-size: 2rem;
   font-weight: 800;
