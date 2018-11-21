@@ -4,7 +4,6 @@ import { Spring } from 'react-spring';
 
 class Status extends Component {
   render() {
-    console.log(this.props);
     return (
       <div className="game-status-bar">
         <div className="game-status-component">{this.props.time} Sec</div>
