@@ -1,12 +1,12 @@
-import React, { Component } from "react";
-import { Container, Grid, Header, Segment } from "semantic-ui-react";
-import MainPage from "../components/Main";
+import React, { Component } from 'react';
+import { Container, Grid, Header, Segment } from 'semantic-ui-react';
+import MainPage from '../components/Main';
 
 class Main extends Component {
   render() {
     return (
       <Container>
-        <Segment style={{ padding: "8em 0em" }} vertical>
+        <Segment style={{ padding: '8em 0em' }} vertical>
           <Grid container stackable verticalAlign="middle">
             <Grid.Row>
               <Grid.Column textAlign="center">

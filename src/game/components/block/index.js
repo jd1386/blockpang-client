@@ -1,18 +1,10 @@
-import React, { Component } from "react";
-import "./style.css";
+import React, { Component } from 'react';
+import './style.css';
 
 class Block extends Component {
-  constructor(props) {
-    super(props);
-    this.state = {
-      isVisible: true
-    };
-  }
-
-  componentDidMount() {
-    setInterval(() => {
-      this.setState({ isVisible: !this.state.isVisible });
-    }, 1000);
+  _handleOnClick(e) {
+    console.log('Thank you for clicking me!', e.target);
+    // e.target.remove();
   }
 
   render() {
