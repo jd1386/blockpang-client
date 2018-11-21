@@ -131,8 +131,8 @@ class App extends React.Component {
     } else {
       return this.state.blocks.map((block, index) => {
         return (
-          <div className="block-wrapper">
-            <Block key={index} color={block.color} keyDown={block.key} />
+          <div className="block-wrapper" key={index}>
+            <Block color={block.color} keyDown={block.key} />
           </div>
         );
       });
