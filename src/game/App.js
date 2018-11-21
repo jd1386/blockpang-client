@@ -116,26 +116,16 @@ class App extends React.Component {
     let blockImage;
     console.log('this.state.isPlaying ', this.state.isPlaying);
     if (this.state.isPlaying && random(1) === 1) {
-      randomColor = random(1) === 1 ? '#1aaaba' : `${getRandColor(4)}`;
+      randomColor = random(4) === 1 ? '#1aaaba' : `${getRandColor(4)}`;
       randomColorIndex = random(this.eventBlockColors.length - 1);
       randomKeyIndex = random(this.eventBlockKeys.length - 1);
       return {
         blockImage: randomColor === '#1aaaba' ? 'ICON' : '',
         blockImage:
           randomColor === '#1aaaba' ? (
-            <Image
-              // id="block-image"
-              size="mini"
-              src="favicon.ico"
-              // style={{ marginRight: '1.5em' }}
-            />
+            <Image size="mini" src="favicon.ico" />
           ) : (
-            <Image
-              // id="block-image"
-              size="mini"
-              src="coin.gif"
-              // style={{ marginRight: '1.5em' }}
-            />
+            <Image size="mini" src="coin.gif" />
           ),
         color: randomColor,
         // color: this.eventBlockColors[randomColorIndex],
