@@ -1,10 +1,10 @@
-import React, { Component } from "react";
-import "./style.css";
+import React, { Component } from 'react';
+import './style.css';
 
 class Block extends Component {
   _handleOnClick(e) {
-    console.log("Thank you for clicking me!", e.target);
-    e.target.remove();
+    console.log('Thank you for clicking me!', e.target);
+    // e.target.remove();
   }
 
   render() {
