@@ -1,6 +1,7 @@
 import React from 'react';
 import './App.css';
 import { random } from 'lodash';
+import { Spring } from 'react-spring';
 import Block from './components/block';
 import Status from './components/status';
 import Gameover from './components/status/gameover';
@@ -26,7 +27,7 @@ class App extends React.Component {
     super(props);
     this.blockColors = ['red', 'green', 'blue'];
     this.blockKeys = ['a', 's', 'd'];
-    this.eventBlockColors = ['mint', 'purple', 'black', 'orange', 'cyan'];
+    this.eventBlockColors = ['lime', 'purple', 'black', 'orange', 'cyan'];
     // this.eventBlockKeys = ['a', 's', 'd', 'f', 'c'];
     this.eventBlockKeys = ['f', 'c'];
     // this.eventBlockColors = [{color : 'mint', probability : 0.5} ] // 확률 문제는 일단 심플하게 구현하고 생각하기로
@@ -116,7 +117,7 @@ class App extends React.Component {
     // generate an array of random blocks
     let randomBlocks = [];
 
-    for (let i = 0; i < 5; i++) {
+    for (let i = 0; i < 7; i++) {
       randomBlocks.push(this._generateRandomBlock());
     }
     return randomBlocks;
@@ -124,16 +125,44 @@ class App extends React.Component {
 
   _renderDefaultBlocks() {
     // render the default blocks
-    return this.state.blocks.map((block, index) => {
-      return (
-        <Block
-          key={index}
-          color={block.color}
-          keyDown={block.key}
-          bonusScore={block.bonusScore}
-        />
-      );
-    });
+
+    // when user is not playing the game
+    // the game has been just initialized
+    if (!this.state.isPlaying) {
+      return this.state.blocks.map((block, index) => {
+        return (
+          <Spring
+            from={{
+              opacity: 0
+            }}
+            to={{
+              opacity: 1
+            }}
+            key={index}
+          >
+            {(props, index) => (
+              <div className="block-wrapper" style={props}>
+                <Block key={index} color={block.color} keyDown={block.key} />
+              </div>
+            )}
+          </Spring>
+        );
+      });
+    } else {
+      // the game has started
+      return this.state.blocks.map((block, index) => {
+        return (
+          <div className="block-wrapper" key={index}>
+            <Block
+              key={index}
+              color={block.color}
+              keyDown={block.key}
+              bonusScore={block.bonusScore}
+            />
+          </div>
+        );
+      });
+    }
   }
 
   _updateScore() {
@@ -181,12 +210,33 @@ class App extends React.Component {
         </div>
       );
     } else {
-      return (
-        <div id="game-board" tabIndex="0" onKeyDown={this._handleKeyDown}>
-          <Status time={this.state.time} score={this.state.score} />
-          <div className="blocks-container">{this._renderDefaultBlocks()}</div>
-        </div>
-      );
+      if (this.state.isPlaying) {
+        return (
+          <div id="game-board" tabIndex="0" onKeyDown={this._handleKeyDown}>
+            <Status
+              time={this.state.time}
+              prevScore={this.state.score - 10}
+              currentScore={this.state.score}
+            />
+            <div className="blocks-container">
+              {this._renderDefaultBlocks()}
+            </div>
+          </div>
+        );
+      } else {
+        return (
+          <div id="game-board" tabIndex="0" onKeyDown={this._handleKeyDown}>
+            <Status
+              time={this.state.time}
+              prevScore={0}
+              currentScore={this.state.score}
+            />
+            <div className="blocks-container">
+              {this._renderDefaultBlocks()}
+            </div>
+          </div>
+        );
+      }
     }
   };
 
@@ -199,7 +249,7 @@ class App extends React.Component {
   };
 
   render() {
-    return <div>{this._checkGameEnd()}</div>;
+    return this._checkGameEnd();
   }
 }
 

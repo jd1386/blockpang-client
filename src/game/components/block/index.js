@@ -10,7 +10,7 @@ class Block extends Component {
   render() {
     let bonusScore;
     if (this.props.bonusScore) {
-      bonusScore = <h4>Bonus {this.props.bonusScore}!</h4>;
+      bonusScore = <h4>Bonus {this.props.bonusScore}</h4>;
     }
     return (
       <div
