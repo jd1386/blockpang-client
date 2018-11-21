@@ -115,7 +115,7 @@ class App extends React.Component {
     // generate an array of random blocks
     let randomBlocks = [];
 
-    for (let i = 0; i < 5; i++) {
+    for (let i = 0; i < 7; i++) {
       randomBlocks.push(this._generateRandomBlock());
     }
     return randomBlocks;
