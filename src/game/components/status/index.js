@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import './style.css';
-import { Spring, config } from 'react-spring';
+import { Spring } from 'react-spring';
 
 class Status extends Component {
   render() {

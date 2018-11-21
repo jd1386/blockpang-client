@@ -1,7 +1,7 @@
 import React from 'react';
 import './App.css';
 import { random } from 'lodash';
-import { Spring, Transition } from 'react-spring';
+import { Spring } from 'react-spring';
 import Block from './components/block';
 import Status from './components/status';
 import Gameover from './components/status/gameover';
@@ -27,6 +27,10 @@ class App extends React.Component {
     super(props);
     this.blockColors = ['red', 'green', 'blue'];
     this.blockKeys = ['a', 's', 'd'];
+    this.eventBlockColors = ['lime', 'purple', 'black', 'orange', 'cyan'];
+    // this.eventBlockKeys = ['a', 's', 'd', 'f', 'c'];
+    this.eventBlockKeys = ['f', 'c'];
+    // this.eventBlockColors = [{color : 'mint', probability : 0.5} ] // 확률 문제는 일단 심플하게 구현하고 생각하기로
     this.state = defaultState();
   }
 
@@ -61,11 +65,16 @@ class App extends React.Component {
     let nextBlocks = this.state.blocks.slice(0, this.state.blocks.length);
     // key 값이 일치하면, blocks 데이터를 삭제한다.
     if (e.key.toLowerCase() === nextBlocks[nextBlocks.length - 1].key) {
+      let keepBonusScore = nextBlocks[nextBlocks.length - 1].bonusScore;
       nextBlocks.pop();
       this.setState({ blocks: nextBlocks });
 
       // 점수를 업데이트한다
       this._updateScore();
+      // 보너스 점수를 추가한다
+      if (keepBonusScore) {
+        this._updateEventBlockScore(keepBonusScore);
+      }
 
       // 약간의 시간 간격을 두고 새로운 블럭을 스택 상단에 쌓는다
       // TODO: 지금은 기본 기능만 구현한 것이므로
@@ -78,12 +87,23 @@ class App extends React.Component {
       }, 400);
     } else if (!isStart) {
       // 시작하자마자 버튼 잘못 눌러서 사망하는 상황 방지. 첫 입력 미스는 막아줌.
-      this._gameEnd();
+      this._endGame();
     }
   };
 
   _generateRandomBlock() {
     let randomIndex = random(this.blockColors.length - 1);
+    let randomColorIndex;
+    let randomKeyIndex;
+    if (random(8) === 1) {
+      randomColorIndex = random(this.eventBlockColors.length - 1);
+      randomKeyIndex = random(this.eventBlockKeys.length - 1);
+      return {
+        color: this.eventBlockColors[randomColorIndex],
+        key: this.eventBlockKeys[randomKeyIndex],
+        bonusScore: random(100)
+      };
+    }
 
     return {
       color: this.blockColors[randomIndex],
@@ -131,7 +151,12 @@ class App extends React.Component {
       return this.state.blocks.map((block, index) => {
         return (
           <div className="block-wrapper" key={index}>
-            <Block color={block.color} keyDown={block.key} />
+            <Block
+              key={index}
+              color={block.color}
+              keyDown={block.key}
+              bonusScore={block.bonusScore}
+            />
           </div>
         );
       });
@@ -145,11 +170,17 @@ class App extends React.Component {
     }));
   }
 
-  _gameEnd = () => {
+  _updateEventBlockScore(bonusScore) {
+    this.setState(prevState => ({
+      score: (prevState.score += bonusScore)
+    }));
+  }
+
+  _endGame = () => {
     this.setState({ gameoverReason: 'miss' });
   };
 
-  _gameRestart = e => {
+  _restartGame = e => {
     if (e.keyCode === 32) {
       e.preventDefault();
       return;
@@ -160,19 +191,14 @@ class App extends React.Component {
       this.setState({ blocks: this._generateDefaultBlocks() });
     }
   };
-  componentDidMount = () => {
-    this.setState({ blocks: this._generateDefaultBlocks() });
-    this.interval = setInterval(() => this._tick(), 1000);
-    window.focus();
-  };
 
-  _gameEndCheck = () => {
+  _checkGameEnd = () => {
     if (
       (this.state.isPlaying && this.state.time === 0) ||
       this.state.gameoverReason === 'miss'
     ) {
       return (
-        <div id="game-board" tabIndex="0" onKeyDown={this._gameRestart}>
+        <div id="game-board" tabIndex="0" onKeyDown={this._restartGame}>
           {/* <h1>YOU DEAD!</h1> */}
           <Gameover
             reason={this.state.gameoverReason}
@@ -182,21 +208,43 @@ class App extends React.Component {
         </div>
       );
     } else {
-      return (
-        <div id="game-board" tabIndex="0" onKeyDown={this._handleKeyDown}>
-          <Status
-            time={this.state.time}
-            prevScore={this.state.score - 10}
-            currentScore={this.state.score}
-          />
-          <div className="blocks-container">{this._renderDefaultBlocks()}</div>
-        </div>
-      );
+      if (this.state.isPlaying) {
+        return (
+          <div id="game-board" tabIndex="0" onKeyDown={this._handleKeyDown}>
+            <Status
+              time={this.state.time}
+              prevScore={this.state.score - 10}
+              currentScore={this.state.score}
+            />
+            <div className="blocks-container">
+              {this._renderDefaultBlocks()}
+            </div>
+          </div>
+        );
+      } else {
+        return (
+          <div id="game-board" tabIndex="0" onKeyDown={this._handleKeyDown}>
+            <Status
+              time={this.state.time}
+              prevScore={0}
+              currentScore={this.state.score}
+            />
+            <div className="blocks-container">
+              {this._renderDefaultBlocks()}
+            </div>
+          </div>
+        );
+      }
     }
   };
 
+  componentDidMount = () => {
+    this.setState({ blocks: this._generateDefaultBlocks() });
+    this.interval = setInterval(() => this._tick(), 1000);
+  };
+
   render() {
-    return <div>{this._gameEndCheck()}</div>;
+    return this._checkGameEnd();
   }
 }
 
