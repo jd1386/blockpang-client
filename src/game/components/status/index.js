@@ -1,12 +1,25 @@
-import React, { Component } from "react";
-import "./style.css";
+import React, { Component } from 'react';
+import './style.css';
+import { Spring } from 'react-spring';
 
 class Status extends Component {
   render() {
+    console.log(this.props);
     return (
       <div className="game-status-bar">
         <div className="game-status-component">{this.props.time} Sec</div>
-        <div className="game-status-component">{this.props.score} Coins</div>
+        <Spring
+          from={{ number: this.props.prevScore }}
+          to={{ number: this.props.currentScore }}
+        >
+          {props => {
+            return (
+              <div className="game-status-component">
+                {Math.round(props.number)}
+              </div>
+            );
+          }}
+        </Spring>
       </div>
     );
   }

@@ -1,16 +1,26 @@
+.block-wrapper {
+  display: -webkit-box;
+  display: -moz-box;
+  display: -ms-flexbox;
+  display: -webkit-flex;
+  display: flex;
+  width: 50vw;
+  height: 8vh;
+  margin-bottom: 3px;
+  flex-direction: row;
+  justify-content: center;
+  align-content: center;
+}
+
 .block {
   display: -webkit-box;
   display: -moz-box;
   display: -ms-flexbox;
   display: -webkit-flex;
   display: flex;
-  width: 50%;
+  width: 50vw;
   height: 8vh;
-  background: #0e9cbc;
-  margin-bottom: 3px;
-  flex-direction: row;
   justify-content: center;
-  align-content: center;
 }
 
 .block:hover {
