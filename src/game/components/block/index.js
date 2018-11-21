@@ -10,7 +10,12 @@ class Block extends Component {
     }
 
     return (
-      <div className="block" style={{ background: this.props.color }}>
+      <div
+        className="block"
+        onClick={this._handleOnClick}
+        style={{ background: this.props.color }}
+      >
+        {this.props.image}
         <div className="block-text">
           {this.props.keyDown}
           {bonusScore}

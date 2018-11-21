@@ -11,3 +11,11 @@
   width: 50%;
   float: right;
 }
+
+.ui.mini.image#onlycoin {
+  display: inline;
+}
+
+.game-status-div {
+  font-family: sans-serif;
+}
