@@ -103,10 +103,9 @@ class App extends React.Component {
 
   _renderDefaultBlocks() {
     // render the default blocks
-    // return this.state.blocks.map((block, index) => {
-    //   return <Block key={index} color={block.color} keyDown={block.key} />;
-    // });
 
+    // when user is not playing the game
+    // the game has been just initialized
     if (!this.state.isPlaying) {
       return this.state.blocks.map((block, index) => {
         return (
@@ -117,7 +116,6 @@ class App extends React.Component {
             to={{
               opacity: 1
             }}
-            delay={2000}
             key={index}
           >
             {(props, index) => (
@@ -129,6 +127,7 @@ class App extends React.Component {
         );
       });
     } else {
+      // the game has started
       return this.state.blocks.map((block, index) => {
         return (
           <div className="block-wrapper" key={index}>
@@ -137,17 +136,6 @@ class App extends React.Component {
         );
       });
     }
-
-    // return (
-    //   <Transition
-    //     items={this.state.blocks}
-    //     from={{ transform: "translate3d(0,-40px,0)" }}
-    //     enter={{ transform: "translate3d(0,0px,0)" }}
-    //     leave={{ transform: "translate3d(0,-40px,0)" }}
-    //   >
-    //     {block => props => <Block color={block.color} keyDown={block.key} />}
-    //   </Transition>
-    // );
   }
 
   _updateScore() {
