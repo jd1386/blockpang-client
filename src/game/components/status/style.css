@@ -11,3 +11,11 @@
   width: 50%;
   float: right;
 }
+
+.game-status-timer {
+  align-items: center;
+  flex-direction: column;
+  justify-content: center;
+  margin: auto;
+  width: 15.5rem;
+}
