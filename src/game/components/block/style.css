@@ -36,3 +36,7 @@
   vertical-align: middle;
   padding: 25px 0;
 }
+
+.ui.mini.image#block-image {
+  /* display: inline; */
+}

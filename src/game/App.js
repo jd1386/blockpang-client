@@ -5,6 +5,7 @@ import { Spring } from 'react-spring';
 import Block from './components/block';
 import Status from './components/status';
 import Gameover from './components/status/gameover';
+import { Image } from 'semantic-ui-react';
 
 const defaultState = () => {
   // TODO:
@@ -22,12 +23,26 @@ const defaultState = () => {
   };
 };
 
+const getRandColor = brightness => {
+  // Six levels of brightness from 0 to 5, 0 being the darkest
+  let rgb = [Math.random() * 256, Math.random() * 256, Math.random() * 256];
+  let mix = [brightness * 51, brightness * 51, brightness * 51]; //51 => 255/5
+  let mixedrgb = [rgb[0] + mix[0], rgb[1] + mix[1], rgb[2] + mix[2]].map(
+    function(x) {
+      return Math.round(x / 2.0);
+    }
+  );
+  return 'rgb(' + mixedrgb.join(',') + ')';
+};
+
 class App extends React.Component {
   constructor(props) {
     super(props);
-    this.blockColors = ['red', 'green', 'blue'];
+    this.blockColors = ['#f783ac', '#69db7c', '#4dabf7'];
+    // this.blockColors = ['red', 'green', 'blue'];
     this.blockKeys = ['a', 's', 'd'];
     this.eventBlockColors = ['lime', 'purple', 'black', 'orange', 'cyan'];
+
     // this.eventBlockKeys = ['a', 's', 'd', 'f', 'c'];
     this.eventBlockKeys = ['f', 'c'];
     // this.eventBlockColors = [{color : 'mint', probability : 0.5} ] // 확률 문제는 일단 심플하게 구현하고 생각하기로
@@ -97,13 +112,36 @@ class App extends React.Component {
     let randomIndex = random(this.blockColors.length - 1);
     let randomColorIndex;
     let randomKeyIndex;
-    if (random(8) === 1) {
+    let randomColor;
+    let blockImage;
+    console.log('this.state.isPlaying ', this.state.isPlaying);
+    if (this.state.isPlaying && random(1) === 1) {
+      randomColor = random(1) === 1 ? '#1aaaba' : `${getRandColor(4)}`;
       randomColorIndex = random(this.eventBlockColors.length - 1);
       randomKeyIndex = random(this.eventBlockKeys.length - 1);
       return {
-        color: this.eventBlockColors[randomColorIndex],
+        blockImage: randomColor === '#1aaaba' ? 'ICON' : '',
+        blockImage:
+          randomColor === '#1aaaba' ? (
+            <Image
+              // id="block-image"
+              size="mini"
+              src="favicon.ico"
+              // style={{ marginRight: '1.5em' }}
+            />
+          ) : (
+            <Image
+              // id="block-image"
+              size="mini"
+              src="coin.gif"
+              // style={{ marginRight: '1.5em' }}
+            />
+          ),
+        color: randomColor,
+        // color: this.eventBlockColors[randomColorIndex],
         key: this.eventBlockKeys[randomKeyIndex],
-        bonusScore: random(100)
+        bonusScore: randomColor === '#1aaaba' ? random(50) + 50 : random(30)
+        // bonusScore: random(100)
       };
     }
 
@@ -155,6 +193,7 @@ class App extends React.Component {
           <div className="block-wrapper" key={index}>
             <Block
               key={index}
+              image={block.blockImage}
               color={block.color}
               keyDown={block.key}
               bonusScore={block.bonusScore}
@@ -179,7 +218,7 @@ class App extends React.Component {
   }
 
   _endGame = () => {
-    this.setState({ gameoverReason: 'miss' });
+    this.setState({ isPlaying: false, gameoverReason: 'miss' });
   };
 
   _restartGame = e => {
