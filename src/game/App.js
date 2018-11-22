@@ -1,5 +1,5 @@
 import React from 'react';
-import './App.css';
+import './App.scss';
 import { random } from 'lodash';
 // import { Spring, Transition } from 'react-spring';
 import { VelocityComponent } from 'velocity-react';

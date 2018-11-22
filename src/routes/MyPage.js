@@ -10,7 +10,7 @@ import {
   Input
   // Label
 } from 'semantic-ui-react';
-import './MyPage.css';
+import './MyPage.scss';
 
 const getDefaultState = () => {
   let walletAddress;
