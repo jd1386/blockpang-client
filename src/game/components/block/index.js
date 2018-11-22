@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import './style.css';
+import './style.scss';
 
 class Block extends Component {
   _handleOnClick(e) {
