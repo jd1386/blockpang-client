@@ -6,9 +6,7 @@
   display: flex;
   height: 8vh;
   margin-bottom: 3px;
-  flex-direction: row;
   justify-content: center;
-  align-content: center;
 }
 
 .block {
@@ -19,7 +17,13 @@
   display: flex;
   width: 50vw;
   height: 8vh;
-  justify-content: center;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+
+  .div {
+    width: 33%;
+  }
 
   .inner-text {
     text-transform: uppercase;
@@ -28,7 +32,11 @@
     font-size: 2rem;
     font-weight: 800;
     vertical-align: middle;
-    padding: 25px 0;
+
+    .bonus-text {
+      margin-top: 8px;
+      font-size: 14px;
+    }
   }
 }
 
@@ -37,20 +45,23 @@
 }
 
 .block-bottom {
+  margin-top: 2px;
   transform: scale(1.06);
-  box-shadow: 4px -8px 20px 2px rgba(0, 0, 0.2, 0.2);
+  // box-shadow: 4px -8px 20px 2px rgba(0, 0, 0.2, 0.2);
+  box-shadow: 0 14px 28px rgba(0, 0, 0, 0.25), 0 10px 10px rgba(0, 0, 0, 0.22);
 
   .inner-text {
     text-transform: uppercase;
     text-align: center;
     color: white;
-    font-size: 2.5rem;
+    font-size: 2.9rem;
     font-weight: 900;
     vertical-align: middle;
-    padding: 25px 0;
+    padding-top: 7px;
   }
 }
 
 .ui.mini.image#block-image {
   /* display: inline; */
+  width: 4rem;
 }
