@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import './style.scss';
 // import { Spring } from 'react-spring';
 import { VelocityComponent } from 'velocity-react';
+import BlockContent from './blockContent';
 
 class Block extends Component {
   state = {
@@ -18,22 +19,13 @@ class Block extends Component {
   }
 
   render() {
-    let bonusScore;
-    if (this.props.bonusScore) {
-      bonusScore = <h4>Bonus {this.props.bonusScore}</h4>;
-    }
-
     if (this.props.index === 0) {
       return (
         <div
           className="block block-bottom"
           style={{ background: this.props.color }}
         >
-          {this.props.image}
-          <div className="inner-text">
-            {this.props.keyDown}
-            {bonusScore}
-          </div>
+          <BlockContent data={this.props} />
         </div>
         // <VelocityComponent
         //   animation={{ opacity: this.state.isVisible ? 1 : 0 }}
@@ -56,11 +48,7 @@ class Block extends Component {
     } else {
       return (
         <div className="block" style={{ background: this.props.color }}>
-          {this.props.image}
-          <div className="inner-text">
-            {this.props.keyDown}
-            {bonusScore}
-          </div>
+          <BlockContent data={this.props} />
         </div>
 
         // <VelocityComponent

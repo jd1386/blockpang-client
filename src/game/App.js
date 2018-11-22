@@ -124,12 +124,12 @@ class App extends React.Component {
       randomColorIndex = random(this.eventBlockColors.length - 1);
       randomKeyIndex = random(this.eventBlockKeys.length - 1);
       return {
-        blockImage: randomColor === '#1aaaba' ? 'ICON' : '',
+        // blockImage: randomColor === '#1aaaba' ? 'ICON' : '',
         blockImage:
           randomColor === '#1aaaba' ? (
             <Image size="mini" src="favicon.ico" />
           ) : (
-            <Image size="mini" src="coin.gif" />
+            <Image size="mini" src="coin.gif" id="block-image" />
           ),
         color: randomColor,
         // color: this.eventBlockColors[randomColorIndex],
