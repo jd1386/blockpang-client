@@ -15,7 +15,7 @@ const defaultState = {
   blocks: [],
   isPlaying: false,
   gameoverReason: '',
-  randomBlockProbability: 6 // 0이면 100%, 1이면 50%, 3이면 33%
+  randomBlockProbability: 15 // % 
 };
 
 class App extends React.Component {
@@ -134,8 +134,7 @@ class App extends React.Component {
 
     if (
       this.state.isPlaying &&
-      random(this.state.randomBlockProbability) === 0
-    ) {
+      random(100) + 1 <= this.state.randomBlockProbability
       randomColor = random(1) === 1 ? '#1aaaba' : `${Util.getRandColor(4)}`;
 
       randomKeyIndex = random(this.eventBlockKeys.length - 1);
