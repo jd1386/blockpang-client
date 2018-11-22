@@ -1,0 +1,26 @@
+<svg class="ldi-e802bs" width="200px"  height="200px"  xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" viewBox="0 0 100 100" preserveAspectRatio="xMidYMid" style="background: none;"><!--?xml version="1.0" encoding="utf-8"?--><!--Generator: Adobe Illustrator 21.0.0, SVG Export Plug-In . SVG Version: 6.00 Build 0)--><svg version="1.1" id="Layer_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px" viewBox="0 0 100 100" style="transform-origin: 50px 50px 0px;" xml:space="preserve"><g style="transform-origin: 50px 50px 0px;"><g style="transform-origin: 50px 50px 0px; transform: scale(0.6);"><g style="transform-origin: 50px 50px 0px;"><g><g class="ld ld-fade" style="transform-origin: 50px 50px 0px; animation-duration: 1s; animation-delay: -1s; animation-direction: normal;"><circle style="fill:none;stroke:#323232;stroke-width:3;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:10" cx="50" cy="50" r="37.5" stroke="rgb(50, 50, 50)"></circle></g><g style="transform-origin: 50px 50px 0px;"><g><g class="ld ld-fade" style="transform-origin: 50px 50px 0px; animation-duration: 1s; animation-delay: -0.933333s; animation-direction: normal;"><path style="fill: none; stroke: rgb(132, 155, 135); stroke-width: 3; stroke-linecap: round; stroke-linejoin: round; stroke-miterlimit: 10;" d=" M59.836,36.885H43.443c-3.622,0-6.557,2.936-6.557,6.557v0c0,3.622,2.936,6.557,6.557,6.557h13.115 c3.622,0,6.557,2.936,6.557,6.557v0c0,3.622-2.936,6.557-6.557,6.557H36.885" stroke="rgb(132, 155, 135)"></path></g><g style="transform-origin: 50px 50px 0px;"><g><g class="ld ld-fade" style="transform-origin: 50px 50px 0px; animation-duration: 1s; animation-delay: -0.866667s; animation-direction: normal;"><line style="fill: none; stroke: rgb(132, 155, 135); stroke-width: 3; stroke-linecap: round; stroke-linejoin: round; stroke-miterlimit: 10;" x1="46.066" y1="30" x2="46.066" y2="70" stroke="rgb(132, 155, 135)"></line></g><g class="ld ld-fade" style="transform-origin: 50px 50px 0px; animation-duration: 1s; animation-delay: -0.8s; animation-direction: normal;"><line style="fill: none; stroke: rgb(132, 155, 135); stroke-width: 3; stroke-linecap: round; stroke-linejoin: round; stroke-miterlimit: 10;" x1="52.623" y1="30" x2="52.623" y2="70" stroke="rgb(132, 155, 135)"></line></g></g></g></g></g><metadata xmlns:d="https://loading.io/stock/" class="ld ld-fade" style="transform-origin: 50px 50px 0px; animation-duration: 1s; animation-delay: -0.733333s; animation-direction: normal;">
+<d:name class="ld ld-fade" style="transform-origin: 50px 50px 0px; animation-duration: 1s; animation-delay: -0.666667s; animation-direction: normal;">money</d:name>
+<d:tags class="ld ld-fade" style="transform-origin: 50px 50px 0px; animation-duration: 1s; animation-delay: -0.6s; animation-direction: normal;">money,price,revenue,profit,evaluation,value,dollar,bucks,cent,coin,credit,currency</d:tags>
+<d:license class="ld ld-fade" style="transform-origin: 50px 50px 0px; animation-duration: 1s; animation-delay: -0.533333s; animation-direction: normal;">cc-by</d:license>
+<d:slug class="ld ld-fade" style="transform-origin: 50px 50px 0px; animation-duration: 1s; animation-delay: -0.466667s; animation-direction: normal;">e802bs</d:slug>
+</metadata></g></g></g></g><style type="text/css" class="ld ld-fade" style="transform-origin: 50px 50px 0px; animation-duration: 1s; animation-delay: -0.4s; animation-direction: normal;">path,ellipse,circle,rect,polygon,polyline,line { stroke-width: 0; }@keyframes ld-fade {
+  0% {
+    opacity: 1;
+  }
+  100% {
+    opacity: 0;
+  }
+}
+@-webkit-keyframes ld-fade {
+  0% {
+    opacity: 1;
+  }
+  100% {
+    opacity: 0;
+  }
+}
+.ld.ld-fade {
+  -webkit-animation: ld-fade 1s infinite linear;
+  animation: ld-fade 1s infinite linear;
+}
+</style></svg></svg>

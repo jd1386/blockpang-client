@@ -45,7 +45,10 @@ class App extends React.Component {
     this.eventBlockColors = ['lime', 'purple', 'black', 'orange', 'cyan'];
 
     // this.eventBlockKeys = ['a', 's', 'd', 'f', 'c'];
-    this.eventBlockKeys = ['f', 'c'];
+    // this.eventBlockKeys = [['a', 's', 'd', 'f', 'c']];
+    this.eventBlockKeys = [['{', '{']];
+    // this.eventBlockKeys = [['{', '{']];
+    // this.eventBlockKeys = ['f', 'c'];
     // this.eventBlockColors = [{color : 'mint', probability : 0.5} ] // 확률 문제는 일단 심플하게 구현하고 생각하기로
     this.state = defaultState();
   }
@@ -69,7 +72,8 @@ class App extends React.Component {
   _handleKeyDown = e => {
     let isStart;
 
-    if (e.keyCode === 32) {
+    console.log('입력키 ', e.key, '키코드', e.keyCode);
+    if (e.keyCode === 32 || e.keyCode === 16) {
       e.preventDefault();
       return;
     }
@@ -82,30 +86,45 @@ class App extends React.Component {
 
     let currentBlocks = this.state.blocks.slice();
     // key 값이 일치하면, blocks 데이터를 삭제한다.
-    if (e.key.toLowerCase() === currentBlocks[0].key) {
-      let keepBonusScore = currentBlocks[0].bonusScore;
-      currentBlocks.shift();
-      this.setState({ blocks: currentBlocks });
-      console.log(this.state.blocks);
+    // if (e.key.toLowerCase() === currentBlocks[0].key) {
+    console.log('현재 입력해야 할 블럭 키', currentBlocks[0].key[0]);
+    if (e.key.toLowerCase() === currentBlocks[0].key[0]) {
+      if (currentBlocks[0].key.length === 1) {
+        let keepBonusScore = currentBlocks[0].bonusScore;
+        currentBlocks.shift();
+        this.setState({ blocks: currentBlocks });
+        console.log(this.state.blocks);
 
-      // 점수를 업데이트한다
-      this._updateScore();
-      // 보너스 점수를 추가한다
-      if (keepBonusScore) {
-        this._updateEventBlockScore(keepBonusScore);
-      }
+        // 점수를 업데이트한다
+        this._updateScore();
+        // 보너스 점수를 추가한다
+        if (keepBonusScore) {
+          this._updateEventBlockScore(keepBonusScore);
+        }
 
-      // 약간의 시간 간격을 두고 새로운 블럭을 스택 상단에 쌓는다
-      // TODO: 지금은 기본 기능만 구현한 것이므로
-      // 아래 로직은 향후 바뀔 수 있음
-      setTimeout(() => {
-        let newBlock = this._generateRandomBlock();
-        console.log('new block generated!', newBlock);
+        // 약간의 시간 간격을 두고 새로운 블럭을 스택 상단에 쌓는다
+        // TODO: 지금은 기본 기능만 구현한 것이므로
+        // 아래 로직은 향후 바뀔 수 있음
+        setTimeout(() => {
+          let newBlock = this._generateRandomBlock();
+          console.log('new block generated!', newBlock);
+
+          this.setState({
+            blocks: [...this.state.blocks, newBlock]
+          });
+        }, 350);
+      } else if (currentBlocks[0].key[0].length > 1) {
+        let [firstBlock, ...otherBlocks] = this.state.blocks;
+        console.log('firstBlock', firstBlock);
+        console.log('firstBlock-key', firstBlock.key);
+        console.log('otherBlocks', otherBlocks);
+        if (firstBlock.key.length > 1) firstBlock.key.shift();
 
         this.setState({
-          blocks: [...this.state.blocks, newBlock]
+          blocks: [firstBlock, ...otherBlocks]
         });
-      }, 350);
+      } else if (currentBlocks[0].key[0].health) {
+      }
     } else if (!isStart) {
       // 시작하자마자 버튼 잘못 눌러서 사망하는 상황 방지. 첫 입력 미스는 막아줌.
       this._endGame();
@@ -118,9 +137,8 @@ class App extends React.Component {
     let randomKeyIndex;
     let randomColor;
     let blockImage;
-    console.log('this.state.isPlaying ', this.state.isPlaying);
     if (this.state.isPlaying && random(1) === 1) {
-      randomColor = random(4) === 1 ? '#1aaaba' : `${getRandColor(4)}`;
+      randomColor = random(0) === 1 ? '#1aaaba' : `${getRandColor(4)}`;
       randomColorIndex = random(this.eventBlockColors.length - 1);
       randomKeyIndex = random(this.eventBlockKeys.length - 1);
       return {
@@ -133,7 +151,7 @@ class App extends React.Component {
           ),
         color: randomColor,
         // color: this.eventBlockColors[randomColorIndex],
-        key: this.eventBlockKeys[randomKeyIndex],
+        key: this.eventBlockKeys[randomKeyIndex].slice(),
         bonusScore: randomColor === '#1aaaba' ? random(50) + 50 : random(30)
         // bonusScore: random(100)
       };
@@ -141,7 +159,8 @@ class App extends React.Component {
 
     return {
       color: this.blockColors[randomIndex],
-      key: this.blockKeys[randomIndex]
+      key: this.blockKeys[randomIndex],
+      health: 3
     };
   }
 
@@ -222,6 +241,7 @@ class App extends React.Component {
             image={block.blockImage}
             color={block.color}
             keyDown={block.key}
+            health={block.health}
             bonusScore={block.bonusScore}
           />
         </div>
