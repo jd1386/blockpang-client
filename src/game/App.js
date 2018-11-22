@@ -7,33 +7,14 @@ import Block from './components/block';
 import Status from './components/status';
 import Gameover from './components/status/gameover';
 import { Image } from 'semantic-ui-react';
+import Util from './utils';
 
-const defaultState = () => {
-  // TODO:
-  // check boardSize based on user's screen size
-  // update boardSize
-  let userBoardSize = 30;
-  // return initial state
-  return {
-    boardSize: userBoardSize,
-    time: 30000,
-    score: 0,
-    blocks: [],
-    isPlaying: false,
-    gameoverReason: ''
-  };
-};
-
-const getRandColor = brightness => {
-  // Six levels of brightness from 0 to 5, 0 being the darkest
-  let rgb = [Math.random() * 256, Math.random() * 256, Math.random() * 256];
-  let mix = [brightness * 51, brightness * 51, brightness * 51]; //51 => 255/5
-  let mixedrgb = [rgb[0] + mix[0], rgb[1] + mix[1], rgb[2] + mix[2]].map(
-    function(x) {
-      return Math.round(x / 2.0);
-    }
-  );
-  return 'rgb(' + mixedrgb.join(',') + ')';
+const defaultState = {
+  time: 30000,
+  score: 0,
+  blocks: [],
+  isPlaying: false,
+  gameoverReason: ''
 };
 
 class App extends React.Component {
@@ -47,7 +28,7 @@ class App extends React.Component {
     // this.eventBlockKeys = ['a', 's', 'd', 'f', 'c'];
     this.eventBlockKeys = ['f', 'c'];
     // this.eventBlockColors = [{color : 'mint', probability : 0.5} ] // 확률 문제는 일단 심플하게 구현하고 생각하기로
-    this.state = defaultState();
+    this.state = defaultState;
   }
 
   _tick = () => {
@@ -86,7 +67,6 @@ class App extends React.Component {
       let keepBonusScore = currentBlocks[0].bonusScore;
       currentBlocks.shift();
       this.setState({ blocks: currentBlocks });
-      console.log(this.state.blocks);
 
       // 점수를 업데이트한다
       this._updateScore();
@@ -114,14 +94,13 @@ class App extends React.Component {
 
   _generateRandomBlock() {
     let randomIndex = random(this.blockColors.length - 1);
-    let randomColorIndex;
     let randomKeyIndex;
     let randomColor;
-    let blockImage;
+    // let blockImage;
     console.log('this.state.isPlaying ', this.state.isPlaying);
     if (this.state.isPlaying && random(1) === 1) {
-      randomColor = random(4) === 1 ? '#1aaaba' : `${getRandColor(4)}`;
-      randomColorIndex = random(this.eventBlockColors.length - 1);
+      randomColor = random(4) === 1 ? '#1aaaba' : `${Util.getRandColor(4)}`;
+
       randomKeyIndex = random(this.eventBlockKeys.length - 1);
       return {
         // blockImage: randomColor === '#1aaaba' ? 'ICON' : '',
@@ -163,19 +142,6 @@ class App extends React.Component {
     if (!this.state.isPlaying) {
       return this.state.blocks.map((block, index) => {
         return (
-          // <Spring from={{ opacity: 0 }} to={{ opacity: 1 }} key={index}>
-          //   {(props, index) => (
-          //     <div className="block-wrapper" style={props}>
-          //       <Block
-          //         key={index}
-          //         index={index}
-          //         color={block.color}
-          //         keyDown={block.key}
-          //       />
-          //     </div>
-          //   )}
-          // </Spring>
-
           <VelocityComponent
             animation={{ opacity: 1 }}
             runOnMount={true}
@@ -193,15 +159,6 @@ class App extends React.Component {
               />
             </div>
           </VelocityComponent>
-
-          // <div className="block-wrapper" key={index}>
-          //   <Block
-          //     key={index}
-          //     index={index}
-          //     color={block.color}
-          //     keyDown={block.key}
-          //   />
-          // </div>
         );
       });
     } else {
@@ -210,11 +167,6 @@ class App extends React.Component {
       console.log('game has started', this.state.blocks);
 
       return this.state.blocks.map((block, index) => (
-        // <VelocityTransitionGroup
-        //   enter={{ animation: 'fadeIn' }}
-        //   runOnMount={true}
-        //   key={index}
-        // >
         <div className="block-wrapper">
           <Block
             key={index}
@@ -225,7 +177,6 @@ class App extends React.Component {
             bonusScore={block.bonusScore}
           />
         </div>
-        // </VelocityTransitionGroup>
       ));
     }
   }
@@ -253,7 +204,7 @@ class App extends React.Component {
       return;
     }
     if (e.key === 'w' || e.key === 'W') {
-      this.setState(defaultState());
+      this.setState(defaultState);
       // this.setState((this.state = defaultState())); 위처럼 써줘야 한다.
       this.setState({ blocks: this._generateDefaultBlocks() });
     }
