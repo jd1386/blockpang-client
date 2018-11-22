@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import './style.scss';
 // import { Spring } from 'react-spring';
-import { VelocityComponent } from 'velocity-react';
+// import { VelocityComponent } from 'velocity-react';
 import BlockContent from './blockContent';
 
 class Block extends Component {
