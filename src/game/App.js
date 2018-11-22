@@ -1,8 +1,8 @@
 import React from 'react';
 import './App.css';
 import { random } from 'lodash';
-import { Spring, Transition } from 'react-spring';
-import { VelocityComponent, VelocityTransitionGroup } from 'velocity-react';
+// import { Spring, Transition } from 'react-spring';
+import { VelocityComponent } from 'velocity-react';
 import Block from './components/block';
 import Status from './components/status';
 import Gameover from './components/status/gameover';
@@ -100,12 +100,12 @@ class App extends React.Component {
       // 아래 로직은 향후 바뀔 수 있음
       setTimeout(() => {
         let newBlock = this._generateRandomBlock();
-        console.log('new block!', newBlock);
+        console.log('new block generated!', newBlock);
 
         this.setState({
           blocks: [...this.state.blocks, newBlock]
         });
-      }, 1000);
+      }, 350);
     } else if (!isStart) {
       // 시작하자마자 버튼 잘못 눌러서 사망하는 상황 방지. 첫 입력 미스는 막아줌.
       this._endGame();
@@ -145,7 +145,7 @@ class App extends React.Component {
     };
   }
 
-  _generateDefaultBlocks(numOfBlocks = 7) {
+  _generateDefaultBlocks(numOfBlocks = 6) {
     // generate an array of random blocks
     let randomBlocks = [];
 
@@ -176,14 +176,32 @@ class App extends React.Component {
           //   )}
           // </Spring>
 
-          <div className="block-wrapper" key={index}>
-            <Block
-              key={index}
-              index={index}
-              color={block.color}
-              keyDown={block.key}
-            />
-          </div>
+          <VelocityComponent
+            animation={{ opacity: 1 }}
+            runOnMount={true}
+            key={index}
+            duration={3000}
+          >
+            <div className="block-wrapper">
+              <Block
+                key={index}
+                index={index}
+                image={block.blockImage}
+                color={block.color}
+                keyDown={block.key}
+                bonusScore={block.bonusScore}
+              />
+            </div>
+          </VelocityComponent>
+
+          // <div className="block-wrapper" key={index}>
+          //   <Block
+          //     key={index}
+          //     index={index}
+          //     color={block.color}
+          //     keyDown={block.key}
+          //   />
+          // </div>
         );
       });
     } else {
@@ -192,21 +210,22 @@ class App extends React.Component {
       console.log('game has started', this.state.blocks);
 
       return this.state.blocks.map((block, index) => (
-        <VelocityTransitionGroup
-          enter={{ animation: 'fadeIn' }}
-          runOnMount={true}
-          key={index}
-        >
-          <div className="block-wrapper">
-            <Block
-              key={index}
-              image={block.blockImage}
-              color={block.color}
-              keyDown={block.key}
-              bonusScore={block.bonusScore}
-            />
-          </div>
-        </VelocityTransitionGroup>
+        // <VelocityTransitionGroup
+        //   enter={{ animation: 'fadeIn' }}
+        //   runOnMount={true}
+        //   key={index}
+        // >
+        <div className="block-wrapper">
+          <Block
+            key={index}
+            index={index}
+            image={block.blockImage}
+            color={block.color}
+            keyDown={block.key}
+            bonusScore={block.bonusScore}
+          />
+        </div>
+        // </VelocityTransitionGroup>
       ));
     }
   }
@@ -287,7 +306,7 @@ class App extends React.Component {
     // const totalSeconds = parseInt(this.state.time) * 1000;
     // this.setState(() => ({ time: parseInt(totalSeconds) }));
 
-    this.interval = setInterval(() => this._tick(), 10);
+    // this.interval = setInterval(() => this._tick(), 10);
   };
 
   render() {
