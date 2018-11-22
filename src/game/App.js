@@ -9,20 +9,12 @@ import Gameover from './components/status/gameover';
 import { Image } from 'semantic-ui-react';
 import Util from './utils';
 
-const defaultState = () => {
-  // TODO:
-  // check boardSize based on user's screen size
-  // update boardSize
-  let userBoardSize = 30;
-  // return initial state
-  return {
-    boardSize: userBoardSize,
-    time: 30000,
-    score: 0,
-    blocks: [],
-    isPlaying: false,
-    gameoverReason: ''
-  };
+const defaultState = {
+  time: 30000,
+  score: 0,
+  blocks: [],
+  isPlaying: false,
+  gameoverReason: ''
 };
 
 class App extends React.Component {
@@ -36,7 +28,7 @@ class App extends React.Component {
     // this.eventBlockKeys = ['a', 's', 'd', 'f', 'c'];
     this.eventBlockKeys = ['f', 'c'];
     // this.eventBlockColors = [{color : 'mint', probability : 0.5} ] // 확률 문제는 일단 심플하게 구현하고 생각하기로
-    this.state = defaultState();
+    this.state = defaultState;
   }
 
   _tick = () => {
@@ -75,7 +67,6 @@ class App extends React.Component {
       let keepBonusScore = currentBlocks[0].bonusScore;
       currentBlocks.shift();
       this.setState({ blocks: currentBlocks });
-      console.log(this.state.blocks);
 
       // 점수를 업데이트한다
       this._updateScore();
@@ -199,11 +190,6 @@ class App extends React.Component {
       console.log('game has started', this.state.blocks);
 
       return this.state.blocks.map((block, index) => (
-        // <VelocityTransitionGroup
-        //   enter={{ animation: 'fadeIn' }}
-        //   runOnMount={true}
-        //   key={index}
-        // >
         <div className="block-wrapper">
           <Block
             key={index}
@@ -214,7 +200,6 @@ class App extends React.Component {
             bonusScore={block.bonusScore}
           />
         </div>
-        // </VelocityTransitionGroup>
       ));
     }
   }
@@ -242,7 +227,7 @@ class App extends React.Component {
       return;
     }
     if (e.key === 'w' || e.key === 'W') {
-      this.setState(defaultState());
+      this.setState(defaultState);
       // this.setState((this.state = defaultState())); 위처럼 써줘야 한다.
       this.setState({ blocks: this._generateDefaultBlocks() });
     }
