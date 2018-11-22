@@ -4,7 +4,6 @@
   display: -ms-flexbox;
   display: -webkit-flex;
   display: flex;
-  width: 50vw;
   height: 8vh;
   margin-bottom: 3px;
   flex-direction: row;
@@ -21,20 +20,35 @@
   width: 50vw;
   height: 8vh;
   justify-content: center;
+
+  .inner-text {
+    text-transform: uppercase;
+    text-align: center;
+    color: white;
+    font-size: 2rem;
+    font-weight: 800;
+    vertical-align: middle;
+    padding: 25px 0;
+  }
 }
 
 .block:hover {
   cursor: pointer;
 }
 
-.block-text {
-  text-transform: uppercase;
-  text-align: center;
-  color: white;
-  font-size: 2rem;
-  font-weight: 800;
-  vertical-align: middle;
-  padding: 25px 0;
+.block-bottom {
+  transform: scale(1.06);
+  box-shadow: 4px -8px 20px 2px rgba(0, 0, 0.2, 0.2);
+
+  .inner-text {
+    text-transform: uppercase;
+    text-align: center;
+    color: white;
+    font-size: 2.5rem;
+    font-weight: 900;
+    vertical-align: middle;
+    padding: 25px 0;
+  }
 }
 
 .ui.mini.image#block-image {

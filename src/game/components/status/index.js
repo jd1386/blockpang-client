@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import './style.css';
+import './style.scss';
 import { Spring } from 'react-spring';
 import { Image } from 'semantic-ui-react';
 class Status extends Component {

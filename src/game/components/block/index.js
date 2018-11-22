@@ -1,10 +1,20 @@
 import React, { Component } from 'react';
 import './style.scss';
+// import { Spring } from 'react-spring';
+import { VelocityComponent } from 'velocity-react';
 
 class Block extends Component {
-  _handleOnClick(e) {
-    console.log('Thank you for clicking me!', e.target);
-    // e.target.remove();
+  state = {
+    isVisible: false
+  };
+
+  componentDidMount() {
+    console.log('block is now visible');
+    this.setState({ isVisible: !this.state.isVisible });
+  }
+
+  componentWillUnmount() {
+    console.log('will unmount');
   }
 
   render() {
@@ -12,19 +22,63 @@ class Block extends Component {
     if (this.props.bonusScore) {
       bonusScore = <h4>Bonus {this.props.bonusScore}</h4>;
     }
-    return (
-      <div
-        className="block"
-        onClick={this._handleOnClick}
-        style={{ background: this.props.color }}
-      >
-        {this.props.image}
-        <div className="block-text">
-          {this.props.keyDown}
-          {bonusScore}
+
+    if (this.props.index === 0) {
+      return (
+        <div
+          className="block block-bottom"
+          style={{ background: this.props.color }}
+        >
+          {this.props.image}
+          <div className="inner-text">
+            {this.props.keyDown}
+            {bonusScore}
+          </div>
         </div>
-      </div>
-    );
+        // <VelocityComponent
+        //   animation={{ opacity: this.state.isVisible ? 1 : 0 }}
+        //   enter={{ animation: 'fadeIn' }}
+        //   runAnimation={true}
+        //   duration={500}
+        // >
+        //   <div
+        //     className="block block-bottom"
+        //     style={{ background: this.props.color }}
+        //   >
+        //     {this.props.image}
+        //     <div className="inner-text">
+        //       {this.props.keyDown}
+        //       {bonusScore}
+        //     </div>
+        //   </div>
+        // </VelocityComponent>
+      );
+    } else {
+      return (
+        <div className="block" style={{ background: this.props.color }}>
+          {this.props.image}
+          <div className="inner-text">
+            {this.props.keyDown}
+            {bonusScore}
+          </div>
+        </div>
+
+        // <VelocityComponent
+        //   animation={{ opacity: this.state.isVisible ? 1 : 0 }}
+        //   enter={{ animation: 'fadeIn' }}
+        //   runAnimation={true}
+        //   duration={500}
+        // >
+        //   <div className="block" style={{ background: this.props.color }}>
+        //     {this.props.image}
+        //     <div className="block-bottom-text">
+        //       {this.props.keyDown}
+        //       {bonusScore}
+        //     </div>
+        //   </div>
+        // </VelocityComponent>
+      );
+    }
   }
 }
 
