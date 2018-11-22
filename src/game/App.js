@@ -14,20 +14,22 @@ const defaultState = {
   score: 0,
   blocks: [],
   isPlaying: false,
-  gameoverReason: ''
+  gameoverReason: '',
+  randomBlockProbability: 6 // 0이면 100%, 1이면 50%, 3이면 33%
 };
 
 class App extends React.Component {
   constructor(props) {
     super(props);
-    this.blockColors = ['#f783ac', '#69db7c', '#4dabf7'];
-    // this.blockColors = ['red', 'green', 'blue'];
+    this.blockColors = ['#f783ac', '#69db7c', '#4dabf7']; // this.blockColors = ['red', 'green', 'blue'];
     this.blockKeys = ['a', 's', 'd'];
     this.eventBlockColors = ['lime', 'purple', 'black', 'orange', 'cyan'];
-
-    // this.eventBlockKeys = ['a', 's', 'd', 'f', 'c'];
-    // this.eventBlockKeys = [['a', 's', 'd', 'f', 'c']];
-    this.eventBlockKeys = [['{', '{']];
+    this.eventBlockKeys = ['f', 'c', ['a', 's'], ['d', 'f']];
+    this.multiBlockKeysStage1 = [
+      ['a', 's'],
+      ['d', 'f'],
+      ['a', 's', 'd', 'f', 'f']
+    ];
     // this.eventBlockKeys = [['{', '{']];
     // this.eventBlockKeys = ['f', 'c'];
     // this.eventBlockColors = [{color : 'mint', probability : 0.5} ] // 확률 문제는 일단 심플하게 구현하고 생각하기로
@@ -52,7 +54,6 @@ class App extends React.Component {
 
   _handleKeyDown = e => {
     let isStart;
-
     console.log('입력키 ', e.key, '키코드', e.keyCode);
     if (e.keyCode === 32 || e.keyCode === 16) {
       e.preventDefault();
@@ -66,15 +67,21 @@ class App extends React.Component {
     if (this.state.blocks.length === 0) return;
 
     let currentBlocks = this.state.blocks.slice();
-    // key 값이 일치하면, blocks 데이터를 삭제한다.
-    // if (e.key.toLowerCase() === currentBlocks[0].key) {
-    console.log('현재 입력해야 할 블럭 키', currentBlocks[0].key[0]);
+
+    // console.log('현재 입력해야 할 블럭 키', currentBlocks[0].key[0]);
+    // console.log('입력키', e.key.toLowerCase());
+    // console.log('체력', currentBlocks[0].health);
+    // console.log('현재 블록상태', this.state.blocks);
+    // if (e.key.toLowerCase() === currentBlocks[0].key) { // 기존 입력할 키가 단 하나였을 경우
     if (e.key.toLowerCase() === currentBlocks[0].key[0]) {
-      if (currentBlocks[0].key.length === 1) {
+      // key 값이 일치하면, blocks 데이터를 삭제한다.
+      if (
+        currentBlocks[0].key.length === 1 &&
+        (currentBlocks[0].health === 1 || !currentBlocks[0].health)
+      ) {
         let keepBonusScore = currentBlocks[0].bonusScore;
         currentBlocks.shift();
         this.setState({ blocks: currentBlocks });
-        console.log(this.state.blocks);
 
         // 점수를 업데이트한다
         this._updateScore();
@@ -94,17 +101,20 @@ class App extends React.Component {
             blocks: [...this.state.blocks, newBlock]
           });
         }, 350);
-      } else if (currentBlocks[0].key[0].length > 1) {
+      } else if (currentBlocks[0].key.length > 1) {
         let [firstBlock, ...otherBlocks] = this.state.blocks;
-        console.log('firstBlock', firstBlock);
-        console.log('firstBlock-key', firstBlock.key);
-        console.log('otherBlocks', otherBlocks);
         if (firstBlock.key.length > 1) firstBlock.key.shift();
 
         this.setState({
           blocks: [firstBlock, ...otherBlocks]
         });
-      } else if (currentBlocks[0].key[0].health) {
+      } else if (currentBlocks[0].health) {
+        let [firstBlock, ...otherBlocks] = this.state.blocks;
+        if (firstBlock.health > 1) firstBlock.health -= 1;
+
+        this.setState({
+          blocks: [firstBlock, ...otherBlocks]
+        });
       }
     } else if (!isStart) {
       // 시작하자마자 버튼 잘못 눌러서 사망하는 상황 방지. 첫 입력 미스는 막아줌.
@@ -117,13 +127,19 @@ class App extends React.Component {
     let randomKeyIndex;
     let randomColor;
     // let blockImage;
-    console.log('this.state.isPlaying ', this.state.isPlaying);
-    if (this.state.isPlaying && random(1) === 1) {
-      randomColor = random(4) === 1 ? '#1aaaba' : `${Util.getRandColor(4)}`;
+    let keySet = this.blockKeys[randomIndex]; //normalStageKeySet
+    if (this.state.score > 1500 && random(7) === 0) {
+      keySet = this.multiBlockKeysStage1[randomIndex];
+    }
+
+    if (
+      this.state.isPlaying &&
+      random(this.state.randomBlockProbability) === 0
+    ) {
+      randomColor = random(1) === 1 ? '#1aaaba' : `${Util.getRandColor(4)}`;
 
       randomKeyIndex = random(this.eventBlockKeys.length - 1);
       return {
-        // blockImage: randomColor === '#1aaaba' ? 'ICON' : '',
         blockImage:
           randomColor === '#1aaaba' ? (
             <Image size="mini" src="favicon.ico" />
@@ -131,17 +147,14 @@ class App extends React.Component {
             <Image size="mini" src="coin.gif" id="block-image" />
           ),
         color: randomColor,
-        // color: this.eventBlockColors[randomColorIndex],
         key: this.eventBlockKeys[randomKeyIndex].slice(),
         bonusScore: randomColor === '#1aaaba' ? random(50) + 50 : random(30)
-        // bonusScore: random(100)
       };
     }
 
     return {
       color: this.blockColors[randomIndex],
-      key: this.blockKeys[randomIndex],
-      health: 3
+      key: keySet
     };
   }
 
