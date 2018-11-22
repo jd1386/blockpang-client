@@ -15,18 +15,16 @@ const defaultState = {
   blocks: [],
   isPlaying: false,
   gameoverReason: '',
-  randomBlockProbability: 15 // % 
+  randomBlockProbability: 15 //%%
 };
 
 class App extends React.Component {
   constructor(props) {
     super(props);
-    this.gameBoardBackground = Util.generateRandBackground();
-    this.blockColors = ['#f783ac', '#69db7c', '#4dabf7'];
-    // this.blockColors = ['red', 'green', 'blue'];
+    this.blockColors = ['#f783ac', '#69db7c', '#4dabf7']; // this.blockColors = ['red', 'green', 'blue'];
     this.blockKeys = ['a', 's', 'd'];
     this.eventBlockColors = ['lime', 'purple', 'black', 'orange', 'cyan'];
-    this.eventBlockKeys = ['f', 'c', ['a', 's'], ['d', 'f']];
+    this.eventBlockKeys = ['f', 'c'];
     this.multiBlockKeysStage1 = [
       ['a', 's'],
       ['d', 'f'],
@@ -137,6 +135,7 @@ class App extends React.Component {
     if (
       this.state.isPlaying &&
       random(100) + 1 <= this.state.randomBlockProbability
+    ) {
       randomColor = random(1) === 1 ? '#1aaaba' : `${Util.getRandColor(4)}`;
 
       randomKeyIndex = random(this.eventBlockKeys.length - 1);
@@ -170,6 +169,8 @@ class App extends React.Component {
   }
 
   _renderBlocks() {
+    // render the default blocks
+
     // when user is not playing the game
     // the game has been just initialized
     if (!this.state.isPlaying) {
@@ -196,10 +197,14 @@ class App extends React.Component {
       });
     } else {
       // the game has started
+
+      console.log('game has started', this.state.blocks);
+
       return this.state.blocks.map((block, index) => (
         <div className="block-wrapper">
           <Block
             key={index}
+            index={index}
             image={block.blockImage}
             color={block.color}
             keyDown={block.key}
@@ -246,12 +251,7 @@ class App extends React.Component {
       this.state.gameoverReason === 'miss'
     ) {
       return (
-        <div
-          id="game-board"
-          tabIndex="0"
-          onKeyDown={this._restartGame}
-          style={this.gameBoardBackground}
-        >
+        <div id="game-board" tabIndex="0" onKeyDown={this._restartGame}>
           {/* <h1>YOU DEAD!</h1> */}
           <Gameover
             reason={this.state.gameoverReason}
@@ -263,12 +263,7 @@ class App extends React.Component {
     } else {
       if (this.state.isPlaying) {
         return (
-          <div
-            id="game-board"
-            tabIndex="0"
-            onKeyDown={this._handleKeyDown}
-            style={this.gameBoardBackground}
-          >
+          <div id="game-board" tabIndex="0" onKeyDown={this._handleKeyDown}>
             <Status
               time={this.state.time}
               prevScore={this.state.score - 10}
@@ -279,12 +274,7 @@ class App extends React.Component {
         );
       } else {
         return (
-          <div
-            id="game-board"
-            tabIndex="0"
-            onKeyDown={this._handleKeyDown}
-            style={this.gameBoardBackground}
-          >
+          <div id="game-board" tabIndex="0" onKeyDown={this._handleKeyDown}>
             <Status
               time={this.state.time}
               prevScore={0}
