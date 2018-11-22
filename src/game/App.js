@@ -94,14 +94,13 @@ class App extends React.Component {
 
   _generateRandomBlock() {
     let randomIndex = random(this.blockColors.length - 1);
-    let randomColorIndex;
     let randomKeyIndex;
     let randomColor;
-    let blockImage;
+    // let blockImage;
     console.log('this.state.isPlaying ', this.state.isPlaying);
     if (this.state.isPlaying && random(1) === 1) {
       randomColor = random(4) === 1 ? '#1aaaba' : `${Util.getRandColor(4)}`;
-      randomColorIndex = random(this.eventBlockColors.length - 1);
+
       randomKeyIndex = random(this.eventBlockKeys.length - 1);
       return {
         // blockImage: randomColor === '#1aaaba' ? 'ICON' : '',
@@ -143,19 +142,6 @@ class App extends React.Component {
     if (!this.state.isPlaying) {
       return this.state.blocks.map((block, index) => {
         return (
-          // <Spring from={{ opacity: 0 }} to={{ opacity: 1 }} key={index}>
-          //   {(props, index) => (
-          //     <div className="block-wrapper" style={props}>
-          //       <Block
-          //         key={index}
-          //         index={index}
-          //         color={block.color}
-          //         keyDown={block.key}
-          //       />
-          //     </div>
-          //   )}
-          // </Spring>
-
           <VelocityComponent
             animation={{ opacity: 1 }}
             runOnMount={true}
@@ -173,15 +159,6 @@ class App extends React.Component {
               />
             </div>
           </VelocityComponent>
-
-          // <div className="block-wrapper" key={index}>
-          //   <Block
-          //     key={index}
-          //     index={index}
-          //     color={block.color}
-          //     keyDown={block.key}
-          //   />
-          // </div>
         );
       });
     } else {
