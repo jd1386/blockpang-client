@@ -136,8 +136,6 @@ class App extends React.Component {
   }
 
   _renderBlocks() {
-    // render the default blocks
-
     // when user is not playing the game
     // the game has been just initialized
     if (!this.state.isPlaying) {
@@ -164,14 +162,10 @@ class App extends React.Component {
       });
     } else {
       // the game has started
-
-      console.log('game has started', this.state.blocks);
-
       return this.state.blocks.map((block, index) => (
         <div className="block-wrapper">
           <Block
             key={index}
-            index={index}
             image={block.blockImage}
             color={block.color}
             keyDown={block.key}

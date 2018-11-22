@@ -9,7 +9,6 @@ class Block extends Component {
     return (
       <div
         className={`block ${this.props.index === 0 ? 'bottom' : null}`}
-        key={this.props.index}
         style={{ background: this.props.color }}
       >
         <BlockContent data={this.props} />
