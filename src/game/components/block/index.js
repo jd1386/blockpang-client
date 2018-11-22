@@ -1,72 +1,38 @@
 import React, { Component } from 'react';
 import './style.scss';
 // import { Spring } from 'react-spring';
-import { VelocityComponent } from 'velocity-react';
+// import { VelocityComponent } from 'velocity-react';
 import BlockContent from './blockContent';
 
 class Block extends Component {
-  state = {
-    isVisible: false
-  };
-
-  componentDidMount() {
-    console.log('block is now visible');
-    this.setState({ isVisible: !this.state.isVisible });
-  }
-
-  componentWillUnmount() {
-    console.log('will unmount');
-  }
-
   render() {
-    if (this.props.index === 0) {
-      return (
-        <div
-          className="block block-bottom"
-          style={{ background: this.props.color }}
-        >
-          <BlockContent data={this.props} />
-        </div>
-        // <VelocityComponent
-        //   animation={{ opacity: this.state.isVisible ? 1 : 0 }}
-        //   enter={{ animation: 'fadeIn' }}
-        //   runAnimation={true}
-        //   duration={500}
-        // >
-        //   <div
-        //     className="block block-bottom"
-        //     style={{ background: this.props.color }}
-        //   >
-        //     {this.props.image}
-        //     <div className="inner-text">
-        //       {this.props.keyDown}
-        //       {bonusScore}
-        //     </div>
-        //   </div>
-        // </VelocityComponent>
-      );
-    } else {
-      return (
-        <div className="block" style={{ background: this.props.color }}>
-          <BlockContent data={this.props} />
-        </div>
+    return (
+      <div
+        className={`block ${this.props.index === 0 ? 'bottom' : null}`}
+        style={{ background: this.props.color }}
+      >
+        <BlockContent data={this.props} />
+      </div>
 
-        // <VelocityComponent
-        //   animation={{ opacity: this.state.isVisible ? 1 : 0 }}
-        //   enter={{ animation: 'fadeIn' }}
-        //   runAnimation={true}
-        //   duration={500}
-        // >
-        //   <div className="block" style={{ background: this.props.color }}>
-        //     {this.props.image}
-        //     <div className="block-bottom-text">
-        //       {this.props.keyDown}
-        //       {bonusScore}
-        //     </div>
-        //   </div>
-        // </VelocityComponent>
-      );
-    }
+      // FIXME: animation effects ..
+      // <VelocityComponent
+      //   animation={{ opacity: this.state.isVisible ? 1 : 0 }}
+      //   enter={{ animation: 'fadeIn' }}
+      //   runAnimation={true}
+      //   duration={500}
+      // >
+      //   <div
+      //     className="block block-bottom"
+      //     style={{ background: this.props.color }}
+      //   >
+      //     {this.props.image}
+      //     <div className="inner-text">
+      //       {this.props.keyDown}
+      //       {bonusScore}
+      //     </div>
+      //   </div>
+      // </VelocityComponent>
+    );
   }
 }
 
