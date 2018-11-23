@@ -7,7 +7,10 @@ import Block from './components/block';
 import Status from './components/status';
 import { Image } from 'semantic-ui-react';
 import Util from './utils';
-import config from './config';
+import gameConfig from './config';
+
+const config = gameConfig.test;
+// const config = gameConfig.normal;
 
 const defaultState = {
   time: config.time,
