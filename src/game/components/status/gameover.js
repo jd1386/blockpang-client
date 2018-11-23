@@ -2,23 +2,18 @@ import React, { Component } from 'react';
 import './style.scss';
 import Status from './index';
 
+const gameoverMessages = {
+  exceedBlockLimit: 'You have too many blocks',
+  missInput: 'You must type the right key',
+  timeover: 'time over'
+};
+
 class Gameover extends Component {
+  _getMessage() {
+    return gameoverMessages[this.props.reason];
+  }
+
   render() {
-    let message;
-    let lefttime;
-
-    if (this.props.reason === 'exceedBlockLimit') {
-      message = <p>You Have Too MANY BLOCKS</p>;
-      lefttime = <span>{parseInt(this.props.lefttime / 1000)} Sec</span>;
-    } else if (this.props.reason === 'missInput') {
-      message = <p>You MUST type the RIGHT KEY</p>;
-      lefttime = (
-        <span>LEFT TIME : {parseInt(this.props.lefttime / 1000)} Sec</span>
-      );
-    } else if (this.props.reason === 'timeover') {
-      message = 'TIME OVER! If your want restart, press W KEY.';
-    }
-
     return (
       <React.Fragment>
         <Status.Header
@@ -29,8 +24,7 @@ class Gameover extends Component {
         <div className="game-status-main">
           <div className="header">Game Over</div>
           <div className="content">
-            <div>{message}</div>
-
+            <div>{this._getMessage()}</div>
             <div className="flash">Press W KEY to restart</div>
           </div>
         </div>

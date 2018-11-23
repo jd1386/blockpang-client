@@ -1,6 +1,6 @@
 const test = {
-  time: 30000,
-  nextBlockTime: 29500,
+  time: 3000,
+  nextBlockTime: 2950,
   score: 0,
   block: {
     colors: ['#f783ac', '#69db7c', '#4dabf7'],
