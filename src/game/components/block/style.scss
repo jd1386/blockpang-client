@@ -1,3 +1,8 @@
+@font-face {
+  font-family: 'Baby Blocks';
+  src: local('Baby Blocks'), url('../fonts/baby-blocks-font.ttf');
+}
+
 .block-wrapper {
   display: -webkit-box;
   display: -moz-box;
@@ -32,10 +37,12 @@
     font-size: 2rem;
     font-weight: 800;
     vertical-align: middle;
+    font-family: 'Baby Blocks', sans-serif;
 
     .bonus-text {
       margin-top: 8px;
       font-size: 14px;
+      font-family: '8 Bit', sans-serif;
     }
   }
 }
