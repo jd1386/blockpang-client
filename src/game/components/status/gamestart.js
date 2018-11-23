@@ -4,11 +4,15 @@ import './style.scss';
 class Gamestart extends Component {
   render() {
     return (
-      <div className="game-status-div" onClick={this.props.onClick()}>
-        <div>Block Pang</div>
-        <div>Start Game</div>
-        <div>Insert (1) Coin ...</div>
-      </div>
+      <React.Fragment>
+        <div className="game-status-main" onClick={this.props.onClick()}>
+          <div className="header">BlockPang</div>
+          <div className="content">
+            <div>Start Game</div>
+            <div className="flash">Insert (1) Coin ...</div>
+          </div>
+        </div>
+      </React.Fragment>
     );
   }
 }
