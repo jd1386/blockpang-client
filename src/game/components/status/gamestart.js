@@ -9,7 +9,9 @@ class Gamestart extends Component {
         <Status.Header time={30000} currentScore={0} />
 
         <div className="game-status-main" onClick={this.props.onClick()}>
-          <div className="header">BlockPang</div>
+          <div className="header">
+            Block<br />Pang
+          </div>
           <div className="content">
             <div>Start Game</div>
             <div className="flash">Insert (1) Coin ...</div>

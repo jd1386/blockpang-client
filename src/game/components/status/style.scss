@@ -4,18 +4,20 @@
 }
 
 .game-status-bar {
-  margin-top: 30px;
-  min-height: 12vh;
+  margin-top: 18px;
+  min-height: 8vh;
   display: flex;
+  flex-direction: row;
   align-items: flex-start;
   flex-wrap: nowrap;
-  font-size: 2em;
+  font-size: 3vh;
   font-family: '8 Bit', sans-serif;
 }
 
 .game-status-component {
   width: 50%;
   text-align: center;
+  margin-top: 5px;
 
   .status-title {
     padding-left: 10px;
@@ -32,13 +34,14 @@
   height: 100%;
 
   .header {
-    font-size: 4rem;
-    line-height: 6rem;
+    font-size: 9vw;
+    line-height: 18vh;
+    height: 100%;
+    padding-top: 10vh;
   }
 
   .content {
     line-height: 5rem;
-    padding-top: 40%;
   }
 
   .flash {
