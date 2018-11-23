@@ -6,11 +6,11 @@ import App from './App';
 import * as serviceWorker from './serviceWorker';
 import WebFont from 'webfontloader';
 
-WebFont.load({
-  google: {
-    families: ['Nanum Gothic', 'sans-serif']
-  }
-});
+// WebFont.load({
+//   google: {
+//     families: ['Nanum Gothic', 'sans-serif']
+//   }
+// });
 
 ReactDOM.render(<App />, document.getElementById('root'));
 
