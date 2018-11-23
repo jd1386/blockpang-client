@@ -143,7 +143,7 @@ class App extends React.Component {
     let keySet = this.blockKeys[randomIndex]; //normalStageKeySet
 
     if (this.state.score > 1500 && random(7) === 0) {
-      keySet = this.multiBlockKeysStage1[randomIndex];
+      keySet = this.multiBlockKeysStage1[randomIndex].slice();
     }
 
     if (
