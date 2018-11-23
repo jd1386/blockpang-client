@@ -17,8 +17,9 @@ const defaultState = {
   isFirstPlaying: true,
   isPlaying: false,
   gameoverReason: '',
-  randomBlockProbability: 15, //%%
-  nextBlockGenerationSpeed: 500
+  randomBlockProbability: 15, // 1~100%
+  nextBlockGenerationSpeed: 500, // direct proportion
+  nextBlockGenerationInterval: 300
 };
 
 class App extends React.Component {
@@ -84,13 +85,15 @@ class App extends React.Component {
     // console.log('입력키', e.key.toLowerCase());
     // console.log('체력', currentBlocks[0].health);
     // console.log('현재 블록상태', this.state.blocks);
+
     // if (e.key.toLowerCase() === currentBlocks[0].key) { // 기존 입력할 키가 단 하나였을 경우
     if (e.key.toLowerCase() === currentBlocks[0].key[0]) {
-      // key 값이 일치하면, blocks 데이터를 삭제한다.
+      // key 값이 일치하면, currentBlocks 배열의 블럭 데이터를 삭제한다.
       if (
         currentBlocks[0].key.length === 1 &&
         (currentBlocks[0].health === 1 || !currentBlocks[0].health)
       ) {
+        // 블럭 파괴 키가 1개 뿐이고, 블럭 health prop이 1이거나 없을 경우
         let keepBonusScore = currentBlocks[0].bonusScore;
         currentBlocks.shift();
         this.setState({ blocks: currentBlocks });
@@ -103,8 +106,9 @@ class App extends React.Component {
         }
 
         // 약간의 시간 간격을 두고 새로운 블럭을 스택 상단에 쌓는다
-        // TODO: 지금은 기본 기능만 구현한 것이므로
-        // 아래 로직은 향후 바뀔 수 있음
+        // TODO: 기본 기능만 구현한 것.
+        // 현재는 매 일정 시간 간격으로 블럭이 자동 생성되도록 로직이 바뀌어
+        // 아래 파트는 주석처리.
 
         // setTimeout(() => {
         //   let newBlock = this._generateRandomBlock();
@@ -115,6 +119,7 @@ class App extends React.Component {
         //   });
         // }, 350);
       } else if (currentBlocks[0].key.length > 1) {
+        // 멀티 키를 가진 블럭의 경우
         let [firstBlock, ...otherBlocks] = this.state.blocks;
         if (firstBlock.key.length > 1) firstBlock.key.shift();
 
@@ -122,6 +127,8 @@ class App extends React.Component {
           blocks: [firstBlock, ...otherBlocks]
         });
       } else if (currentBlocks[0].health) {
+        // 체력을 가진 블럭의 경우, 체력을 가진 경우는 키를 여러번 입력해야 파괴됨.
+        // TODO: 멀티 키와 체력을 동시에 가진 블럭의 처리는 아직 고려 안함.
         let [firstBlock, ...otherBlocks] = this.state.blocks;
         if (firstBlock.health > 1) firstBlock.health -= 1;
 
@@ -143,19 +150,23 @@ class App extends React.Component {
     let keySet = this.blockKeys[randomIndex]; //normalStageKeySet
 
     if (this.state.score > 1500 && random(7) === 0) {
+      // 1500 점을 넘는 경우 멀티 키를 가진 블럭 출현
+      // TODO: 현재 확정되지 않은 스테이지 개념. 보완 필요.
       keySet = this.multiBlockKeysStage1[randomIndex].slice();
     }
 
     if (
       this.state.isPlaying &&
-      random(100) + 1 <= this.state.randomBlockProbability
+      random(100) + 1 <= this.state.randomBlockProbability // 랜덤컬러 블럭 출현 파트
     ) {
       randomColor = random(1) === 1 ? '#1aaaba' : `${Util.getRandColor(4)}`;
+      // 랜덤 블럭 출현이 확정면면 다시 50% 확률로 ICON 블럭 혹은 랜덤 컬러 블럭이 출현
 
       randomKeyIndex = random(this.eventBlockKeys.length - 1);
       return {
+        // 랜덤 블럭
         blockImage:
-          randomColor === '#1aaaba' ? (
+          randomColor === '#1aaaba' ? ( // ICON COLOR 인 경우
             <Image size="mini" src="favicon.ico" />
           ) : (
             <Image size="mini" src="coin.gif" id="block-image" />
@@ -167,6 +178,7 @@ class App extends React.Component {
     }
 
     return {
+      // 베이직 블럭
       color: this.blockColors[randomIndex],
       key: keySet
     };
@@ -210,7 +222,6 @@ class App extends React.Component {
     } else {
       // the game has started
       // console.log('game has started', this.state.blocks);
-
       return this.state.blocks.map((block, index) => (
         <div className="block-wrapper" key={index}>
           <Block
@@ -263,7 +274,6 @@ class App extends React.Component {
     if (
       (this.state.isPlaying && this.state.time === 0) ||
       this.state.gameoverReason
-      // this.state.gameoverReason === 'miss'
     ) {
       return (
         <div
@@ -327,12 +337,14 @@ class App extends React.Component {
         'this.state.nextBlockTime time passed! new block generated!',
         this.state.nextBlockTime
       );
-      // let nextBlockTime = this.state.nextBlockTime - 300; // 300이 적당하다
       let n;
       n =
         Math.floor(this.state.time / this.state.nextBlockGenerationSpeed / 10) *
         10;
-      if (n < 300) n = 300;
+
+      if (n < this.state.nextBlockGenerationInterval)
+        n = this.state.nextBlockGenerationInterval;
+      // if (n < 300) n = 300;
       let nextBlockTime = this.state.nextBlockTime - n; // 300이 적당하다
       this.setState({
         blocks: [...this.state.blocks, newBlock],
@@ -359,16 +371,8 @@ class App extends React.Component {
   };
 
   componentDidMount = () => {
-    console.log('did mount!');
     // Gamestart render
     this._renderGamestart();
-
-    // this.setState({ blocks: this._generateDefaultBlocks() });
-    // this.interval = setInterval(() => this._tick(), 10);
-    // const timerId = setInterval(() => {
-    //   this._shouldMakeBlock();
-    // }, 3000);
-    // // console.log('timerId', timerId);
   };
 
   render() {
