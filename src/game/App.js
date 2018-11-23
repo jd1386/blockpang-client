@@ -11,6 +11,8 @@ import Util from './utils';
 
 const defaultState = {
   time: 30000,
+  nextBlockTime: 29500,
+  // nextBlockTime: 9500,
   score: 0,
   blocks: [],
   isPlaying: false,
@@ -94,14 +96,15 @@ class App extends React.Component {
         // 약간의 시간 간격을 두고 새로운 블럭을 스택 상단에 쌓는다
         // TODO: 지금은 기본 기능만 구현한 것이므로
         // 아래 로직은 향후 바뀔 수 있음
-        setTimeout(() => {
-          let newBlock = this._generateRandomBlock();
-          console.log('new block generated!', newBlock);
 
-          this.setState({
-            blocks: [...this.state.blocks, newBlock]
-          });
-        }, 350);
+        // setTimeout(() => {
+        //   let newBlock = this._generateRandomBlock();
+        //   console.log('new block generated!', newBlock);
+
+        //   this.setState({
+        //     blocks: [...this.state.blocks, newBlock]
+        //   });
+        // }, 350);
       } else if (currentBlocks[0].key.length > 1) {
         let [firstBlock, ...otherBlocks] = this.state.blocks;
         if (firstBlock.key.length > 1) firstBlock.key.shift();
@@ -129,6 +132,7 @@ class App extends React.Component {
     let randomColor;
     // let blockImage;
     let keySet = this.blockKeys[randomIndex]; //normalStageKeySet
+
     if (this.state.score > 1500 && random(7) === 0) {
       keySet = this.multiBlockKeysStage1[randomIndex];
     }
@@ -199,7 +203,7 @@ class App extends React.Component {
     } else {
       // the game has started
 
-      console.log('game has started', this.state.blocks);
+      // console.log('game has started', this.state.blocks);
 
       return this.state.blocks.map((block, index) => (
         <div className="block-wrapper">
@@ -303,15 +307,40 @@ class App extends React.Component {
     }
   };
 
+  _shouldMakeBlock = () => {
+    if (
+      this.state.time === this.state.nextBlockTime &&
+      this.state.blocks.length < 13
+    ) {
+      let newBlock = this._generateRandomBlock();
+      console.log(
+        'this.state.nextBlockTime time passed! new block generated!',
+        this.state.nextBlockTime
+      );
+      // let nextBlockTime = this.state.nextBlockTime - 300; // 300이 적당하다
+      let n;
+      n = Math.floor(this.state.time / 55 / 10) * 10;
+      if (n < 300) n = 300;
+      let nextBlockTime = this.state.nextBlockTime - n; // 300이 적당하다
+      this.setState({
+        blocks: [...this.state.blocks, newBlock],
+        nextBlockTime
+      });
+    }
+    if (this.state.blocks.length > 11) this._endGame();
+  };
+
   componentDidMount = () => {
     this.setState({ blocks: this._generateDefaultBlocks() });
-    // const totalSeconds = parseInt(this.state.time) * 1000;
-    // this.setState(() => ({ time: parseInt(totalSeconds) }));
-
-    // this.interval = setInterval(() => this._tick(), 10);
+    this.interval = setInterval(() => this._tick(), 10);
+    // const timerId = setInterval(() => {
+    //   this._shouldMakeBlock();
+    // }, 3000);
+    // console.log('timerId', timerId);
   };
 
   render() {
+    if (this.state.isPlaying) this._shouldMakeBlock();
     return this._checkGameEnd();
   }
 }
