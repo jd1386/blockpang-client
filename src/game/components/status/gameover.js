@@ -1,41 +1,40 @@
 import React, { Component } from 'react';
 import './style.scss';
+import Status from './index';
 
 class Gameover extends Component {
   render() {
     let message;
     let lefttime;
+
     if (this.props.reason === 'exceedBlockLimit') {
-      message = (
-        <p>
-          GAME OVER! You Have Too MANY BLOCK.
-          <br />
-          If your want restart, press W KEY.
-        </p>
-      );
-      lefttime = (
-        <h1>LEFT TIME : {parseInt(this.props.lefttime / 1000)} Sec</h1>
-      );
+      message = <p>You Have Too MANY BLOCKS</p>;
+      lefttime = <span>{parseInt(this.props.lefttime / 1000)} Sec</span>;
     } else if (this.props.reason === 'missInput') {
-      message = (
-        <p>
-          HAHA! GAME OVER! You MUST type RIGHT KEY!
-          <br />
-          If your want restart, press W KEY.
-        </p>
-      );
+      message = <p>You MUST type the RIGHT KEY</p>;
       lefttime = (
-        <h1>LEFT TIME : {parseInt(this.props.lefttime / 1000)} Sec</h1>
+        <span>LEFT TIME : {parseInt(this.props.lefttime / 1000)} Sec</span>
       );
     } else if (this.props.reason === 'timeover') {
       message = 'TIME OVER! If your want restart, press W KEY.';
     }
+
     return (
-      <div className="game-status-div">
-        <h1>{message}</h1>
-        <h1>SCORE : {this.props.score}</h1>
-        {lefttime}
-      </div>
+      <React.Fragment>
+        <Status.Header
+          time={this.props.lefttime}
+          currentScore={this.props.score}
+        />
+
+        <div className="game-status-main">
+          <div className="header">Game Over</div>
+          <div className="content">
+            <div>{message}</div>
+
+            <div className="flash">Press W KEY to restart</div>
+          </div>
+        </div>
+      </React.Fragment>
     );
   }
 }

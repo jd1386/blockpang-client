@@ -301,7 +301,6 @@ class App extends React.Component {
           >
             <Status.Header
               time={this.state.time}
-              prevScore={this.state.score - 10}
               currentScore={this.state.score}
             />
             <div className="blocks-container">{this._renderBlocks()}</div>
@@ -317,7 +316,6 @@ class App extends React.Component {
           >
             <Status.Header
               time={this.state.time}
-              prevScore={0}
               currentScore={this.state.score}
             />
             <div className="blocks-container">{this._renderBlocks()}</div>
