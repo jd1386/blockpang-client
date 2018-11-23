@@ -40,6 +40,15 @@ class App extends React.Component {
     this.state = defaultState;
   }
 
+  _checkAllowKeycodes(e) {
+    let allowKeyCodes = [9, 13, 16, 17, 18, 20, 32, 91]; //9tab, 13enter, 16shift, 17ctrl,18alt,20capslock, 32space, 91ctrl,
+
+    if (allowKeyCodes.includes(e.keyCode)) {
+      e.preventDefault();
+      return true;
+    }
+  }
+
   _tick = () => {
     if (this.state.gameoverReason) return;
 
@@ -59,15 +68,13 @@ class App extends React.Component {
   _handleKeyDown = e => {
     let isStart;
     console.log('입력키 ', e.key, '키코드', e.keyCode);
-    let allowKeyCodes = [9, 13, 16, 17, 18, 20, 32, 91]; //9tab, 13enter, 16shift, 17ctrl,18alt,20capslock, 32space, 91ctrl,
+
     if (!this.state.isPlaying) {
       isStart = true;
       this.setState({ isPlaying: true });
     }
-    if (allowKeyCodes.includes(e.keyCode)) {
-      e.preventDefault();
-      return;
-    }
+
+    if (this._checkAllowKeycodes(e)) return;
 
     if (this.state.blocks.length === 0) return;
 
@@ -136,7 +143,7 @@ class App extends React.Component {
     let keySet = this.blockKeys[randomIndex]; //normalStageKeySet
 
     if (this.state.score > 1500 && random(7) === 0) {
-      keySet = this.multiBlockKeysStage1[randomIndex];
+      keySet = this.multiBlockKeysStage1[randomIndex].slice();
     }
 
     if (
