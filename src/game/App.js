@@ -5,7 +5,6 @@ import { random } from 'lodash';
 import { VelocityComponent } from 'velocity-react';
 import Block from './components/block';
 import Status from './components/status';
-import Gameover from './components/status/gameover';
 import { Image } from 'semantic-ui-react';
 import Util from './utils';
 
@@ -259,7 +258,7 @@ class App extends React.Component {
           style={this.gameBoardBackground}
         >
           {/* <h1>YOU DEAD!</h1> */}
-          <Gameover
+          <Status.Gameover
             reason={this.state.gameoverReason}
             score={this.state.score}
             lefttime={this.state.time}
@@ -275,7 +274,7 @@ class App extends React.Component {
             onKeyDown={this._handleKeyDown}
             style={this.gameBoardBackground}
           >
-            <Status
+            <Status.Header
               time={this.state.time}
               prevScore={this.state.score - 10}
               currentScore={this.state.score}
@@ -291,7 +290,7 @@ class App extends React.Component {
             onKeyDown={this._handleKeyDown}
             style={this.gameBoardBackground}
           >
-            <Status
+            <Status.Header
               time={this.state.time}
               prevScore={0}
               currentScore={this.state.score}
