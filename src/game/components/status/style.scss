@@ -18,10 +18,55 @@
   float: right;
 }
 
-.ui.mini.image#onlycoin {
-  display: inline;
+.game-status-main {
+  margin: auto 0;
+  text-align: center;
+  font-family: '8 Bit', sans-serif;
+  font-size: 2em;
+  line-height: 25rem;
+
+  .header {
+    font-size: 4rem;
+  }
+
+  .content {
+    line-height: 5rem;
+  }
+
+  .flash {
+    color: #848484;
+    -webkit-animation: flash linear 1s infinite;
+    animation: flash linear 1s infinite;
+    font-size: 1.2rem;
+  }
+  @-webkit-keyframes flash {
+    0% {
+      opacity: 1;
+    }
+    50% {
+      opacity: 0.1;
+    }
+    100% {
+      opacity: 1;
+    }
+  }
+  @keyframes flash {
+    0% {
+      opacity: 1;
+    }
+    50% {
+      opacity: 0.1;
+    }
+    100% {
+      opacity: 1;
+    }
+  }
 }
 
-.game-status-div {
-  font-family: sans-serif;
+.game-status-main:hover {
+  cursor: pointer;
+}
+
+.ui.mini.image#onlycoin {
+  display: inline;
 }
