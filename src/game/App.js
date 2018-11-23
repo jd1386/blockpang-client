@@ -7,44 +7,30 @@ import Block from './components/block';
 import Status from './components/status';
 import { Image } from 'semantic-ui-react';
 import Util from './utils';
+import gameConfig from './config';
+
+const config = gameConfig.test;
+// const config = gameConfig.normal;
 
 const defaultState = {
-  time: 300000,
-  nextBlockTime: 295000,
-  // nextBlockTime: 9500,
-  score: 2000,
+  time: config.time,
+  nextBlockTime: config.nextBlockTime,
+  score: config.score,
   blocks: [],
   isFirstPlaying: true,
   isPlaying: false,
-  gameoverReason: '',
-  randomBlockProbability: 15, // 1~100%
-  nextBlockGenerationSpeed: 500, // direct proportion
-  nextBlockGenerationInterval: 300
+  gameoverReason: ''
 };
 
 class App extends React.Component {
   constructor(props) {
     super(props);
     this.gameBoardBackground = Util.generateRandBackground();
-    this.blockColors = ['#f783ac', '#69db7c', '#4dabf7']; // this.blockColors = ['red', 'green', 'blue'];
-    this.blockKeys = ['a', 's', 'd'];
-    this.eventBlockColors = ['lime', 'purple', 'black', 'orange', 'cyan'];
-    this.eventBlockKeys = ['f', 'c'];
-    this.multiBlockKeysStage1 = [
-      ['a', 's'],
-      ['d', 'f'],
-      ['a', 's', 'd', 'f', 'f']
-    ];
-    // this.eventBlockKeys = [['{', '{']];
-    // this.eventBlockKeys = ['f', 'c'];
-    // this.eventBlockColors = [{color : 'mint', probability : 0.5} ] // 확률 문제는 일단 심플하게 구현하고 생각하기로
     this.state = defaultState;
   }
 
-  _checkAllowKeycodes(e) {
-    let allowKeyCodes = [9, 13, 16, 17, 18, 20, 32, 91]; //9tab, 13enter, 16shift, 17ctrl,18alt,20capslock, 32space, 91ctrl,
-
-    if (allowKeyCodes.includes(e.keyCode)) {
+  _checkAllowedKeycodes(e) {
+    if (config.allowedKeyCodes.includes(e.keyCode)) {
       e.preventDefault();
       return true;
     }
@@ -75,7 +61,7 @@ class App extends React.Component {
       this.setState({ isPlaying: true });
     }
 
-    if (this._checkAllowKeycodes(e)) return;
+    if (this._checkAllowedKeycodes(e)) return;
 
     if (this.state.blocks.length === 0) return;
 
@@ -143,26 +129,26 @@ class App extends React.Component {
   };
 
   _generateRandomBlock() {
-    let randomIndex = random(this.blockColors.length - 1);
+    let randomIndex = random(config.block.colors.length - 1);
     let randomKeyIndex;
     let randomColor;
     // let blockImage;
-    let keySet = this.blockKeys[randomIndex]; //normalStageKeySet
+    let keySet = config.block.keys[randomIndex]; //normalStageKeySet
 
     if (this.state.score > 1500 && random(7) === 0) {
       // 1500 점을 넘는 경우 멀티 키를 가진 블럭 출현
       // TODO: 현재 확정되지 않은 스테이지 개념. 보완 필요.
-      keySet = this.multiBlockKeysStage1[randomIndex].slice();
+      keySet = config.stage[0].multiBlockKeys[randomIndex].slice();
     }
 
     if (
       this.state.isPlaying &&
-      random(100) + 1 <= this.state.randomBlockProbability // 랜덤컬러 블럭 출현 파트
+      random(100) + 1 <= config.randomBlockProbability // 랜덤컬러 블럭 출현 파트
     ) {
       randomColor = random(1) === 1 ? '#1aaaba' : `${Util.getRandColor(4)}`;
       // 랜덤 블럭 출현이 확정면면 다시 50% 확률로 ICON 블럭 혹은 랜덤 컬러 블럭이 출현
 
-      randomKeyIndex = random(this.eventBlockKeys.length - 1);
+      randomKeyIndex = random(config.eventBlock.keys.length - 1);
       return {
         // 랜덤 블럭
         blockImage:
@@ -172,14 +158,14 @@ class App extends React.Component {
             <Image size="mini" src="coin.gif" id="block-image" />
           ),
         color: randomColor,
-        key: this.eventBlockKeys[randomKeyIndex].slice(),
+        key: config.eventBlock.keys[randomKeyIndex].slice(),
         bonusScore: randomColor === '#1aaaba' ? random(50) + 50 : random(30)
       };
     }
 
     return {
       // 베이직 블럭
-      color: this.blockColors[randomIndex],
+      color: config.block.colors[randomIndex],
       key: keySet
     };
   }
@@ -264,9 +250,11 @@ class App extends React.Component {
       // default state should be now
       // isFirstPlaying: false
       // because the game has been restarted
-      this.setState(Object.assign(defaultState, { isFirstPlaying: false }));
-      // this.setState((this.state = defaultState())); 위처럼 써줘야 한다.
-      this.setState({ blocks: this._generateDefaultBlocks() });
+      this.setState({
+        ...defaultState,
+        ...{ isFirstPlaying: false },
+        blocks: this._generateDefaultBlocks()
+      });
     }
   };
 
@@ -337,11 +325,10 @@ class App extends React.Component {
       );
       let n;
       n =
-        Math.floor(this.state.time / this.state.nextBlockGenerationSpeed / 10) *
-        10;
+        Math.floor(this.state.time / config.nextBlockGenerationSpeed / 10) * 10;
 
-      if (n < this.state.nextBlockGenerationInterval)
-        n = this.state.nextBlockGenerationInterval;
+      if (n < config.nextBlockGenerationInterval)
+        n = config.nextBlockGenerationInterval;
       // if (n < 300) n = 300;
       let nextBlockTime = this.state.nextBlockTime - n; // 300이 적당하다
       this.setState({
