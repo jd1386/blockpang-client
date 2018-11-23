@@ -250,9 +250,11 @@ class App extends React.Component {
       // default state should be now
       // isFirstPlaying: false
       // because the game has been restarted
-      this.setState(Object.assign(defaultState, { isFirstPlaying: false }));
-      // this.setState((this.state = defaultState())); 위처럼 써줘야 한다.
-      this.setState({ blocks: this._generateDefaultBlocks() });
+      this.setState({
+        ...defaultState,
+        ...{ isFirstPlaying: false },
+        blocks: this._generateDefaultBlocks()
+      });
     }
   };
 
