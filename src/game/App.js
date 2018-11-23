@@ -356,11 +356,6 @@ class App extends React.Component {
       isPlaying: true
     });
     this.interval = setInterval(() => this._tick(), 10);
-
-    const timerId = setInterval(() => {
-      this._shouldMakeBlock();
-    }, 3000);
-    // console.log('timerId', timerId);
   };
 
   componentDidMount = () => {
