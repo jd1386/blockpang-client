@@ -16,16 +16,19 @@ class Header extends Component {
 
     return (
       <div className="game-status-bar">
-        <div className="game-status-component">{displayTime} Sec</div>
+        <div className="game-status-component">
+          <Image id="onlycoin" size="mini" src="clock.gif" />
+          <span className="status-title">{displayTime}</span>
+        </div>
         <Spring
-          from={{ number: this.props.prevScore }}
+          from={{ number: this.props.currentScore }}
           to={{ number: this.props.currentScore }}
         >
           {props => {
             return (
               <div className="game-status-component">
                 <Image id="onlycoin" size="mini" src="coin.gif" />
-                {Math.round(props.number)}
+                <span className="status-title">{Math.round(props.number)}</span>
               </div>
             );
           }}

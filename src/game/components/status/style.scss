@@ -4,29 +4,40 @@
 }
 
 .game-status-bar {
-  margin-top: 30px;
-  min-height: 12vh;
+  margin-top: 18px;
+  min-height: 8vh;
   display: flex;
+  flex-direction: row;
   align-items: flex-start;
   flex-wrap: nowrap;
-  font-size: 2em;
+  font-size: 3vh;
   font-family: '8 Bit', sans-serif;
 }
 
 .game-status-component {
   width: 50%;
-  float: right;
+  text-align: center;
+  margin-top: 5px;
+
+  .status-title {
+    padding-left: 10px;
+  }
 }
 
 .game-status-main {
-  margin: auto 0;
+  // margin: auto 0;
   text-align: center;
   font-family: '8 Bit', sans-serif;
   font-size: 2em;
-  line-height: 25rem;
+  display: flex;
+  flex-direction: column;
+  height: 100%;
 
   .header {
-    font-size: 4rem;
+    font-size: 9vw;
+    line-height: 18vh;
+    height: 100%;
+    padding-top: 10vh;
   }
 
   .content {
@@ -35,8 +46,8 @@
 
   .flash {
     color: #848484;
-    -webkit-animation: flash linear 1s infinite;
-    animation: flash linear 1s infinite;
+    -webkit-animation: flash linear 2s infinite;
+    animation: flash linear 2s infinite;
     font-size: 1.2rem;
   }
   @-webkit-keyframes flash {
