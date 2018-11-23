@@ -9,14 +9,16 @@ import { Image } from 'semantic-ui-react';
 import Util from './utils';
 
 const defaultState = {
-  time: 30000,
-  nextBlockTime: 29500,
+  time: 300000,
+  nextBlockTime: 295000,
   // nextBlockTime: 9500,
-  score: 0,
+  score: 2000,
   blocks: [],
+  isFirstPlaying: true,
   isPlaying: false,
   gameoverReason: '',
-  randomBlockProbability: 15 //%%
+  randomBlockProbability: 15, //%%
+  nextBlockGenerationSpeed: 500
 };
 
 class App extends React.Component {
@@ -189,8 +191,6 @@ class App extends React.Component {
           >
             <div className="block-wrapper">
               <Block
-                key={index}
-                index={index}
                 image={block.blockImage}
                 color={block.color}
                 keyDown={block.key}
@@ -202,11 +202,10 @@ class App extends React.Component {
       });
     } else {
       // the game has started
-
       // console.log('game has started', this.state.blocks);
 
       return this.state.blocks.map((block, index) => (
-        <div className="block-wrapper">
+        <div className="block-wrapper" key={index}>
           <Block
             key={index}
             index={index}
@@ -244,7 +243,10 @@ class App extends React.Component {
       return;
     }
     if (e.key === 'w' || e.key === 'W') {
-      this.setState(defaultState);
+      // default state should be now
+      // isFirstPlaying: false
+      // because the game has been restarted
+      this.setState(Object.assign(defaultState, { isFirstPlaying: false }));
       // this.setState((this.state = defaultState())); 위처럼 써줘야 한다.
       this.setState({ blocks: this._generateDefaultBlocks() });
     }
@@ -320,7 +322,9 @@ class App extends React.Component {
       );
       // let nextBlockTime = this.state.nextBlockTime - 300; // 300이 적당하다
       let n;
-      n = Math.floor(this.state.time / 55 / 10) * 10;
+      n =
+        Math.floor(this.state.time / this.state.nextBlockGenerationSpeed / 10) *
+        10;
       if (n < 300) n = 300;
       let nextBlockTime = this.state.nextBlockTime - n; // 300이 적당하다
       this.setState({
@@ -331,18 +335,59 @@ class App extends React.Component {
     if (this.state.blocks.length > 11) this._endGame('exceedBlockLimit');
   };
 
-  componentDidMount = () => {
-    this.setState({ blocks: this._generateDefaultBlocks() });
+  _renderGamestart = () => (
+    <div id="game-board" tabIndex="0" style={this.gameBoardBackground}>
+      <Status.Gamestart onClick={() => this._handleGamestartClick} />
+    </div>
+  );
+
+  _handleGamestartClick = () => {
+    console.log('Gamestart clicked');
+    this.setState({
+      blocks: this._generateDefaultBlocks(),
+      isFirstPlaying: false,
+      isPlaying: true
+    });
     this.interval = setInterval(() => this._tick(), 10);
-    // const timerId = setInterval(() => {
-    //   this._shouldMakeBlock();
-    // }, 3000);
+
+    const timerId = setInterval(() => {
+      this._shouldMakeBlock();
+    }, 3000);
     // console.log('timerId', timerId);
   };
 
+  componentDidMount = () => {
+    console.log('did mount!');
+    // Gamestart render
+    this._renderGamestart();
+
+    // this.setState({ blocks: this._generateDefaultBlocks() });
+    // this.interval = setInterval(() => this._tick(), 10);
+    // const timerId = setInterval(() => {
+    //   this._shouldMakeBlock();
+    // }, 3000);
+    // // console.log('timerId', timerId);
+  };
+
   render() {
-    if (this.state.isPlaying) this._shouldMakeBlock();
-    return this._checkGameEnd();
+    if (this.state.isFirstPlaying) {
+      return this._renderGamestart();
+    }
+
+    if (this.state.isPlaying) {
+      console.log('User is now playing the game');
+      this._shouldMakeBlock();
+      return this._checkGameEnd();
+    } else {
+      if (this.state.gameoverReason) {
+        console.log('gameoverReason', this.state.gameoverReason);
+        return this._checkGameEnd();
+      } else {
+        // restart the game
+        this._shouldMakeBlock();
+        return this._checkGameEnd();
+      }
+    }
   }
 }
 

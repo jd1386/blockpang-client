@@ -1,10 +1,16 @@
+@font-face {
+  font-family: '8 Bit';
+  src: local('8 Bit'), url('../fonts/8bit-font.ttf');
+}
+
 .game-status-bar {
   margin-top: 30px;
   min-height: 12vh;
   display: flex;
   align-items: flex-start;
   flex-wrap: nowrap;
-  font-size: 3em;
+  font-size: 2em;
+  font-family: '8 Bit', sans-serif;
 }
 
 .game-status-component {
