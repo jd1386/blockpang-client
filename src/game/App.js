@@ -58,15 +58,16 @@ class App extends React.Component {
   _handleKeyDown = e => {
     let isStart;
     console.log('입력키 ', e.key, '키코드', e.keyCode);
-    if (e.keyCode === 32 || e.keyCode === 16) {
-      e.preventDefault();
-      return;
-    }
-
+    let allowKeyCodes = [9, 13, 16, 17, 18, 20, 32, 91]; //9tab, 13enter, 16shift, 17ctrl,18alt,20capslock, 32space, 91ctrl,
     if (!this.state.isPlaying) {
       isStart = true;
       this.setState({ isPlaying: true });
     }
+    if (allowKeyCodes.includes(e.keyCode)) {
+      e.preventDefault();
+      return;
+    }
+
     if (this.state.blocks.length === 0) return;
 
     let currentBlocks = this.state.blocks.slice();
@@ -122,7 +123,7 @@ class App extends React.Component {
       }
     } else if (!isStart) {
       // 시작하자마자 버튼 잘못 눌러서 사망하는 상황 방지. 첫 입력 미스는 막아줌.
-      this._endGame();
+      this._endGame('missInput');
     }
   };
 
@@ -234,8 +235,8 @@ class App extends React.Component {
     }));
   }
 
-  _endGame = () => {
-    this.setState({ isPlaying: false, gameoverReason: 'miss' });
+  _endGame = gameoverReason => {
+    this.setState({ isPlaying: false, gameoverReason });
   };
 
   _restartGame = e => {
@@ -253,7 +254,8 @@ class App extends React.Component {
   _checkGameEnd = () => {
     if (
       (this.state.isPlaying && this.state.time === 0) ||
-      this.state.gameoverReason === 'miss'
+      this.state.gameoverReason
+      // this.state.gameoverReason === 'miss'
     ) {
       return (
         <div
@@ -327,7 +329,7 @@ class App extends React.Component {
         nextBlockTime
       });
     }
-    if (this.state.blocks.length > 11) this._endGame();
+    if (this.state.blocks.length > 11) this._endGame('exceedBlockLimit');
   };
 
   componentDidMount = () => {

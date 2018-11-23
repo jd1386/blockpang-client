@@ -5,7 +5,18 @@ class Gameover extends Component {
   render() {
     let message;
     let lefttime;
-    if (this.props.reason === 'miss') {
+    if (this.props.reason === 'exceedBlockLimit') {
+      message = (
+        <p>
+          GAME OVER! You Have Too MANY BLOCK.
+          <br />
+          If your want restart, press W KEY.
+        </p>
+      );
+      lefttime = (
+        <h1>LEFT TIME : {parseInt(this.props.lefttime / 1000)} Sec</h1>
+      );
+    } else if (this.props.reason === 'missInput') {
       message = (
         <p>
           HAHA! GAME OVER! You MUST type RIGHT KEY!
@@ -16,8 +27,7 @@ class Gameover extends Component {
       lefttime = (
         <h1>LEFT TIME : {parseInt(this.props.lefttime / 1000)} Sec</h1>
       );
-    }
-    if (this.props.reason === 'timeover') {
+    } else if (this.props.reason === 'timeover') {
       message = 'TIME OVER! If your want restart, press W KEY.';
     }
     return (
