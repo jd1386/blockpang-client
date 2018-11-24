@@ -14,6 +14,12 @@ const test = {
   },
   stage: {
     1: {
+      multiBlockKeys: [['i']],
+      appearanceScoreConditions: 100,
+      appearanceProbability: 1,
+      bonusTime: 10000
+    },
+    2: {
       multiBlockKeys: [
         ['a', 'a'],
         ['d', 'd'],
@@ -25,7 +31,7 @@ const test = {
       appearanceProbability: 15,
       bonusTime: 10000
     },
-    2: {
+    3: {
       multiBlockKeys: [
         ['a', 's'],
         ['d', 'f'],
@@ -37,7 +43,7 @@ const test = {
       appearanceProbability: 15,
       bonusTime: 10000
     },
-    3: {
+    4: {
       multiBlockKeys: [
         ['s', 'a'],
         ['f', 'd'],
@@ -57,7 +63,7 @@ const test = {
     }
   },
   randomBlockProbability: 15, // 1~100%
-  nextBlockGenerationSpeed: 10, // direct proportion
+  nextBlockGenerationSpeed: 100, // direct proportion
   nextBlockGenerationInterval: 300,
   allowedKeyCodes: [9, 13, 16, 17, 18, 20, 32, 91] //9tab, 13enter, 16shift, 17ctrl,18alt,20capslock, 32space, 91ctrl,
 };
