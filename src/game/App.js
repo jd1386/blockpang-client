@@ -3,6 +3,7 @@ import './App.scss';
 import { random } from 'lodash';
 // import { Spring, Transition } from 'react-spring';
 import { VelocityComponent } from 'velocity-react';
+import Board from './components/board';
 import Block from './components/block';
 import Status from './components/status';
 import { Image } from 'semantic-ui-react';
@@ -276,59 +277,65 @@ class App extends React.Component {
     }
   };
 
-  _checkGameEnd = () => {
-    if (
+  _isGameEnded = () => {
+    // game has ended if the following condtions are met
+    return (
       (this.state.isPlaying && this.state.time === 0) ||
       this.state.gameoverReason
-    ) {
+    );
+  };
+
+  _checkGameEnd = () => {
+    // game is now ended
+    if (this._isGameEnded()) {
       return (
-        <div
-          id="game-board"
-          tabIndex="0"
-          onKeyDown={this._restartGame}
-          style={this.gameBoardBackground}
+        <Board
+          handleKeyDown={this._restartGame}
+          boardBackground={this.gameBoardBackground}
+          renderBlocks={this._renderBlocks}
+          time={this.state.time || 30000}
+          currentScore={this.state.score || 0}
         >
-          {/* <h1>YOU DEAD!</h1> */}
           <Status.Gameover
             reason={this.state.gameoverReason}
             score={this.state.score}
             lefttime={this.state.time}
           />
-        </div>
+        </Board>
       );
     } else {
-      if (this.state.isPlaying) {
-        return (
-          <div
-            id="game-board"
-            tabIndex="0"
-            onKeyDown={this._handleKeyDown}
-            style={this.gameBoardBackground}
-          >
-            <Status.Header
-              time={this.state.time}
-              currentScore={this.state.score}
-            />
-            <div className="blocks-container">{this._renderBlocks()}</div>
-          </div>
-        );
-      } else {
-        return (
-          <div
-            id="game-board"
-            tabIndex="0"
-            onKeyDown={this._handleKeyDown}
-            style={this.gameBoardBackground}
-          >
-            <Status.Header
-              time={this.state.time}
-              currentScore={this.state.score}
-            />
-            <div className="blocks-container">{this._renderBlocks()}</div>
-          </div>
-        );
-      }
+      // game is being played
+      return (
+        <Board
+          handleKeyDown={this._handleKeyDown}
+          boardBackground={this.gameBoardBackground}
+          renderBlocks={this._renderBlocks}
+          time={this.state.time || 30000}
+          currentScore={this.state.score || 0}
+        >
+          <div className="blocks-container">{this._renderBlocks()}</div>
+        </Board>
+      );
     }
+  };
+
+  _renderGamestart = () => (
+    <Board
+      boardBackground={this.gameBoardBackground}
+      time={this.state.time || 30000}
+      currentScore={this.state.score || 0}
+    >
+      <Status.Gamestart onClick={() => this._handleGamestartClick} />
+    </Board>
+  );
+
+  _handleGamestartClick = () => {
+    this.setState({
+      blocks: this._generateDefaultBlocks(),
+      isFirstPlaying: false,
+      isPlaying: true
+    });
+    this.interval = setInterval(() => this._tick(), 10);
   };
 
   _shouldMakeBlock = () => {
@@ -357,22 +364,6 @@ class App extends React.Component {
     if (this.state.blocks.length > 11) this._endGame('exceedBlockLimit');
   };
 
-  _renderGamestart = () => (
-    <div id="game-board" tabIndex="0" style={this.gameBoardBackground}>
-      <Status.Gamestart onClick={() => this._handleGamestartClick} />
-    </div>
-  );
-
-  _handleGamestartClick = () => {
-    console.log('Gamestart clicked');
-    this.setState({
-      blocks: this._generateDefaultBlocks(),
-      isFirstPlaying: false,
-      isPlaying: true
-    });
-    this.interval = setInterval(() => this._tick(), 10);
-  };
-
   componentDidMount = () => {
     // Gamestart render
     this._renderGamestart();
@@ -384,7 +375,6 @@ class App extends React.Component {
     }
 
     if (this.state.isPlaying) {
-      console.log('User is now playing the game');
       this._shouldMakeBlock();
       return this._checkGameEnd();
     } else {

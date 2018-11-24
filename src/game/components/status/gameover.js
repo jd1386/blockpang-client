@@ -15,20 +15,13 @@ class Gameover extends Component {
 
   render() {
     return (
-      <React.Fragment>
-        <Status.Header
-          time={this.props.lefttime}
-          currentScore={this.props.score}
-        />
-
-        <div className="game-status-main">
-          <div className="header">Game Over</div>
-          <div className="content">
-            <div>{this._getMessage()}</div>
-            <div className="flash">Press W KEY to restart</div>
-          </div>
+      <div className="game-status-main">
+        <div className="header">Game Over</div>
+        <div className="content">
+          <div>{this._getMessage()}</div>
+          <div className="flash">Press W KEY to restart</div>
         </div>
-      </React.Fragment>
+      </div>
     );
   }
 }
