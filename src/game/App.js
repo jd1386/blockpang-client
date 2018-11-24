@@ -21,7 +21,8 @@ const defaultState = {
   isFirstPlaying: true,
   isPlaying: false,
   gameoverReason: '',
-  currentStage: 0
+  currentStage: 1,
+  gameMessage: ''
 };
 
 class App extends React.Component {
@@ -84,7 +85,17 @@ class App extends React.Component {
         // 블럭 파괴 키가 1개 뿐이고, 블럭 health prop이 1이거나 없을 경우
         let keepBonusScore = currentBlocks[0].bonusScore;
         currentBlocks.shift();
-        this.setState({ blocks: currentBlocks });
+        this.setState({
+          blocks: currentBlocks,
+          gameMessage: 'Hit!'
+        });
+
+        // reset gameMessage so it renders again
+        setTimeout(() => {
+          this.setState(() => ({
+            gameMessage: ''
+          }));
+        }, 350);
 
         // 점수를 업데이트한다
         this._updateScore();
@@ -356,6 +367,7 @@ class App extends React.Component {
           renderBlocks={this._renderBlocks}
           time={this.state.time || 30000}
           currentScore={this.state.score || 0}
+          message={this.state.gameMessage}
         >
           <div className="blocks-container">{this._renderBlocks()}</div>
         </Board>
