@@ -195,7 +195,7 @@ class App extends React.Component {
         ),
       color: randomColor,
       key: config.eventBlock.keys[randomKeyIndex].slice(),
-      bonusScore: randomColor === '#1aaaba' ? random(1, 50) + 50 : random(1, 30)
+      bonusScore: randomColor === '#1aaaba' ? random(51, 100) : random(1, 30)
     };
   }
 
