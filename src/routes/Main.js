@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Container, Grid, Segment } from 'semantic-ui-react';
+import { Grid, Segment } from 'semantic-ui-react';
 import MainPage from '../components/Main';
 
 class Main extends Component {
