@@ -348,7 +348,7 @@ class App extends React.Component {
           handleKeyDown={this._restartGame}
           boardBackground={this.gameBoardBackground}
           renderBlocks={this._renderBlocks}
-          time={this.state.time || 30000}
+          time={this.state.time}
           currentScore={this.state.score || 0}
         >
           <Status.Gameover
