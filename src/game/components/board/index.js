@@ -10,7 +10,11 @@ const board = props => {
       onKeyDown={props.handleKeyDown}
       style={props.boardBackground}
     >
-      <Status.Header time={props.time} currentScore={props.currentScore} />
+      <Status.Header
+        time={props.time}
+        currentScore={props.currentScore}
+        message={props.message}
+      />
       {props.children}
     </div>
   );
