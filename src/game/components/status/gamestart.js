@@ -10,10 +10,12 @@ class Gamestart extends Component {
 
         <div className="game-status-main" onClick={this.props.onClick()}>
           <div className="header">
-            Block<br />Pang
+            Block
+            <br />
+            Pang
           </div>
           <div className="content">
-            <div>Start Game</div>
+            <div>Click to Play</div>
             <div className="flash">Insert (1) Coin ...</div>
           </div>
         </div>
