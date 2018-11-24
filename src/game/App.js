@@ -183,7 +183,7 @@ class App extends React.Component {
   _generateRandomBlock() {
     // 랜덤 블럭 출현이 확정되면 다시 50% 확률로 ICON 블럭 혹은 랜덤 컬러 블럭이 출현
     let randomColor =
-      random(1, 100) === 50 ? '#1aaaba' : `${Util.getRandColor(4)}`;
+      random(1, 100) <= 50 ? '#1aaaba' : `${Util.getRandColor(4)}`;
     let randomKeyIndex = random(config.eventBlock.keys.length - 1);
     return {
       // 랜덤 블럭
