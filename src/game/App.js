@@ -29,6 +29,7 @@ class App extends React.Component {
     super(props);
     this.gameBoardBackground = Util.generateRandBackground();
     this.state = defaultState;
+    console.log(random);
   }
 
   _checkAllowedKeycodes(e) {
@@ -130,33 +131,30 @@ class App extends React.Component {
     }
   };
 
-  _generateBlock() {
-    if (
+  _isMultiKeyBlockAppearanceConditions() {
+    // config에 있는 스테이지 출현 점수를 충족시키고, 지정된 확률을 만족할 때, 0 스테이지 이상부터 멀티키 출현
+    return (
       this.state.currentStage > 0 &&
       this.state.score >
         config.stage[this.state.currentStage].appearanceScoreConditions &&
-      random(99) + 1 <=
+      random(1, 100) <=
         config.stage[this.state.currentStage].appearanceProbability
-    ) {
-      // TODO: 현재 확정되지 않은 스테이지 개념. 보완 필요.
-      let randomIndex = random(
-        config.stage[this.state.currentStage].multiBlockKeys.length - 1
-      );
-      let keySet = config.stage[this.state.currentStage].multiBlockKeys[
-        randomIndex
-      ].slice();
+    );
+  }
 
-      return this._generateBasicBlock(randomIndex, keySet);
-    }
+  _isRandomColorBonusBlockAppearanceConditions() {
+    return (
+      this.state.isPlaying && random(1, 100) <= config.randomBlockProbability
+    );
+  }
 
-    if (
-      this.state.isPlaying &&
-      random(100) + 1 <= config.randomBlockProbability // 랜덤컬러 블럭 출현 파트
-    ) {
-      return this._generateRandomBlock();
-    }
+  _generateBlock() {
+    if (this._isMultiKeyBlockAppearanceConditions())
+      return this._generateBasicMultiBlock();
 
-    return this._generateBasicBlock();
+    return this._isRandomColorBonusBlockAppearanceConditions() // 랜덤컬러 블럭 출현 파트
+      ? this._generateRandomBlock()
+      : this._generateBasicBlock();
   }
 
   _generateBasicBlock(
@@ -170,9 +168,22 @@ class App extends React.Component {
     };
   }
 
+  _generateBasicMultiBlock() {
+    let randomIndex = random(
+      config.stage[this.state.currentStage].multiBlockKeys.length - 1
+    );
+    return {
+      color: config.block.colors[randomIndex],
+      key: config.stage[this.state.currentStage].multiBlockKeys[
+        randomIndex
+      ].slice()
+    };
+  }
+
   _generateRandomBlock() {
     // 랜덤 블럭 출현이 확정되면 다시 50% 확률로 ICON 블럭 혹은 랜덤 컬러 블럭이 출현
-    let randomColor = random(1) === 1 ? '#1aaaba' : `${Util.getRandColor(4)}`;
+    let randomColor =
+      random(1, 100) === 50 ? '#1aaaba' : `${Util.getRandColor(4)}`;
     let randomKeyIndex = random(config.eventBlock.keys.length - 1);
     return {
       // 랜덤 블럭
@@ -184,7 +195,7 @@ class App extends React.Component {
         ),
       color: randomColor,
       key: config.eventBlock.keys[randomKeyIndex].slice(),
-      bonusScore: randomColor === '#1aaaba' ? random(50) + 50 : random(30)
+      bonusScore: randomColor === '#1aaaba' ? random(1, 50) + 50 : random(1, 30)
     };
   }
 
