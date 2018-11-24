@@ -74,6 +74,16 @@
   }
 }
 
+.message-wrapper {
+  width: 100%;
+  text-align: center;
+  color: #db2828;
+  font-family: '8 Bit';
+  font-size: 2.5rem;
+  position: absolute;
+  top: 10vh;
+}
+
 .game-status-main:hover {
   cursor: pointer;
 }

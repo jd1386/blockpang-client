@@ -23,15 +23,15 @@ const test = {
     }
   },
   randomBlockProbability: 15, // 1~100%
-  nextBlockGenerationSpeed: 50, // direct proportion
+  nextBlockGenerationSpeed: 10, // direct proportion
   nextBlockGenerationInterval: 300,
   allowedKeyCodes: [9, 13, 16, 17, 18, 20, 32, 91] //9tab, 13enter, 16shift, 17ctrl,18alt,20capslock, 32space, 91ctrl,
 };
 //TODO: normal에 있고 test에 굳이 적혀 있지 않은 코드는 normal에 존재하는 코드를 계승하도록...
 
 const normal = {
-  time: 300000,
-  nextBlockTime: 295000,
+  time: 30000,
+  nextBlockTime: 200,
   score: 2000,
   block: {
     colors: ['#f783ac', '#69db7c', '#4dabf7'],
@@ -47,7 +47,7 @@ const normal = {
     }
   },
   randomBlockProbability: 15, // 1~100%
-  nextBlockGenerationSpeed: 500, // direct proportion
+  nextBlockGenerationSpeed: 10, // direct proportion
   nextBlockGenerationInterval: 300,
   allowedKeyCodes: [9, 13, 16, 17, 18, 20, 32, 91] //9tab, 13enter, 16shift, 17ctrl,18alt,20capslock, 32space, 91ctrl,
 };
