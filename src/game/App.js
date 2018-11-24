@@ -19,7 +19,8 @@ const defaultState = {
   blocks: [],
   isFirstPlaying: true,
   isPlaying: false,
-  gameoverReason: ''
+  gameoverReason: '',
+  currentStage: 1
 };
 
 class App extends React.Component {
@@ -128,45 +129,61 @@ class App extends React.Component {
     }
   };
 
-  _generateRandomBlock() {
-    let randomIndex = random(config.block.colors.length - 1);
-    let randomKeyIndex;
-    let randomColor;
-    // let blockImage;
-    let keySet = config.block.keys[randomIndex]; //normalStageKeySet
-
-    if (this.state.score > 1500 && random(7) === 0) {
-      // 1500 점을 넘는 경우 멀티 키를 가진 블럭 출현
+  _generateBlock() {
+    if (
+      this.state.currentStage > 0 &&
+      this.state.score >
+        config.stage[this.state.currentStage].appearanceScoreConditions &&
+      random(99) + 1 <=
+        config.stage[this.state.currentStage].appearanceProbability
+    ) {
       // TODO: 현재 확정되지 않은 스테이지 개념. 보완 필요.
-      keySet = config.stage[0].multiBlockKeys[randomIndex].slice();
+      let randomIndex = random(
+        config.stage[this.state.currentStage].multiBlockKeys.length - 1
+      );
+      let keySet = config.stage[this.state.currentStage].multiBlockKeys[
+        randomIndex
+      ].slice();
+
+      return this._generateBasicBlock(randomIndex, keySet);
     }
 
     if (
       this.state.isPlaying &&
       random(100) + 1 <= config.randomBlockProbability // 랜덤컬러 블럭 출현 파트
     ) {
-      randomColor = random(1) === 1 ? '#1aaaba' : `${Util.getRandColor(4)}`;
-      // 랜덤 블럭 출현이 확정면면 다시 50% 확률로 ICON 블럭 혹은 랜덤 컬러 블럭이 출현
-
-      randomKeyIndex = random(config.eventBlock.keys.length - 1);
-      return {
-        // 랜덤 블럭
-        blockImage:
-          randomColor === '#1aaaba' ? ( // ICON COLOR 인 경우
-            <Image size="mini" src="favicon.ico" />
-          ) : (
-            <Image size="mini" src="coin.gif" id="block-image" />
-          ),
-        color: randomColor,
-        key: config.eventBlock.keys[randomKeyIndex].slice(),
-        bonusScore: randomColor === '#1aaaba' ? random(50) + 50 : random(30)
-      };
+      return this._generateRandomBlock();
     }
 
+    return this._generateBasicBlock();
+  }
+
+  _generateBasicBlock(
+    randomIndex = random(config.block.colors.length - 1), //normalStageKeySet
+    keySet = config.block.keys[randomIndex]
+  ) {
     return {
       // 베이직 블럭
       color: config.block.colors[randomIndex],
       key: keySet
+    };
+  }
+
+  _generateRandomBlock() {
+    // 랜덤 블럭 출현이 확정되면 다시 50% 확률로 ICON 블럭 혹은 랜덤 컬러 블럭이 출현
+    let randomColor = random(1) === 1 ? '#1aaaba' : `${Util.getRandColor(4)}`;
+    let randomKeyIndex = random(config.eventBlock.keys.length - 1);
+    return {
+      // 랜덤 블럭
+      blockImage:
+        randomColor === '#1aaaba' ? ( // ICON COLOR 인 경우
+          <Image size="mini" src="favicon.ico" />
+        ) : (
+          <Image size="mini" src="coin.gif" id="block-image" />
+        ),
+      color: randomColor,
+      key: config.eventBlock.keys[randomKeyIndex].slice(),
+      bonusScore: randomColor === '#1aaaba' ? random(50) + 50 : random(30)
     };
   }
 
@@ -175,7 +192,8 @@ class App extends React.Component {
     let randomBlocks = [];
 
     for (let i = 0; i < numOfBlocks; i++) {
-      randomBlocks.push(this._generateRandomBlock());
+      randomBlocks.push(this._generateBasicBlock());
+      // randomBlocks.push(this._generateRandomBlock());
     }
     return randomBlocks;
   }
@@ -318,7 +336,7 @@ class App extends React.Component {
       this.state.time === this.state.nextBlockTime &&
       this.state.blocks.length < 13
     ) {
-      let newBlock = this._generateRandomBlock();
+      let newBlock = this._generateBlock();
       console.log(
         'this.state.nextBlockTime time passed! new block generated!',
         this.state.nextBlockTime
