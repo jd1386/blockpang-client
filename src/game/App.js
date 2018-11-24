@@ -21,7 +21,8 @@ const defaultState = {
   isFirstPlaying: true,
   isPlaying: false,
   gameoverReason: '',
-  currentStage: 1
+  currentStage: 1,
+  gameMessage: ''
 };
 
 class App extends React.Component {
@@ -84,7 +85,17 @@ class App extends React.Component {
         // 블럭 파괴 키가 1개 뿐이고, 블럭 health prop이 1이거나 없을 경우
         let keepBonusScore = currentBlocks[0].bonusScore;
         currentBlocks.shift();
-        this.setState({ blocks: currentBlocks });
+        this.setState({
+          blocks: currentBlocks,
+          gameMessage: 'Hit!'
+        });
+
+        // reset gameMessage so it renders again
+        setTimeout(() => {
+          this.setState(() => ({
+            gameMessage: ''
+          }));
+        }, 350);
 
         // 점수를 업데이트한다
         this._updateScore();
@@ -130,33 +141,63 @@ class App extends React.Component {
     }
   };
 
-  _generateBlock() {
-    if (
+  _isMultiKeyBlockAppearanceConditions() {
+    // config에 있는 스테이지 출현 점수를 충족시키고, 지정된 확률을 만족할 때, 0 스테이지 이상부터 멀티키 출현
+    return (
       this.state.currentStage > 0 &&
       this.state.score >
         config.stage[this.state.currentStage].appearanceScoreConditions &&
-      random(99) + 1 <=
+      random(1, 100) <=
         config.stage[this.state.currentStage].appearanceProbability
-    ) {
-      // TODO: 현재 확정되지 않은 스테이지 개념. 보완 필요.
-      let randomIndex = random(
-        config.stage[this.state.currentStage].multiBlockKeys.length - 1
-      );
-      let keySet = config.stage[this.state.currentStage].multiBlockKeys[
-        randomIndex
-      ].slice();
+    );
+  }
 
-      return this._generateBasicBlock(randomIndex, keySet);
+  _isRandomColorBonusBlockAppearanceConditions() {
+    return (
+      this.state.isPlaying && random(1, 100) <= config.randomBlockProbability
+    );
+  }
+
+  _doesNextStageExist() {
+    return Boolean(config.stage[this.state.currentStage + 1]);
+  }
+  _isStageLevelUpCondition() {
+    return (
+      this.state.score >=
+      config.stage[this.state.currentStage + 1].appearanceScoreConditions
+    );
+  }
+
+  _stageLevelUp() {
+    this.setState(prevState => ({
+      currentStage: prevState.currentStage + 1
+    }));
+  }
+
+  _addBonusTime() {
+    this.setState(prevState => ({
+      time:
+        prevState.time + config.stage[this.state.currentStage + 1].bonusTime,
+      nextBlockTime:
+        prevState.nextBlockTime +
+        config.stage[this.state.currentStage + 1].bonusTime
+    }));
+    console.log('보너스 타임 추가!');
+  }
+
+  _generateBlock() {
+    if (this._doesNextStageExist() && this._isStageLevelUpCondition()) {
+      this._stageLevelUp();
+      this._addBonusTime();
+      console.log('스테이지 레벨업!');
     }
 
-    if (
-      this.state.isPlaying &&
-      random(100) + 1 <= config.randomBlockProbability // 랜덤컬러 블럭 출현 파트
-    ) {
-      return this._generateRandomBlock();
-    }
+    if (this._isMultiKeyBlockAppearanceConditions())
+      return this._generateBasicMultiBlock();
 
-    return this._generateBasicBlock();
+    return this._isRandomColorBonusBlockAppearanceConditions() // 랜덤컬러 블럭 출현 파트
+      ? this._generateRandomBlock()
+      : this._generateBasicBlock();
   }
 
   _generateBasicBlock(
@@ -170,9 +211,23 @@ class App extends React.Component {
     };
   }
 
+  _generateBasicMultiBlock() {
+    let randomColorIndex = random(config.block.colors.length - 1);
+    let randomKeyIndex = random(
+      config.stage[this.state.currentStage].multiBlockKeys.length - 1
+    );
+    return {
+      color: config.block.colors[randomColorIndex],
+      key: config.stage[this.state.currentStage].multiBlockKeys[
+        randomKeyIndex
+      ].slice()
+    };
+  }
+
   _generateRandomBlock() {
     // 랜덤 블럭 출현이 확정되면 다시 50% 확률로 ICON 블럭 혹은 랜덤 컬러 블럭이 출현
-    let randomColor = random(1) === 1 ? '#1aaaba' : `${Util.getRandColor(4)}`;
+    let randomColor =
+      random(1, 100) <= 50 ? '#1aaaba' : `${Util.getRandColor(4)}`;
     let randomKeyIndex = random(config.eventBlock.keys.length - 1);
     return {
       // 랜덤 블럭
@@ -184,7 +239,7 @@ class App extends React.Component {
         ),
       color: randomColor,
       key: config.eventBlock.keys[randomKeyIndex].slice(),
-      bonusScore: randomColor === '#1aaaba' ? random(50) + 50 : random(30)
+      bonusScore: randomColor === '#1aaaba' ? random(51, 100) : random(1, 30)
     };
   }
 
@@ -293,7 +348,7 @@ class App extends React.Component {
           handleKeyDown={this._restartGame}
           boardBackground={this.gameBoardBackground}
           renderBlocks={this._renderBlocks}
-          time={this.state.time || 30000}
+          time={this.state.time}
           currentScore={this.state.score || 0}
         >
           <Status.Gameover
@@ -312,7 +367,7 @@ class App extends React.Component {
           renderBlocks={this._renderBlocks}
           time={this.state.time || 30000}
           currentScore={this.state.score || 0}
-          message={'Some Message'}
+          message={this.state.gameMessage}
         >
           <div className="blocks-container">{this._renderBlocks()}</div>
         </Board>
