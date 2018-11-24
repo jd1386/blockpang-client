@@ -1,7 +1,7 @@
 const test = {
-  time: 500000,
-  nextBlockTime: 499950,
-  score: 2000,
+  time: 3000,
+  nextBlockTime: 2950,
+  score: 0,
   block: {
     colors: ['#f783ac', '#69db7c', '#4dabf7'],
     keys: ['a', 's', 'd']
@@ -23,7 +23,7 @@ const test = {
     }
   },
   randomBlockProbability: 15, // 1~100%
-  nextBlockGenerationSpeed: 5000, // direct proportion
+  nextBlockGenerationSpeed: 50, // direct proportion
   nextBlockGenerationInterval: 300,
   allowedKeyCodes: [9, 13, 16, 17, 18, 20, 32, 91] //9tab, 13enter, 16shift, 17ctrl,18alt,20capslock, 32space, 91ctrl,
 };
