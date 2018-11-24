@@ -21,7 +21,7 @@ const defaultState = {
   isFirstPlaying: true,
   isPlaying: false,
   gameoverReason: '',
-  currentStage: 1
+  currentStage: 0
 };
 
 class App extends React.Component {
@@ -29,7 +29,6 @@ class App extends React.Component {
     super(props);
     this.gameBoardBackground = Util.generateRandBackground();
     this.state = defaultState;
-    console.log(random);
   }
 
   _checkAllowedKeycodes(e) {
@@ -148,7 +147,40 @@ class App extends React.Component {
     );
   }
 
+  _doesNextStageExist() {
+    return Boolean(config.stage[this.state.currentStage + 1]);
+  }
+  _isStageLevelUpCondition() {
+    return (
+      this.state.score >=
+      config.stage[this.state.currentStage + 1].appearanceScoreConditions
+    );
+  }
+
+  _stageLevelUp() {
+    this.setState(prevState => ({
+      currentStage: prevState.currentStage + 1
+    }));
+  }
+
+  _addBonusTime() {
+    this.setState(prevState => ({
+      time:
+        prevState.time + config.stage[this.state.currentStage + 1].bonusTime,
+      nextBlockTime:
+        prevState.nextBlockTime +
+        config.stage[this.state.currentStage + 1].bonusTime
+    }));
+    console.log('보너스 타임 추가!');
+  }
+
   _generateBlock() {
+    if (this._doesNextStageExist() && this._isStageLevelUpCondition()) {
+      this._stageLevelUp();
+      this._addBonusTime();
+      console.log('스테이지 레벨업!');
+    }
+
     if (this._isMultiKeyBlockAppearanceConditions())
       return this._generateBasicMultiBlock();
 
@@ -169,13 +201,14 @@ class App extends React.Component {
   }
 
   _generateBasicMultiBlock() {
-    let randomIndex = random(
+    let randomColorIndex = random(config.block.colors.length - 1);
+    let randomKeyIndex = random(
       config.stage[this.state.currentStage].multiBlockKeys.length - 1
     );
     return {
-      color: config.block.colors[randomIndex],
+      color: config.block.colors[randomColorIndex],
       key: config.stage[this.state.currentStage].multiBlockKeys[
-        randomIndex
+        randomKeyIndex
       ].slice()
     };
   }
