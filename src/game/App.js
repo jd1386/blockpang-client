@@ -312,6 +312,7 @@ class App extends React.Component {
           renderBlocks={this._renderBlocks}
           time={this.state.time || 30000}
           currentScore={this.state.score || 0}
+          message={'Some Message'}
         >
           <div className="blocks-container">{this._renderBlocks()}</div>
         </Board>
