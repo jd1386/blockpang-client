@@ -13,6 +13,7 @@ const board = props => {
       <Status.Header
         time={props.time}
         currentScore={props.currentScore}
+        stage={props.stage}
         message={props.message}
       />
       {props.children}
