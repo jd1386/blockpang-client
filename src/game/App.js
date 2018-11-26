@@ -233,9 +233,9 @@ class App extends React.Component {
       // 랜덤 블럭
       blockImage:
         randomColor === '#1aaaba' ? ( // ICON COLOR 인 경우
-          <Image size="mini" src="favicon.ico" />
+          <Image size="mini" src="favicon.ico" class="block-image" />
         ) : (
-          <Image size="mini" src="coin.gif" id="block-image" />
+          <Image size="mini" src="coin.gif" class="block-image" />
         ),
       color: randomColor,
       key: config.eventBlock.keys[randomKeyIndex].slice(),
