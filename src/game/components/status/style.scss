@@ -4,18 +4,17 @@
 }
 
 .game-status-bar {
-  margin-top: 18px;
   min-height: 8vh;
   display: flex;
   flex-direction: row;
-  align-items: flex-start;
+  align-items: center;
   flex-wrap: nowrap;
-  font-size: 3vh;
+  font-size: 1.8vw;
   font-family: '8 Bit', sans-serif;
 }
 
 .game-status-component {
-  width: 50%;
+  width: 33%;
   text-align: center;
   margin-top: 5px;
 
