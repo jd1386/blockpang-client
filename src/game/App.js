@@ -256,9 +256,9 @@ class App extends React.Component {
       // 랜덤 블럭
       blockImage:
         randomColor === '#1aaaba' ? ( // ICON COLOR 인 경우
-          <Image size="mini" src="favicon.ico" class="block-image" />
+          <Image size="mini" src="favicon.ico" className="block-image" />
         ) : (
-          <Image size="mini" src="coin.gif" class="block-image" />
+          <Image size="mini" src="coin.gif" className="block-image" />
         ),
       color: randomColor,
       key: config.eventBlock.keys[randomKeyIndex].slice(),
@@ -370,15 +370,11 @@ class App extends React.Component {
         <Board
           handleKeyDown={this._restartGame}
           boardBackground={this.gameBoardBackground}
-          renderBlocks={this._renderBlocks}
           time={this.state.time}
           currentScore={this.state.score || 0}
+          stage={this.state.currentStage}
         >
-          <Status.Gameover
-            reason={this.state.gameoverReason}
-            score={this.state.score}
-            lefttime={this.state.time}
-          />
+          <Status.Gameover reason={this.state.gameoverReason} />
         </Board>
       );
     } else {
@@ -387,10 +383,10 @@ class App extends React.Component {
         <Board
           handleKeyDown={this._handleKeyDown}
           boardBackground={this.gameBoardBackground}
-          renderBlocks={this._renderBlocks}
-          time={this.state.time || 30000}
-          currentScore={this.state.score || 0}
+          time={this.state.time}
+          currentScore={this.state.score}
           message={this.state.gameMessage}
+          stage={this.state.currentStage}
         >
           <div className="blocks-container">{this._renderBlocks()}</div>
         </Board>
@@ -401,8 +397,9 @@ class App extends React.Component {
   _renderGamestart = () => (
     <Board
       boardBackground={this.gameBoardBackground}
-      time={this.state.time || 30000}
-      currentScore={this.state.score || 0}
+      time={this.state.time}
+      currentScore={this.state.score}
+      stage={this.state.currentStage}
     >
       <Status.Gamestart onClick={() => this._handleGamestartClick} />
     </Board>
