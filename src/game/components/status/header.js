@@ -3,6 +3,7 @@ import './style.scss';
 import { Spring } from 'react-spring';
 import { Image } from 'semantic-ui-react';
 import Timer from './timer';
+import Stage from './stage';
 
 class Header extends Component {
   render() {
@@ -11,6 +12,9 @@ class Header extends Component {
         <div className="game-status-bar">
           <div className="game-status-component">
             <Timer time={this.props.time} />
+          </div>
+          <div className="game-status-component">
+            <Stage stage={this.props.stage} />
           </div>
           <Spring
             from={{ number: this.props.currentScore }}
