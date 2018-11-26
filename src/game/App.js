@@ -85,17 +85,23 @@ class App extends React.Component {
         // 블럭 파괴 키가 1개 뿐이고, 블럭 health prop이 1이거나 없을 경우
         let keepBonusScore = currentBlocks[0].bonusScore;
         currentBlocks.shift();
-        this.setState({
-          blocks: currentBlocks,
-          gameMessage: 'Hit!'
-        });
 
-        // reset gameMessage so it renders again
-        setTimeout(() => {
-          this.setState(() => ({
-            gameMessage: ''
-          }));
-        }, 350);
+        if (this.state.gameMessage) {
+          this.setState({
+            blocks: currentBlocks
+          });
+        } else {
+          this.setState({
+            blocks: currentBlocks,
+            gameMessage: 'Hit!'
+          });
+          // reset gameMessage so it renders again
+          setTimeout(() => {
+            this.setState(() => ({
+              gameMessage: ''
+            }));
+          }, 350);
+        }
 
         // 점수를 업데이트한다
         this._updateScore();
@@ -176,7 +182,8 @@ class App extends React.Component {
 
   _stageLevelUpMsg() {
     this.setState(prevState => ({
-      gameMessage: `Stage ${prevState.currentStage}`
+      gameMessage: `BonusTime ${config.stage[this.state.currentStage + 1]
+        .bonusTime / 1000} Sec`
     }));
 
     // reset gameMessage so it renders again
@@ -194,17 +201,7 @@ class App extends React.Component {
       nextBlockTime:
         prevState.nextBlockTime +
         config.stage[this.state.currentStage + 1].bonusTime
-      // nextBlockTime:
-      // prevState.nextBlockTime +
-      // config.stage[this.state.currentStage + 1].bonusTime -
-      // config.nextBlockGenerationInterval
     }));
-    console.log('보너스 타임 추가!');
-    console.log(
-      '시간, 다음 블럭 시간22',
-      this.state.time,
-      this.state.nextBlockTime
-    );
   }
 
   _generateBlock() {
@@ -212,7 +209,6 @@ class App extends React.Component {
       this._stageLevelUp();
       this._stageLevelUpMsg();
       this._addBonusTime();
-      console.log('스테이지 레벨업!');
     }
 
     if (this._isMultiKeyBlockAppearanceConditions())
@@ -412,15 +408,9 @@ class App extends React.Component {
     this.setState({
       blocks: this._generateDefaultBlocks(),
       isFirstPlaying: false,
-      isPlaying: true,
-      gameMessage: `Stage 1`
+      isPlaying: true
     });
 
-    setTimeout(() => {
-      this.setState(() => ({
-        gameMessage: ''
-      }));
-    }, 550);
     this.interval = setInterval(() => this._tick(), 10);
   };
 
