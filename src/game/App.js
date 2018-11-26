@@ -174,6 +174,19 @@ class App extends React.Component {
     }));
   }
 
+  _stageLevelUpMsg() {
+    this.setState(prevState => ({
+      gameMessage: `Stage ${prevState.currentStage}`
+    }));
+
+    // reset gameMessage so it renders again
+    setTimeout(() => {
+      this.setState(() => ({
+        gameMessage: ''
+      }));
+    }, 2000);
+  }
+
   _addBonusTime() {
     this.setState(prevState => ({
       time:
@@ -181,13 +194,23 @@ class App extends React.Component {
       nextBlockTime:
         prevState.nextBlockTime +
         config.stage[this.state.currentStage + 1].bonusTime
+      // nextBlockTime:
+      // prevState.nextBlockTime +
+      // config.stage[this.state.currentStage + 1].bonusTime -
+      // config.nextBlockGenerationInterval
     }));
     console.log('보너스 타임 추가!');
+    console.log(
+      '시간, 다음 블럭 시간22',
+      this.state.time,
+      this.state.nextBlockTime
+    );
   }
 
   _generateBlock() {
     if (this._doesNextStageExist() && this._isStageLevelUpCondition()) {
       this._stageLevelUp();
+      this._stageLevelUpMsg();
       this._addBonusTime();
       console.log('스테이지 레벨업!');
     }
@@ -389,8 +412,15 @@ class App extends React.Component {
     this.setState({
       blocks: this._generateDefaultBlocks(),
       isFirstPlaying: false,
-      isPlaying: true
+      isPlaying: true,
+      gameMessage: `Stage 1`
     });
+
+    setTimeout(() => {
+      this.setState(() => ({
+        gameMessage: ''
+      }));
+    }, 550);
     this.interval = setInterval(() => this._tick(), 10);
   };
 
@@ -404,18 +434,16 @@ class App extends React.Component {
         'this.state.nextBlockTime time passed! new block generated!',
         this.state.nextBlockTime
       );
-      let n;
-      n =
+      let nextBlockGenerationInterval =
         Math.floor(this.state.time / config.nextBlockGenerationSpeed / 10) * 10;
 
-      if (n < config.nextBlockGenerationInterval)
-        n = config.nextBlockGenerationInterval;
-      // if (n < 300) n = 300;
-      let nextBlockTime = this.state.nextBlockTime - n; // 300이 적당하다
-      this.setState({
+      if (nextBlockGenerationInterval < config.nextBlockGenerationInterval)
+        nextBlockGenerationInterval = config.nextBlockGenerationInterval;
+
+      this.setState(prevState => ({
         blocks: [...this.state.blocks, newBlock],
-        nextBlockTime
-      });
+        nextBlockTime: prevState.nextBlockTime - nextBlockGenerationInterval
+      }));
     }
     if (this.state.blocks.length > 11) this._endGame('exceedBlockLimit');
   };
