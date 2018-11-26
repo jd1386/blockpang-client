@@ -174,6 +174,19 @@ class App extends React.Component {
     }));
   }
 
+  _stageLevelUpMsg() {
+    this.setState(prevState => ({
+      gameMessage: `Stage ${prevState.currentStage}`
+    }));
+
+    // reset gameMessage so it renders again
+    setTimeout(() => {
+      this.setState(() => ({
+        gameMessage: ''
+      }));
+    }, 2000);
+  }
+
   _addBonusTime() {
     this.setState(prevState => ({
       time:
@@ -197,6 +210,7 @@ class App extends React.Component {
   _generateBlock() {
     if (this._doesNextStageExist() && this._isStageLevelUpCondition()) {
       this._stageLevelUp();
+      this._stageLevelUpMsg();
       this._addBonusTime();
       console.log('스테이지 레벨업!');
     }
@@ -398,8 +412,15 @@ class App extends React.Component {
     this.setState({
       blocks: this._generateDefaultBlocks(),
       isFirstPlaying: false,
-      isPlaying: true
+      isPlaying: true,
+      gameMessage: `Stage 1`
     });
+
+    setTimeout(() => {
+      this.setState(() => ({
+        gameMessage: ''
+      }));
+    }, 550);
     this.interval = setInterval(() => this._tick(), 10);
   };
 

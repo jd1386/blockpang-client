@@ -3,7 +3,7 @@
 const test = {
   time: 30000,
   nextBlockTime: 29500,
-  score: 660,
+  score: 0,
   block: {
     colors: ['#f783ac', '#69db7c', '#4dabf7'],
     keys: ['a', 's', 'd']
