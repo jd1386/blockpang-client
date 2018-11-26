@@ -21,7 +21,7 @@ const defaultState = {
   isFirstPlaying: true,
   isPlaying: false,
   gameoverReason: '',
-  currentStage: 1,
+  numOfIcons: 0,
   gameMessage: ''
 };
 
@@ -367,8 +367,8 @@ class App extends React.Component {
           handleKeyDown={this._restartGame}
           boardBackground={this.gameBoardBackground}
           time={this.state.time}
-          currentScore={this.state.score || 0}
-          stage={this.state.currentStage}
+          currentScore={this.state.score}
+          icons={this.state.numOfIcons}
         >
           <Status.Gameover reason={this.state.gameoverReason} />
         </Board>
@@ -382,7 +382,7 @@ class App extends React.Component {
           time={this.state.time}
           currentScore={this.state.score}
           message={this.state.gameMessage}
-          stage={this.state.currentStage}
+          icons={this.state.numOfIcons}
         >
           <div className="blocks-container">{this._renderBlocks()}</div>
         </Board>
@@ -395,7 +395,7 @@ class App extends React.Component {
       boardBackground={this.gameBoardBackground}
       time={this.state.time}
       currentScore={this.state.score}
-      stage={this.state.currentStage}
+      icons={this.state.numOfIcons}
     >
       <Status.Gamestart onClick={() => this._handleGamestartClick} />
     </Board>
@@ -417,10 +417,10 @@ class App extends React.Component {
       this.state.blocks.length < 13
     ) {
       let newBlock = this._generateBlock();
-      console.log(
-        'this.state.nextBlockTime time passed! new block generated!',
-        this.state.nextBlockTime
-      );
+      // console.log(
+      //   'this.state.nextBlockTime time passed! new block generated!',
+      //   this.state.nextBlockTime
+      // );
       let nextBlockGenerationInterval =
         Math.floor(this.state.time / config.nextBlockGenerationSpeed / 10) * 10;
 
