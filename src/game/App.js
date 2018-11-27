@@ -21,7 +21,7 @@ const defaultState = {
   isFirstPlaying: true,
   isPlaying: false,
   gameoverReason: '',
-  currentStage: 2,
+  numOfIcons: 0,
   gameMessage: ''
 };
 
@@ -29,7 +29,7 @@ class App extends React.Component {
   constructor(props) {
     super(props);
     // this.gameBoardBackground = Util.generateRandBackground();
-    this.gameBoardBackground = Util.generateRandBackgroundForStage('stage1');
+    this.boardBackground = Util.generateRandBackgroundForStage('stage1');
     this.state = defaultState;
   }
 
@@ -117,7 +117,7 @@ class App extends React.Component {
         // 아래 파트는 주석처리.
 
         // setTimeout(() => {
-        //   let newBlock = this._generateRandomBlock();
+        //   let newBlock = this._generateEventBlock();
         //   console.log('new block generated!', newBlock);
 
         //   this.setState({
@@ -220,7 +220,7 @@ class App extends React.Component {
       return this._generateBasicMultiBlock();
 
     return this._isRandomColorBonusBlockAppearanceConditions() // 랜덤컬러 블럭 출현 파트
-      ? this._generateRandomBlock()
+      ? this._generateEventBlock()
       : this._generateBasicBlock();
   }
 
@@ -248,7 +248,7 @@ class App extends React.Component {
     };
   }
 
-  _generateRandomBlock() {
+  _generateEventBlock() {
     // 랜덤 블럭 출현이 확정되면 다시 50% 확률로 ICON 블럭 혹은 랜덤 컬러 블럭이 출현
     let randomColor =
       random(1, 100) <= 50 ? '#1aaaba' : `${Util.getRandColor(4)}`;
@@ -267,15 +267,15 @@ class App extends React.Component {
     };
   }
 
-  _generateDefaultBlocks(numOfBlocks = 6) {
+  _generateInitialBlocks(numOfBlocks = 6) {
     // generate an array of random blocks
-    let randomBlocks = [];
+    let initialBlocks = [];
 
     for (let i = 0; i < numOfBlocks; i++) {
-      randomBlocks.push(this._generateBasicBlock());
-      // randomBlocks.push(this._generateRandomBlock());
+      initialBlocks.push(this._generateBasicBlock());
+      // initialBlocks.push(this._generateEventBlock());
     }
-    return randomBlocks;
+    return initialBlocks;
   }
 
   _renderBlocks() {
@@ -352,7 +352,7 @@ class App extends React.Component {
       this.setState({
         ...defaultState,
         ...{ isFirstPlaying: false },
-        blocks: this._generateDefaultBlocks()
+        blocks: this._generateInitialBlocks()
       });
     }
   };
@@ -371,10 +371,10 @@ class App extends React.Component {
       return (
         <Board
           handleKeyDown={this._restartGame}
-          boardBackground={this.gameBoardBackground}
+          boardBackground={this.boardBackground}
           time={this.state.time}
-          currentScore={this.state.score || 0}
-          stage={this.state.currentStage}
+          currentScore={this.state.score}
+          icons={this.state.numOfIcons}
         >
           <Status.Gameover reason={this.state.gameoverReason} />
         </Board>
@@ -384,11 +384,11 @@ class App extends React.Component {
       return (
         <Board
           handleKeyDown={this._handleKeyDown}
-          boardBackground={this.gameBoardBackground}
+          boardBackground={this.boardBackground}
           time={this.state.time}
           currentScore={this.state.score}
           message={this.state.gameMessage}
-          stage={this.state.currentStage}
+          icons={this.state.numOfIcons}
         >
           <div className="blocks-container">{this._renderBlocks()}</div>
         </Board>
@@ -398,10 +398,10 @@ class App extends React.Component {
 
   _renderGamestart = () => (
     <Board
-      boardBackground={this.gameBoardBackground}
+      boardBackground={this.boardBackground}
       time={this.state.time}
       currentScore={this.state.score}
-      stage={this.state.currentStage}
+      icons={this.state.numOfIcons}
     >
       <Status.Gamestart onClick={() => this._handleGamestartClick} />
     </Board>
@@ -409,7 +409,7 @@ class App extends React.Component {
 
   _handleGamestartClick = () => {
     this.setState({
-      blocks: this._generateDefaultBlocks(),
+      blocks: this._generateInitialBlocks(),
       isFirstPlaying: false,
       isPlaying: true
     });
@@ -423,10 +423,10 @@ class App extends React.Component {
       this.state.blocks.length < 13
     ) {
       let newBlock = this._generateBlock();
-      console.log(
-        'this.state.nextBlockTime time passed! new block generated!',
-        this.state.nextBlockTime
-      );
+      // console.log(
+      //   'this.state.nextBlockTime time passed! new block generated!',
+      //   this.state.nextBlockTime
+      // );
       let nextBlockGenerationInterval =
         Math.floor(this.state.time / config.nextBlockGenerationSpeed / 10) * 10;
 
