@@ -406,7 +406,7 @@ class App extends React.Component {
           boardBackground={this.boardBackground}
           time={this.state.time}
           currentScore={this.state.score}
-          icons={this.state.numOfIcons}
+          stage={this.state.currentStage}
         >
           <Status.Gameover reason={this.state.gameoverReason} />
         </Board>
@@ -420,7 +420,7 @@ class App extends React.Component {
           time={this.state.time}
           currentScore={this.state.score}
           message={this.state.gameMessage}
-          icons={this.state.numOfIcons}
+          stage={this.state.currentStage}
         >
           <div className="blocks-container">{this._renderBlocks()}</div>
         </Board>
@@ -433,7 +433,7 @@ class App extends React.Component {
       boardBackground={this.boardBackground}
       time={this.state.time}
       currentScore={this.state.score}
-      icons={this.state.numOfIcons}
+      stage={this.state.currentStage}
     >
       <Status.Gamestart onClick={() => this._handleGamestartClick} />
     </Board>

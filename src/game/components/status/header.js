@@ -8,7 +8,7 @@ import Stage from './stage';
 
 class Header extends Component {
   render() {
-    const { time, icons, currentScore, message } = this.props;
+    const { time, stage, currentScore, message } = this.props;
     return (
       <React.Fragment>
         <div className="game-status-bar">
@@ -16,7 +16,7 @@ class Header extends Component {
             <Timer time={time} />
           </div>
           <div className="game-status-component">
-            <Stage icons={icons} />
+            <Stage stage={stage} />
           </div>
           <Spring from={{ number: currentScore }} to={{ number: currentScore }}>
             {props => {
@@ -40,7 +40,7 @@ class Header extends Component {
 Header.propTypes = {
   time: PropTypes.number.isRequired,
   currentScore: PropTypes.number.isRequired,
-  icons: PropTypes.number.isRequired,
+  stage: PropTypes.number.isRequired,
   message: PropTypes.string
 };
 

@@ -8,7 +8,7 @@ const board = props => {
     boardBackground,
     time,
     currentScore,
-    icons,
+    stage,
     message
   } = props;
 
@@ -22,7 +22,7 @@ const board = props => {
       <Status.Header
         time={time}
         currentScore={currentScore}
-        icons={icons}
+        stage={stage}
         message={message}
       />
       {props.children}
