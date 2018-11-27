@@ -1,6 +1,5 @@
 import React from 'react';
 import { Image } from 'semantic-ui-react';
-import { Spring } from 'react-spring';
 import PropTypes from 'prop-types';
 
 const stage = props => (

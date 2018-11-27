@@ -1,14 +1,13 @@
 import React, { Component } from 'react';
 import './style.scss';
 import PropTypes from 'prop-types';
-import { Spring } from 'react-spring';
-import { Image } from 'semantic-ui-react';
 import Timer from './timer';
 import Stage from './stage';
+import Score from './score';
 
 class Header extends Component {
   render() {
-    const { time, stage, currentScore, message } = this.props;
+    const { time, stage, score, message } = this.props;
     return (
       <React.Fragment>
         <div className="game-status-bar">
@@ -18,18 +17,9 @@ class Header extends Component {
           <div className="game-status-component">
             <Stage stage={stage} />
           </div>
-          <Spring from={{ number: currentScore }} to={{ number: currentScore }}>
-            {props => {
-              return (
-                <div className="game-status-component">
-                  <Image id="onlycoin" size="mini" src="coin.gif" />
-                  <span className="status-title">
-                    {Math.round(props.number)}
-                  </span>
-                </div>
-              );
-            }}
-          </Spring>
+          <div className="game-status-component">
+            <Score score={score} />
+          </div>
         </div>
         <div className="message-wrapper">{message}</div>
       </React.Fragment>
@@ -39,7 +29,7 @@ class Header extends Component {
 
 Header.propTypes = {
   time: PropTypes.number.isRequired,
-  currentScore: PropTypes.number.isRequired,
+  score: PropTypes.number.isRequired,
   stage: PropTypes.number.isRequired,
   message: PropTypes.string
 };
