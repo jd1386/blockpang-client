@@ -22,13 +22,14 @@ const defaultState = {
   isPlaying: false,
   gameoverReason: '',
   numOfIcons: 0,
+  currentStage: 1,
   gameMessage: ''
 };
 
 class App extends React.Component {
   constructor(props) {
     super(props);
-    // this.gameBoardBackground = Util.generateRandBackground();
+    // this.BoardBackground = Util.generateRandBackground();
     this.boardBackground = Util.generateRandBackgroundForStage('stage1');
     this.state = defaultState;
   }
@@ -202,7 +203,7 @@ class App extends React.Component {
 
   _stageLevelUp() {
     let nextStage = this.state.currentStage + 1; // stage backgroundImage change
-    this.gameBoardBackground = Util.generateRandBackgroundForStage(
+    this.boardBackground = Util.generateRandBackgroundForStage(
       `stage${nextStage}`
     );
     this.setState(prevState => ({
@@ -376,7 +377,7 @@ class App extends React.Component {
       // default state should be now
       // isFirstPlaying: false
       // because the game has been restarted
-      this.gameBoardBackground = Util.generateRandBackgroundForStage('stage1');
+      this.boardBackground = Util.generateRandBackgroundForStage('stage1');
       this.setState({
         ...defaultState,
         ...{ isFirstPlaying: false },
@@ -451,6 +452,7 @@ class App extends React.Component {
       this.state.blocks.length < 13
     ) {
       let newBlock = this._generateBlock();
+
       // console.log(
       //   'this.state.nextBlockTime time passed! new block generated!',
       //   this.state.nextBlockTime
