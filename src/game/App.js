@@ -4,6 +4,7 @@ import { random } from 'lodash';
 // import { Spring, Transition } from 'react-spring';
 // import { VelocityComponent } from 'velocity-react';
 import Board from './components/board';
+import BlockList from './components/block/blockList';
 import Block from './components/block';
 import Status from './components/status';
 import { Image } from 'semantic-ui-react';
@@ -323,36 +324,12 @@ class App extends React.Component {
 
     // when user is not playing the game
     // the game has been just initialized
-    if (!this.state.isPlaying) {
-      return this.state.blocks.map((block, index) => {
-        return (
-          <div className="block-wrapper" key={index}>
-            <Block
-              index={index}
-              image={block.blockImage}
-              color={block.color}
-              keyDown={block.key}
-              bonusScore={block.bonusScore}
-            />
-          </div>
-        );
-      });
-    } else {
-      // the game has started
-      // console.log('game has started', this.state.blocks);
-      return this.state.blocks.map((block, index) => (
-        <div className="block-wrapper" key={index}>
-          <Block
-            index={index}
-            image={block.blockImage}
-            color={block.color}
-            keyDown={block.key}
-            bonusScore={block.bonusScore}
-            health={block.health}
-          />
-        </div>
-      ));
-    }
+    // return !this.state.isPlaying ? (
+    //   <BlockList blocks={this.state.blocks} />
+    // ) : (
+    //   <BlockList blocks={this.state.blocks} />
+    // );
+    return <BlockList blocks={this.state.blocks} />;
   }
 
   _updateScore(score) {

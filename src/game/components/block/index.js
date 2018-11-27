@@ -1,20 +1,10 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import './style.scss';
-// import { Spring } from 'react-spring';
-// import { VelocityComponent } from 'velocity-react';
 import BlockContent from './blockContent';
 
 class Block extends Component {
-  shouldComponentUpdate(nextProps, nextState) {
-    return nextProps !== this.props;
-  }
-
   render() {
-    // test
-    console.log('Block', Date.now(), this.props);
-    //
-
     return (
       <div
         className={`block ${this.props.index === 0 ? 'block-bottom' : ''}`}
