@@ -1,5 +1,6 @@
 import React from 'react';
 import { Image } from 'semantic-ui-react';
+import PropTypes from 'prop-types';
 
 const formatUnitOfTime = unitOfTime => {
   return unitOfTime < 10
@@ -19,5 +20,9 @@ const timer = props => (
     <span className="status-title">{displayTime(props.time)}</span>
   </React.Fragment>
 );
+
+timer.propTypes = {
+  time: PropTypes.number.isRequired
+};
 
 export default timer;

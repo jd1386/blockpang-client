@@ -3,22 +3,31 @@ import './style.scss';
 import Status from '../status';
 
 const board = props => {
+  const {
+    handleKeyDown,
+    boardBackground,
+    time,
+    currentScore,
+    icons,
+    message
+  } = props;
+
   return (
     <div
       id="game-board"
       tabIndex="0"
-      onKeyDown={props.handleKeyDown}
-      style={props.boardBackground}
+      onKeyDown={handleKeyDown}
+      style={boardBackground}
     >
-      {/* {console.log(props)} */}
       <Status.Header
-        time={props.time}
-        currentScore={props.currentScore}
-        icons={props.icons}
-        message={props.message}
+        time={time}
+        currentScore={currentScore}
+        icons={icons}
+        message={message}
       />
       {props.children}
     </div>
   );
 };
+
 export default board;

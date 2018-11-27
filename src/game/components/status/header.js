@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import './style.scss';
+import PropTypes from 'prop-types';
 import { Spring } from 'react-spring';
 import { Image } from 'semantic-ui-react';
 import Timer from './timer';
@@ -7,19 +8,17 @@ import Stage from './stage';
 
 class Header extends Component {
   render() {
+    const { time, icons, currentScore, message } = this.props;
     return (
       <React.Fragment>
         <div className="game-status-bar">
           <div className="game-status-component">
-            <Timer time={this.props.time} />
+            <Timer time={time} />
           </div>
           <div className="game-status-component">
-            <Stage stage={this.props.stage} />
+            <Stage icons={icons} />
           </div>
-          <Spring
-            from={{ number: this.props.currentScore }}
-            to={{ number: this.props.currentScore }}
-          >
+          <Spring from={{ number: currentScore }} to={{ number: currentScore }}>
             {props => {
               return (
                 <div className="game-status-component">
@@ -32,10 +31,17 @@ class Header extends Component {
             }}
           </Spring>
         </div>
-        <div className="message-wrapper">{this.props.message}</div>
+        <div className="message-wrapper">{message}</div>
       </React.Fragment>
     );
   }
 }
+
+Header.propTypes = {
+  time: PropTypes.number.isRequired,
+  currentScore: PropTypes.number.isRequired,
+  icons: PropTypes.number.isRequired,
+  message: PropTypes.string
+};
 
 export default Header;
