@@ -29,7 +29,6 @@ const defaultState = {
 class App extends React.Component {
   constructor(props) {
     super(props);
-    // this.BoardBackground = Util.generateRandBackground();
     this.boardBackground = Util.generateRandBackgroundForStage('stage1');
     this.state = defaultState;
   }
@@ -47,8 +46,7 @@ class App extends React.Component {
     if (this.state.isPlaying) {
       this.state.time > 0
         ? this.setState(prevState => ({
-            time: prevState.time - 10
-            // time: prevState.time - 1
+            time: prevState.time - 10 // miliseconds
           }))
         : this.setState(prevState => ({
             time: 0
@@ -59,7 +57,7 @@ class App extends React.Component {
 
   _handleKeyDown = e => {
     let isStart;
-    console.log('입력키 ', e.key, '키코드', e.keyCode);
+    console.log('user input key', e.key, 'user input keyCode', e.keyCode);
 
     if (!this.state.isPlaying) {
       isStart = true;
@@ -72,26 +70,22 @@ class App extends React.Component {
 
     let currentBlocks = this.state.blocks.slice();
 
-    // console.log('현재 입력해야 할 블럭 키', currentBlocks[0].key[0]);
-    // console.log('입력키', e.key.toLowerCase());
-    // console.log('체력', currentBlocks[0].health);
-    // console.log('현재 블록상태', this.state.blocks);
-
-    // if (e.key.toLowerCase() === currentBlocks[0].key) { // 기존 입력할 키가 단 하나였을 경우
     if (e.key.toLowerCase() === currentBlocks[0].key[0]) {
-      // key 값이 일치하면, currentBlocks 배열의 블럭 데이터를 삭제한다.
+      // If the key value entered matches the key written on the block,
+      // delete the block data from the currentBlocks array.
+
       if (
         currentBlocks[0].key.length === 1 &&
         (currentBlocks[0].health === 1 || !currentBlocks[0].health)
       ) {
-        // 블럭 파괴 키가 1개 뿐이고, 블럭 health prop이 1이거나 없을 경우
+        // There is only one key input to destroy the block, and block health prop 1 or no
         this._destroySingleKeyBlock(currentBlocks);
       } else if (currentBlocks[0].key.length > 1) {
-        // 멀티 키를 가진 블럭의 경우
+        // Multiple key inputs to destroy block
         this._destroyMultiKeyBlock();
       } else if (currentBlocks[0].health) {
-        // 체력을 가진 블럭의 경우, 체력을 가진 경우는 키를 여러번 입력해야 파괴됨.
-        // TODO: 멀티 키와 체력을 동시에 가진 블럭의 처리는 아직 고려 안함.
+        // Block with health, you must input the key several times before it will be destroyed
+        // TODO: Block handling with both multi-key and health attributes has not yet been considered.
         let [firstBlock, ...otherBlocks] = this.state.blocks;
         if (firstBlock.health > 1) firstBlock.health -= 1;
 
@@ -100,7 +94,7 @@ class App extends React.Component {
         });
       }
     } else if (!isStart) {
-      // 시작하자마자 버튼 잘못 눌러서 사망하는 상황 방지. 첫 입력 미스는 막아줌.
+      // Prevent death by pressing the wrong button as soon as it starts. The first input miss is blocked.
       this._endGame('missInput');
     }
   };
@@ -119,10 +113,10 @@ class App extends React.Component {
       });
       this._resetGameMessage();
 
-      // 점수를 업데이트한다
       this._updateScore(10);
-      // 보너스 점수를 추가한다
+
       if (keepBonusScore) {
+        // add bonus score
         this._updateEventBlockScore(keepBonusScore);
       }
     } else {
@@ -173,23 +167,6 @@ class App extends React.Component {
     }, time);
   }
 
-  _isMultiKeyBlockAppearanceConditions() {
-    // config에 있는 스테이지 출현 점수를 충족시키고, 지정된 확률을 만족할 때, 0 스테이지 이상부터 멀티키 출현
-    return (
-      this.state.currentStage > 0 &&
-      this.state.score >
-        config.stage[this.state.currentStage].appearanceScoreConditions &&
-      random(1, 100) <=
-        config.stage[this.state.currentStage].appearanceProbability
-    );
-  }
-
-  _isRandomColorBonusBlockAppearanceConditions() {
-    return (
-      this.state.isPlaying && random(1, 100) <= config.randomBlockProbability
-    );
-  }
-
   _doesNextStageExist() {
     return Boolean(config.stage[this.state.currentStage + 1]);
   }
@@ -209,6 +186,8 @@ class App extends React.Component {
     this.setState(prevState => ({
       currentStage: prevState.currentStage + 1
     }));
+    this._stageLevelUpMsg();
+    this._addBonusTime();
   }
 
   _stageLevelUpMsg() {
@@ -238,27 +217,71 @@ class App extends React.Component {
   _generateBlock() {
     if (this._doesNextStageExist() && this._isStageLevelUpCondition()) {
       this._stageLevelUp();
-      this._stageLevelUpMsg();
-      this._addBonusTime();
     }
 
-    if (this._isMultiKeyBlockAppearanceConditions())
-      return this._generateBasicMultiBlock();
-
-    return this._isRandomColorBonusBlockAppearanceConditions() // 랜덤컬러 블럭 출현 파트
-      ? this._generateEventBlock()
-      : // : this._generateBombBlock();
-        this._generateBasicBlock();
+    return this._generateRandomBlock();
   }
 
-  _generateBasicBlock(
-    randomIndex = random(config.block.colors.length - 1), //normalStageKeySet
-    keySet = config.block.keys[randomIndex]
-  ) {
+  _generateRandomBlock() {
+    if (!this.state.isPlaying) return;
+    let randomNum = random(1, 100);
+    let block;
+
+    switch (true) {
+      case randomNum <= config.bonusBlockProbability:
+        block = this._generateBonusBlock();
+        break;
+      case randomNum <=
+        config.bonusBlockProbability + config.iconBlockProbability:
+        block = this._generateIconBlock();
+        break;
+      case randomNum <=
+        config.bonusBlockProbability +
+          config.iconBlockProbability +
+          config.bombBlockProbability:
+        block = this._generateBombBlock();
+        break;
+      case randomNum <=
+        config.bonusBlockProbability +
+          config.iconBlockProbability +
+          config.bombBlockProbability +
+          config.stage[this.state.currentStage].appearanceProbability:
+        block = this._generateBasicMultiBlock();
+        break;
+      default:
+        block = this._generateBasicBlock();
+    }
+    return block;
+  }
+
+  _generateBonusBlock() {
+    let randomKeyIndex = random(config.eventBlock.keys.length - 1);
     return {
-      // 베이직 블럭
-      color: config.block.colors[randomIndex],
-      key: keySet
+      blockImage: <Image size="mini" src="coin.gif" className="block-image" />,
+      color: `${Util.getRandColor(4)}`,
+      key: config.eventBlock.keys[randomKeyIndex].slice(),
+      bonusScore: random(1, 30)
+    };
+  }
+
+  _generateIconBlock() {
+    let randomKeyIndex = random(config.eventBlock.keys.length - 1);
+    return {
+      blockImage: (
+        <Image size="mini" src="favicon.ico" className="block-image" />
+      ),
+      color: '#1aaaba',
+      key: config.eventBlock.keys[randomKeyIndex].slice(),
+      bonusScore: random(51, 100)
+    };
+  }
+
+  _generateBombBlock() {
+    return {
+      blockImage: <Image size="mini" src="bomb.png" className="block-image" />,
+      color: 'black',
+      key: 'q',
+      type: 'bomb'
     };
   }
 
@@ -275,32 +298,13 @@ class App extends React.Component {
     };
   }
 
-  _generateEventBlock() {
-    // 랜덤 블럭 출현이 확정되면 다시 50% 확률로 ICON 블럭 혹은 랜덤 컬러 블럭이 출현
-    let randomColor =
-      random(1, 100) <= 50 ? '#1aaaba' : `${Util.getRandColor(4)}`;
-    let randomKeyIndex = random(config.eventBlock.keys.length - 1);
+  _generateBasicBlock(
+    randomIndex = random(config.block.colors.length - 1),
+    keySet = config.block.keys[randomIndex] //normalStageKeySet
+  ) {
     return {
-      // 랜덤 블럭
-      blockImage:
-        randomColor === '#1aaaba' ? ( // ICON COLOR 인 경우
-          <Image size="mini" src="favicon.ico" className="block-image" />
-        ) : (
-          <Image size="mini" src="coin.gif" className="block-image" />
-        ),
-      color: randomColor,
-      key: config.eventBlock.keys[randomKeyIndex].slice(),
-      bonusScore: randomColor === '#1aaaba' ? random(51, 100) : random(1, 30)
-    };
-  }
-
-  _generateBombBlock() {
-    return {
-      // 랜덤 블럭
-      blockImage: <Image size="mini" src="bomb.png" className="block-image" />,
-      color: 'black',
-      key: 'q',
-      type: 'bomb'
+      color: config.block.colors[randomIndex],
+      key: keySet
     };
   }
 
@@ -310,7 +314,6 @@ class App extends React.Component {
 
     for (let i = 0; i < numOfBlocks; i++) {
       initialBlocks.push(this._generateBasicBlock());
-      // initialBlocks.push(this._generateEventBlock());
     }
     return initialBlocks;
   }
