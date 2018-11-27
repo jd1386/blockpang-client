@@ -1,5 +1,6 @@
 import React from 'react';
 import './style.scss';
+import PropTypes from 'prop-types';
 
 const gamestart = props => {
   return (
@@ -14,6 +15,10 @@ const gamestart = props => {
       </div>
     </div>
   );
+};
+
+gamestart.propTypes = {
+  onClick: PropTypes.func.isRequired
 };
 
 export default gamestart;
