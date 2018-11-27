@@ -21,7 +21,7 @@ const board = props => {
     >
       <Status.Header
         time={time}
-        currentScore={currentScore}
+        score={currentScore}
         stage={stage}
         message={message}
       />
