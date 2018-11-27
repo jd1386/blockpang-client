@@ -19,6 +19,7 @@ const generateRandBackgroundForStage = stageNumber => {
       background.includes(stageNumber)
     ).length - 1
   );
+
   return backgroundList[
     Object.keys(backgroundList).filter(background =>
       background.includes(stageNumber)
