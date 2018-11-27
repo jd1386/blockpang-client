@@ -28,7 +28,8 @@ const defaultState = {
 class App extends React.Component {
   constructor(props) {
     super(props);
-    this.boardBackground = Util.generateRandBackground();
+    // this.gameBoardBackground = Util.generateRandBackground();
+    this.boardBackground = Util.generateRandBackgroundForStage('stage1');
     this.state = defaultState;
   }
 
@@ -175,6 +176,10 @@ class App extends React.Component {
   }
 
   _stageLevelUp() {
+    let nextStage = this.state.currentStage + 1; // stage backgroundImage change
+    this.gameBoardBackground = Util.generateRandBackgroundForStage(
+      `stage${nextStage}`
+    );
     this.setState(prevState => ({
       currentStage: prevState.currentStage + 1
     }));
@@ -343,6 +348,7 @@ class App extends React.Component {
       // default state should be now
       // isFirstPlaying: false
       // because the game has been restarted
+      this.gameBoardBackground = Util.generateRandBackgroundForStage('stage1');
       this.setState({
         ...defaultState,
         ...{ isFirstPlaying: false },
