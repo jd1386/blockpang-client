@@ -1,5 +1,6 @@
-import React, { Component } from 'react';
+import React from 'react';
 import './style.scss';
+import PropTypes from 'prop-types';
 
 const gameoverMessages = {
   exceedBlockLimit: 'You have too many blocks',
@@ -7,18 +8,22 @@ const gameoverMessages = {
   timeover: 'time over'
 };
 
-class Gameover extends Component {
-  render() {
-    return (
-      <div className="game-status-main">
-        <div className="header">Game Over</div>
-        <div className="content">
-          <div>{gameoverMessages[this.props.reason]}</div>
-          <div className="flash">Press W KEY to restart</div>
-        </div>
-      </div>
-    );
-  }
-}
+const gameover = props => {
+  const { reason } = props;
 
-export default Gameover;
+  return (
+    <div className="game-status-main">
+      <div className="header">Game Over</div>
+      <div className="content">
+        <div>{gameoverMessages[reason]}</div>
+        <div className="flash">Press W KEY to restart</div>
+      </div>
+    </div>
+  );
+};
+
+gameover.propTypes = {
+  reason: PropTypes.string.isRequired
+};
+
+export default gameover;

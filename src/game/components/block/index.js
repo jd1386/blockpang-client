@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import PropTypes from 'prop-types';
 import './style.scss';
 // import { Spring } from 'react-spring';
 // import { VelocityComponent } from 'velocity-react';
@@ -35,5 +36,13 @@ class Block extends Component {
     );
   }
 }
+
+Block.propTypes = {
+  index: PropTypes.number.isRequired,
+  keyDown: PropTypes.oneOfType([PropTypes.string, PropTypes.array]),
+  color: PropTypes.string.isRequired,
+  image: PropTypes.object,
+  bonusScore: PropTypes.number
+};
 
 export default Block;
