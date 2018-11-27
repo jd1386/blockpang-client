@@ -6,7 +6,15 @@ import './style.scss';
 import BlockContent from './blockContent';
 
 class Block extends Component {
+  shouldComponentUpdate(nextProps, nextState) {
+    return nextProps !== this.props;
+  }
+
   render() {
+    // test
+    console.log('Block', Date.now(), this.props);
+    //
+
     return (
       <div
         className={`block ${this.props.index === 0 ? 'block-bottom' : ''}`}
@@ -14,25 +22,6 @@ class Block extends Component {
       >
         <BlockContent data={this.props} />
       </div>
-
-      // FIXME: animation effects ..
-      // <VelocityComponent
-      //   animation={{ opacity: this.state.isVisible ? 1 : 0 }}
-      //   enter={{ animation: 'fadeIn' }}
-      //   runAnimation={true}
-      //   duration={500}
-      // >
-      //   <div
-      //     className="block block-bottom"
-      //     style={{ background: this.props.color }}
-      //   >
-      //     {this.props.image}
-      //     <div className="inner-text">
-      //       {this.props.keyDown}
-      //       {bonusScore}
-      //     </div>
-      //   </div>
-      // </VelocityComponent>
     );
   }
 }

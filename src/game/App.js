@@ -326,8 +326,9 @@ class App extends React.Component {
     if (!this.state.isPlaying) {
       return this.state.blocks.map((block, index) => {
         return (
-          <div className="block-wrapper">
+          <div className="block-wrapper" key={index}>
             <Block
+              index={index}
               image={block.blockImage}
               color={block.color}
               keyDown={block.key}
@@ -342,13 +343,12 @@ class App extends React.Component {
       return this.state.blocks.map((block, index) => (
         <div className="block-wrapper" key={index}>
           <Block
-            key={index}
             index={index}
             image={block.blockImage}
             color={block.color}
             keyDown={block.key}
-            health={block.health}
             bonusScore={block.bonusScore}
+            health={block.health}
           />
         </div>
       ));
