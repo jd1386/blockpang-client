@@ -5,7 +5,8 @@ import PropTypes from 'prop-types';
 const gameoverMessages = {
   exceedBlockLimit: 'You have too many blocks',
   missInput: 'You must type the right key',
-  timeover: 'time over'
+  timeover: 'time over',
+  inputSourceKorean: '재시작하려면 영문 자판으로 변환 후 w를 눌러주세요!'
 };
 
 const gameover = props => {
