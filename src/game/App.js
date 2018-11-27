@@ -2,7 +2,7 @@ import React from 'react';
 import './App.scss';
 import { random } from 'lodash';
 // import { Spring, Transition } from 'react-spring';
-import { VelocityComponent } from 'velocity-react';
+// import { VelocityComponent } from 'velocity-react';
 import Board from './components/board';
 import Block from './components/block';
 import Status from './components/status';
@@ -84,54 +84,10 @@ class App extends React.Component {
         (currentBlocks[0].health === 1 || !currentBlocks[0].health)
       ) {
         // 블럭 파괴 키가 1개 뿐이고, 블럭 health prop이 1이거나 없을 경우
-        let keepBonusScore = currentBlocks[0].bonusScore;
-        currentBlocks.shift();
-
-        if (this.state.gameMessage) {
-          this.setState({
-            blocks: currentBlocks
-          });
-        } else {
-          this.setState({
-            blocks: currentBlocks,
-            gameMessage: 'Hit!'
-          });
-          // reset gameMessage so it renders again
-          setTimeout(() => {
-            this.setState(() => ({
-              gameMessage: ''
-            }));
-          }, 350);
-        }
-
-        // 점수를 업데이트한다
-        this._updateScore();
-        // 보너스 점수를 추가한다
-        if (keepBonusScore) {
-          this._updateEventBlockScore(keepBonusScore);
-        }
-
-        // 약간의 시간 간격을 두고 새로운 블럭을 스택 상단에 쌓는다
-        // TODO: 기본 기능만 구현한 것.
-        // 현재는 매 일정 시간 간격으로 블럭이 자동 생성되도록 로직이 바뀌어
-        // 아래 파트는 주석처리.
-
-        // setTimeout(() => {
-        //   let newBlock = this._generateEventBlock();
-        //   console.log('new block generated!', newBlock);
-
-        //   this.setState({
-        //     blocks: [...this.state.blocks, newBlock]
-        //   });
-        // }, 350);
+        this._destroySingleKeyBlock(currentBlocks);
       } else if (currentBlocks[0].key.length > 1) {
         // 멀티 키를 가진 블럭의 경우
-        let [firstBlock, ...otherBlocks] = this.state.blocks;
-        if (firstBlock.key.length > 1) firstBlock.key.shift();
-
-        this.setState({
-          blocks: [firstBlock, ...otherBlocks]
-        });
+        this._destroyMultiKeyBlock();
       } else if (currentBlocks[0].health) {
         // 체력을 가진 블럭의 경우, 체력을 가진 경우는 키를 여러번 입력해야 파괴됨.
         // TODO: 멀티 키와 체력을 동시에 가진 블럭의 처리는 아직 고려 안함.
@@ -147,6 +103,74 @@ class App extends React.Component {
       this._endGame('missInput');
     }
   };
+
+  _destroySingleKeyBlock(currentBlocks) {
+    let keepBonusScore;
+
+    if (!currentBlocks[0].type) {
+      // regular block
+      keepBonusScore = currentBlocks[0].bonusScore;
+      currentBlocks.shift();
+
+      this.setState({
+        blocks: currentBlocks,
+        gameMessage: 'Hit!'
+      });
+      this._resetGameMessage();
+
+      // 점수를 업데이트한다
+      this._updateScore(10);
+      // 보너스 점수를 추가한다
+      if (keepBonusScore) {
+        this._updateEventBlockScore(keepBonusScore);
+      }
+    } else {
+      // bomb block
+      // calculate the total score of the currentBlocks
+      const sumOfScore = this._sumCurrentBlocksScore(currentBlocks);
+      this._updateScore(sumOfScore);
+      // empty blocks from the state
+      this.setState({
+        blocks: [],
+        gameMessage: 'Bomb!!!'
+      });
+
+      this._resetGameMessage(500);
+    }
+  }
+
+  _destroyMultiKeyBlock() {
+    let [firstBlock, ...otherBlocks] = this.state.blocks;
+    if (firstBlock.key.length > 1) firstBlock.key.shift();
+
+    this.setState({
+      blocks: [firstBlock, ...otherBlocks]
+    });
+  }
+
+  _sumCurrentBlocksScore(currentBlocks) {
+    let sum = 0;
+    currentBlocks.forEach(block => {
+      // if event block, add its bonusScore
+      if (block.bonusScore) {
+        sum += 10 + block.bonusScore;
+      } else {
+        // if regular block, add 10
+        sum += 10;
+      }
+    });
+    console.log('sum is', sum);
+    return sum;
+  }
+
+  _resetGameMessage(time = 350) {
+    // reset gameMessage so it renders again
+    setTimeout(() => {
+      this.setState(() => ({
+        gameMessage: ''
+      }));
+    }, time);
+  }
 
   _isMultiKeyBlockAppearanceConditions() {
     // config에 있는 스테이지 출현 점수를 충족시키고, 지정된 확률을 만족할 때, 0 스테이지 이상부터 멀티키 출현
@@ -168,6 +192,7 @@ class App extends React.Component {
   _doesNextStageExist() {
     return Boolean(config.stage[this.state.currentStage + 1]);
   }
+
   _isStageLevelUpCondition() {
     return (
       this.state.score >=
@@ -221,7 +246,8 @@ class App extends React.Component {
 
     return this._isRandomColorBonusBlockAppearanceConditions() // 랜덤컬러 블럭 출현 파트
       ? this._generateEventBlock()
-      : this._generateBasicBlock();
+      : // : this._generateBombBlock();
+        this._generateBasicBlock();
   }
 
   _generateBasicBlock(
@@ -267,6 +293,16 @@ class App extends React.Component {
     };
   }
 
+  _generateBombBlock() {
+    return {
+      // 랜덤 블럭
+      blockImage: <Image size="mini" src="bomb.png" className="block-image" />,
+      color: 'black',
+      key: 'q',
+      type: 'bomb'
+    };
+  }
+
   _generateInitialBlocks(numOfBlocks = 6) {
     // generate an array of random blocks
     let initialBlocks = [];
@@ -286,21 +322,14 @@ class App extends React.Component {
     if (!this.state.isPlaying) {
       return this.state.blocks.map((block, index) => {
         return (
-          <VelocityComponent
-            animation={{ opacity: 1 }}
-            runOnMount={true}
-            key={index}
-            duration={3000}
-          >
-            <div className="block-wrapper">
-              <Block
-                image={block.blockImage}
-                color={block.color}
-                keyDown={block.key}
-                bonusScore={block.bonusScore}
-              />
-            </div>
-          </VelocityComponent>
+          <div className="block-wrapper">
+            <Block
+              image={block.blockImage}
+              color={block.color}
+              keyDown={block.key}
+              bonusScore={block.bonusScore}
+            />
+          </div>
         );
       });
     } else {
@@ -322,10 +351,9 @@ class App extends React.Component {
     }
   }
 
-  _updateScore() {
-    // TODO: 블록당 점수를 얼마나 할 지는 향후 변경될 수 있다
+  _updateScore(score) {
     this.setState(prevState => ({
-      score: (prevState.score += 10)
+      score: (prevState.score += score)
     }));
   }
 
