@@ -3,7 +3,7 @@
 const test = {
   time: 30000,
   nextBlockTime: 29500,
-  score: 650,
+  score: 1390,
   block: {
     colors: ['#f783ac', '#69db7c', '#4dabf7'],
     keys: ['a', 's', 'd']
@@ -39,7 +39,7 @@ const test = {
         ['a', 'f'],
         ['s', 'd']
       ],
-      appearanceScoreConditions: 1000,
+      appearanceScoreConditions: 1400,
       appearanceProbability: 15,
       bonusTime: 10000
     },
@@ -51,7 +51,7 @@ const test = {
         ['a', 's', 'd'],
         ['d', 'a', 's']
       ],
-      appearanceScoreConditions: 1400,
+      appearanceScoreConditions: 2100,
       appearanceProbability: 15,
       bonusTime: 10000
     },
