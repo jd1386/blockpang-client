@@ -33,6 +33,19 @@ class App extends React.Component {
     this.state = defaultState;
   }
 
+  isKoreanChar(ch) {
+    let c = ch.charCodeAt(0);
+    if (0x1100 <= c && c <= 0x11ff) return true;
+    if (0x3130 <= c && c <= 0x318f) return true;
+    if (0xac00 <= c && c <= 0xd7a3) return true;
+    return false;
+  }
+
+  _alertMessage(gameMessage) {
+    this.setState({
+      gameMessage
+    });
+  }
   _checkAllowedKeycodes(e) {
     if (config.allowedKeyCodes.includes(e.keyCode)) {
       e.preventDefault();
@@ -41,6 +54,7 @@ class App extends React.Component {
   }
 
   _tick = () => {
+    console.log('ticktest');
     if (this.state.gameoverReason) return;
 
     if (this.state.isPlaying) {
@@ -58,6 +72,9 @@ class App extends React.Component {
   _handleKeyDown = e => {
     let isStart;
     console.log('user input key', e.key, 'user input keyCode', e.keyCode);
+
+    if (this.isKoreanChar(e.key))
+      return this._alertMessage('한글 자판을 영문 자판으로 변환해주세요!');
 
     if (!this.state.isPlaying) {
       isStart = true;
@@ -368,10 +385,14 @@ class App extends React.Component {
   }
 
   _endGame = gameoverReason => {
+    clearInterval(this.intervalId);
     this.setState({ isPlaying: false, gameoverReason });
   };
 
   _restartGame = e => {
+    if (this.isKoreanChar(e.key))
+      return this.setState({ gameoverReason: 'inputSourceKorean' });
+
     if (e.keyCode === 32) {
       e.preventDefault();
       return;
@@ -380,6 +401,7 @@ class App extends React.Component {
       // default state should be now
       // isFirstPlaying: false
       // because the game has been restarted
+      this.intervalId = setInterval(() => this._tick(), 10);
       this.boardBackground = Util.generateRandBackgroundForStage('stage1');
       this.setState({
         ...defaultState,
@@ -446,7 +468,7 @@ class App extends React.Component {
       isPlaying: true
     });
 
-    this.interval = setInterval(() => this._tick(), 10);
+    this.intervalId = setInterval(() => this._tick(), 10);
   };
 
   _shouldMakeBlock = () => {
@@ -480,6 +502,7 @@ class App extends React.Component {
   };
 
   render() {
+    console.log('intervalId', this.intervalId);
     if (this.state.isFirstPlaying) {
       return this._renderGamestart();
     }
