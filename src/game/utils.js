@@ -14,7 +14,6 @@ const getRandColor = brightness => {
 
 const generateRandBackgroundForStage = stageNumber => {
   //new
-  console.log('이거 호출되니?');
   let randNum = random(
     Object.keys(backgroundList).filter(background =>
       background.includes(stageNumber)
