@@ -15,7 +15,9 @@ class App extends React.Component {
   };
 
   login = () => {
-    this.setState({ isLoggedIn: true });
+    this.setState(prevState => ({
+      isLoggedIn: true
+    }));
   };
 
   logout = () => {

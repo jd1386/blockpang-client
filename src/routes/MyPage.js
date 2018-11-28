@@ -14,7 +14,7 @@ import './MyPage.scss';
 
 const getDefaultState = () => {
   let walletAddress;
-  walletAddress = window.localStorage.getItem('walletAddress');
+  walletAddress = localStorage.getItem('walletAddress');
   const panes = [
     {
       menuItem: '지갑 등록',
@@ -80,7 +80,9 @@ class MyPage extends Component {
   state = getDefaultState();
 
   render() {
-    if (!this.props.isLoggedIn || !localStorage.getItem('userData')) {
+    // FIXME: fix the following auth logic below
+    // if (!this.props.isLoggedIn) {
+    if (!localStorage.getItem('userData')) {
       return <Redirect to={'/'} />;
     }
 
