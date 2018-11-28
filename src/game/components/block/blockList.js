@@ -4,7 +4,9 @@ import Block from './index';
 
 class BlockList extends React.Component {
   shouldComponentUpdate(nextProps, nextState) {
-    return nextProps.blocks !== this.props.blocks;
+    // BlockList component should re-render as long as
+    // it has a new array of blocks passed in
+    return nextProps.blocks.length !== this.props.blocks.length;
   }
 
   render() {
