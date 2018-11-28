@@ -29,8 +29,8 @@ class Navbar extends Component {
     );
   };
   render() {
-    return (
-      <div>
+    return this.props.isLoggedIn ? (
+      <React.Fragment>
         <Menu fixed="top" inverted>
           <Container>
             <Menu.Item as={Link} to="/" header>
@@ -51,7 +51,24 @@ class Navbar extends Component {
             {this.menuChange()}
           </Container>
         </Menu>
-      </div>
+      </React.Fragment>
+    ) : (
+      <React.Fragment>
+        <Menu fixed="top" inverted>
+          <Container>
+            <Menu.Item as={Link} to="/" header>
+              <Image
+                className="app-logo"
+                size="mini"
+                src="favicon.ico"
+                style={{ marginRight: '1.5em' }}
+              />
+              블록팡
+            </Menu.Item>
+            {this.menuChange()}
+          </Container>
+        </Menu>
+      </React.Fragment>
     );
   }
 }
