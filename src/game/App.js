@@ -4,7 +4,7 @@ import { random } from 'lodash';
 // import { Spring, Transition } from 'react-spring';
 // import { VelocityComponent } from 'velocity-react';
 import Board from './components/board';
-import Block from './components/block';
+import BlockList from './components/block/blockList';
 import Status from './components/status';
 import { Image } from 'semantic-ui-react';
 import Util from './utils';
@@ -70,7 +70,7 @@ class App extends React.Component {
 
   _handleKeyDown = e => {
     let isStart;
-    console.log('user input key', e.key, 'user input keyCode', e.keyCode);
+    // console.log('user input key', e.key, 'user input keyCode', e.keyCode);
 
     if (this.isKoreanChar(e.key))
       return this._alertMessage('한글 자판을 영문 자판으로 변환해주세요!');
@@ -335,40 +335,11 @@ class App extends React.Component {
   }
 
   _renderBlocks() {
-    // render the default blocks
-
-    // when user is not playing the game
-    // the game has been just initialized
-    if (!this.state.isPlaying) {
-      return this.state.blocks.map((block, index) => {
-        return (
-          <div className="block-wrapper">
-            <Block
-              image={block.blockImage}
-              color={block.color}
-              keyDown={block.key}
-              bonusScore={block.bonusScore}
-            />
-          </div>
-        );
-      });
-    } else {
-      // the game has started
-      // console.log('game has started', this.state.blocks);
-      return this.state.blocks.map((block, index) => (
-        <div className="block-wrapper" key={index}>
-          <Block
-            key={index}
-            index={index}
-            image={block.blockImage}
-            color={block.color}
-            keyDown={block.key}
-            health={block.health}
-            bonusScore={block.bonusScore}
-          />
-        </div>
-      ));
-    }
+    return (
+      <div className="blocks-container">
+        <BlockList blocks={this.state.blocks} />
+      </div>
+    );
   }
 
   _updateScore(score) {
@@ -443,7 +414,7 @@ class App extends React.Component {
           message={this.state.gameMessage}
           stage={this.state.currentStage}
         >
-          <div className="blocks-container">{this._renderBlocks()}</div>
+          {this._renderBlocks()}
         </Board>
       );
     }
