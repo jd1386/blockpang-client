@@ -12,27 +12,64 @@ import {
 } from 'semantic-ui-react';
 import './MyPage.scss';
 
+const displayForm = walletAddress => {
+  return (
+    <div>
+      <Input
+        size="tiny"
+        style={{ minWidth: '35em' }}
+        icon="teal chain"
+        iconPosition="left"
+        action={{
+          // style={{ color: 'FFFFFF' }},
+          color: 'teal',
+          content: 'Edit'
+        }}
+        defaultValue={walletAddress}
+      />
+    </div>
+  );
+};
+
+const handleRegisterWallet = () => {
+  console.log('hi');
+};
+
 const getDefaultState = () => {
-  let walletAddress;
-  walletAddress = localStorage.getItem('walletAddress');
+  const walletAddress = localStorage.getItem('walletAddress');
+  // const walletAddress = 'hxc4193cda4a75526bf50896ec242d6713bb6b02a3';
+
   const panes = [
     {
-      menuItem: '지갑 등록',
+      menuItem: 'Manage Wallet',
       render: () => (
         <Tab.Pane attached={false}>
-          아직 등록된 지갑이 없군요!
-          <p />
-          <Button style={{ backgroundColor: '#1aaaba', color: '#FFFFFF' }}>
-            지갑 생성
-          </Button>
-          <Button style={{ backgroundColor: '#1aaaba', color: '#FFFFFF' }}>
-            기존 지갑 등록
-          </Button>
+          <div>
+            <Input
+              size="tiny"
+              style={{ minWidth: '35em', color: 'teal' }}
+              icon="chain"
+              iconPosition="left"
+              action={{
+                color: 'teal',
+                content: 'Register Wallet',
+                onClick: () => handleRegisterWallet()
+              }}
+            />
+          </div>
+          <div style={{ textAlign: 'center', marginTop: '15px' }}>
+            <Button
+              onClick={() => alert('hi')}
+              style={{ backgroundColor: '#1aaaba', color: '#FFFFFF' }}
+            >
+              Create Wallet
+            </Button>
+          </div>
         </Tab.Pane>
       )
     },
     {
-      menuItem: '게임 기록',
+      menuItem: 'Game History',
       render: () => (
         <Tab.Pane attached={false}>
           게임기록이 아직 없습니다. 한 게임 해보시는 건 어떨까요?
@@ -44,18 +81,17 @@ const getDefaultState = () => {
   if (walletAddress) {
     panes.shift();
     panes.unshift({
-      menuItem: '지갑 정보',
+      menuItem: 'Manage Wallet',
       render: () => (
         <Tab.Pane attached={false}>
-          Your Wallet :{' '}
+          Your Wallet Address{' '}
           {/* <Input focus placeholder="hxc4193cda4a75526bf50896ec242d6713bb6b02a3" /> */}
           <Input
             size="tiny"
-            style={{ minWidth: '35em' }}
-            icon="teal chain"
+            style={{ minWidth: '35em', color: 'teal' }}
+            icon="chain"
             iconPosition="left"
             action={{
-              // style={{ color: 'FFFFFF' }},
               color: 'teal',
               content: 'Edit'
             }}
