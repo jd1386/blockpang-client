@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import { Link } from 'react-router-dom';
 import { Header, Icon, Image, Menu, Segment, Sidebar } from 'semantic-ui-react';
 import './style.scss';
 
@@ -6,7 +7,7 @@ class LeftSidebar extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      activeItem: 'home'
+      activeItem: 'dashboard'
     };
   }
 
@@ -18,22 +19,25 @@ class LeftSidebar extends Component {
     return (
       <Menu fluid pointing secondary vertical style={{ background: '#fff' }}>
         <Menu.Item
-          name="home"
-          active={activeItem === 'home'}
+          name="dashboard"
+          active={activeItem === 'dashboard'}
           onClick={this.handleItemClick}
-          className="menu-item"
+          as={Link}
+          to="/admin/"
         />
         <Menu.Item
-          name="messages"
-          active={activeItem === 'messages'}
+          name="page-2"
+          active={activeItem === 'page-2'}
           onClick={this.handleItemClick}
-          className="menu-item"
+          as={Link}
+          to="/admin/page-2"
         />
         <Menu.Item
-          name="friends"
-          active={activeItem === 'friends'}
+          name="page-3"
+          active={activeItem === 'page-3'}
           onClick={this.handleItemClick}
-          className="menu-item"
+          as={Link}
+          to="/admin/page-3"
         />
       </Menu>
     );
