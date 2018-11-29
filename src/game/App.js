@@ -400,7 +400,10 @@ class App extends React.Component {
           currentScore={this.state.score}
           stage={this.state.currentStage}
         >
-          <Status.Gameover reason={this.state.gameoverReason} />
+          <Status.Gameover
+            reason={this.state.gameoverReason}
+            score={this.state.score}
+          />
         </Board>
       );
     } else {
