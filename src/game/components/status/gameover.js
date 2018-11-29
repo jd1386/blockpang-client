@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { Component } from 'react';
 import './style.scss';
 import PropTypes from 'prop-types';
 
@@ -9,22 +9,26 @@ const gameoverMessages = {
   inputSourceKorean: '재시작하려면 영문 자판으로 변환 후 w를 눌러주세요!'
 };
 
-const gameover = props => {
-  const { reason } = props;
+class Gameover extends Component {
+  componentDidMount() {
+    console.log('didMount!');
+  }
 
-  return (
-    <div className="game-status-main">
-      <div className="header">Game Over</div>
-      <div className="content">
-        <div>{gameoverMessages[reason]}</div>
-        <div className="flash">Press W KEY to restart</div>
+  render() {
+    return (
+      <div className="game-status-main">
+        <div className="header">Game Over</div>
+        <div className="content">
+          <div>{gameoverMessages[this.props.reason]}</div>
+          <div className="flash">Press W KEY to restart</div>
+        </div>
       </div>
-    </div>
-  );
-};
+    );
+  }
+}
 
-gameover.propTypes = {
+Gameover.propTypes = {
   reason: PropTypes.string.isRequired
 };
 
-export default gameover;
+export default Gameover;
