@@ -7,8 +7,8 @@ import {
   Button,
   Segment,
   Tab,
-  Input
-  // Label
+  Input,
+  Table
 } from 'semantic-ui-react';
 import './MyPage.scss';
 
@@ -28,6 +28,38 @@ const displayForm = walletAddress => {
         defaultValue={walletAddress}
       />
     </div>
+  );
+};
+
+const gameRecordTable = () => {
+  return (
+    <Table basic="very" celled collapsing>
+      <Table.Header>
+        <Table.Row>
+          <Table.HeaderCell>Time</Table.HeaderCell>
+          <Table.HeaderCell>ICX won</Table.HeaderCell>
+        </Table.Row>
+      </Table.Header>
+
+      <Table.Body>
+        <Table.Row>
+          <Table.Cell>12:30pm</Table.Cell>
+          <Table.Cell>22</Table.Cell>
+        </Table.Row>
+        <Table.Row>
+          <Table.Cell>12:30pm</Table.Cell>
+          <Table.Cell>22</Table.Cell>
+        </Table.Row>
+        <Table.Row>
+          <Table.Cell>12:30pm</Table.Cell>
+          <Table.Cell>22</Table.Cell>
+        </Table.Row>
+        <Table.Row>
+          <Table.Cell>12:30pm</Table.Cell>
+          <Table.Cell>22</Table.Cell>
+        </Table.Row>
+      </Table.Body>
+    </Table>
   );
 };
 
@@ -69,10 +101,11 @@ const getDefaultState = () => {
       )
     },
     {
-      menuItem: 'Game History',
+      menuItem: 'Game Record',
       render: () => (
         <Tab.Pane attached={false}>
-          게임기록이 아직 없습니다. 한 게임 해보시는 건 어떨까요?
+          <h2>Today's Game Record</h2>
+          {gameRecordTable()}
         </Tab.Pane>
       )
     }
