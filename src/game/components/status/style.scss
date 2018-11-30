@@ -3,6 +3,13 @@
   src: local('8 Bit'), url('../fonts/8bit-font.ttf');
 }
 
+.prize {
+  font-size: 3vw;
+  color: #ffeb00;
+  background: black;
+  padding: 1vw;
+}
+
 .game-status-bar {
   min-height: 8vh;
   display: flex;
@@ -35,19 +42,31 @@
   .header {
     font-size: 9vw;
     line-height: 18vh;
-    height: 100%;
     padding-top: 10vh;
+  }
+
+  .header.gameover {
+    font-size: 7vw;
+    line-height: 18vh;
+    padding-top: 5vh;
   }
 
   .content {
     line-height: 5rem;
   }
 
+  .content.gameover {
+    line-height: 5rem;
+  }
+
+  .gameover-message {
+    font-size: 1rem;
+  }
+
   .flash {
     color: #505050;
     -webkit-animation: flash linear 2s infinite;
     animation: flash linear 2s infinite;
-    font-size: 1.2rem;
   }
   @-webkit-keyframes flash {
     0% {
