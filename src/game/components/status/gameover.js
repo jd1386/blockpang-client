@@ -41,7 +41,11 @@ class Gameover extends Component {
       value: this.props.score
     };
 
-    this._requestTransfer(userData);
+    // use setTimeout to give more room between
+    // render and _requestTransfer call
+    setTimeout(() => {
+      this._requestTransfer(userData);
+    }, 2000);
   }
 
   render() {
