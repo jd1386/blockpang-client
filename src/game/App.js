@@ -170,7 +170,6 @@ class App extends React.Component {
         sum += 10;
       }
     });
-    console.log('sum is', sum);
     return sum;
   }
 
@@ -484,7 +483,6 @@ class App extends React.Component {
       return this._checkGameEnd();
     } else {
       if (this.state.gameoverReason) {
-        console.log('gameoverReason', this.state.gameoverReason);
         return this._checkGameEnd();
       } else {
         // restart the game
