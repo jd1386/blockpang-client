@@ -6,120 +6,132 @@ import {
   Header,
   Button,
   Segment,
-  Tab,
-  Input
-  // Label
+  Input,
+  Menu,
+  Table
 } from 'semantic-ui-react';
 import './MyPage.scss';
+import WalletInfo from '../components/MyPage/walletInfo';
+import EditWalletForm from '../components/MyPage/editWalletForm';
 
-const displayForm = walletAddress => {
-  return (
-    <div>
-      <Input
-        size="tiny"
-        style={{ minWidth: '35em' }}
-        icon="teal chain"
-        iconPosition="left"
-        action={{
-          // style={{ color: 'FFFFFF' }},
-          color: 'teal',
-          content: 'Edit'
-        }}
-        defaultValue={walletAddress}
-      />
-    </div>
-  );
-};
+class MyPage extends Component {
+  constructor(props) {
+    super(props);
+    this.state = {
+      // walletAddress: localStorage.getItem('walletAddress'),
+      walletAddress: 'hxc4193cda4a75526bf50896ec242d6713bb6b02a3',
+      activeMenu: 'Manage Wallet',
+      isEditingWallet: false
+    };
+  }
 
-const handleRegisterWallet = () => {
-  console.log('hi');
-};
-
-const getDefaultState = () => {
-  const walletAddress = localStorage.getItem('walletAddress');
-  // const walletAddress = 'hxc4193cda4a75526bf50896ec242d6713bb6b02a3';
-
-  const panes = [
-    {
-      menuItem: 'Manage Wallet',
-      render: () => (
-        <Tab.Pane attached={false}>
-          <div>
-            <Input
-              size="tiny"
-              style={{ minWidth: '35em', color: 'teal' }}
-              icon="chain"
-              iconPosition="left"
-              action={{
-                color: 'teal',
-                content: 'Register Wallet',
-                onClick: () => handleRegisterWallet()
-              }}
-            />
-          </div>
-          <div style={{ textAlign: 'center', marginTop: '15px' }}>
-            <Button
-              onClick={() => alert('hi')}
-              style={{ backgroundColor: '#1aaaba', color: '#FFFFFF' }}
-            >
-              Create Wallet
-            </Button>
-          </div>
-        </Tab.Pane>
-      )
-    },
-    {
-      menuItem: 'Game History',
-      render: () => (
-        <Tab.Pane attached={false}>
-          게임기록이 아직 없습니다. 한 게임 해보시는 건 어떨까요?
-        </Tab.Pane>
-      )
-    }
-  ];
-
-  if (walletAddress) {
-    panes.shift();
-    panes.unshift({
-      menuItem: 'Manage Wallet',
-      render: () => (
-        <Tab.Pane attached={false}>
-          Your Wallet Address{' '}
-          {/* <Input focus placeholder="hxc4193cda4a75526bf50896ec242d6713bb6b02a3" /> */}
+  _manageWalletContent() {
+    return this.state.walletAddress ? (
+      <div>
+        {this.state.isEditingWallet ? (
+          <EditWalletForm
+            walletAddress={this.state.walletAddress}
+            handleEditWallet={() => this._handleEditWallet()}
+            updateWalletAddress={arg => this._updateWalletAddress(arg)}
+          />
+        ) : (
+          <WalletInfo
+            walletAddress={this.state.walletAddress}
+            handleEditWallet={() => this._handleEditWallet()}
+          />
+        )}
+      </div>
+    ) : (
+      <div>
+        <div>
           <Input
             size="tiny"
-            style={{ minWidth: '35em', color: 'teal' }}
+            style={{ width: '100%', color: 'teal' }}
             icon="chain"
             iconPosition="left"
             action={{
               color: 'teal',
-              content: 'Edit'
+              content: 'Register Wallet',
+              onClick: () => this._handleRegisterWallet()
             }}
-            defaultValue={walletAddress}
           />
-          {/* <Label>{walletAddress}</Label> */}
-          {/* <Button>Wallet Change</Button> */}
-          {/* <i class="icon user" /> */}
-        </Tab.Pane>
-      )
-    });
+        </div>
+        <div style={{ textAlign: 'center', marginTop: '15px' }}>
+          <Button
+            onClick={this._handleCreateWallet}
+            style={{ backgroundColor: '#1aaaba', color: '#FFFFFF' }}
+          >
+            Create Wallet
+          </Button>
+        </div>
+      </div>
+    );
   }
-  return {
-    walletAddress,
-    panes
-  };
-};
 
-// const walletAddress = 'hxc4193cda4a75526bf50896ec242d6713bb6b02a3';
+  _gameRecordContent() {
+    return (
+      <Table basic="very" celled collapsing style={{ width: '100%' }}>
+        <Table.Header>
+          <Table.Row>
+            <Table.HeaderCell>Time</Table.HeaderCell>
+            <Table.HeaderCell>Score</Table.HeaderCell>
+            <Table.HeaderCell>ICX won</Table.HeaderCell>
+          </Table.Row>
+        </Table.Header>
 
-class MyPage extends Component {
-  state = getDefaultState();
+        <Table.Body>
+          <Table.Row>
+            <Table.Cell>12:30pm</Table.Cell>
+            <Table.Cell>22</Table.Cell>
+            <Table.Cell>22</Table.Cell>
+          </Table.Row>
+          <Table.Row>
+            <Table.Cell>12:30pm</Table.Cell>
+            <Table.Cell>22</Table.Cell>
+            <Table.Cell>22</Table.Cell>
+          </Table.Row>
+          <Table.Row>
+            <Table.Cell>12:30pm</Table.Cell>
+            <Table.Cell>22</Table.Cell>
+            <Table.Cell>22</Table.Cell>
+          </Table.Row>
+          <Table.Row>
+            <Table.Cell>12:30pm</Table.Cell>
+            <Table.Cell>22</Table.Cell>
+            <Table.Cell>22</Table.Cell>
+          </Table.Row>
+        </Table.Body>
+      </Table>
+    );
+  }
+
+  _handleMenuClick = (e, { name }) => this.setState({ activeMenu: name });
+
+  _handleRegisterWallet() {
+    console.log('clicked handleRegisterWallet');
+  }
+
+  _handleCreateWallet() {
+    console.log('clicked handleCreateWallet');
+  }
+
+  _handleEditWallet() {
+    this.setState(prevState => ({
+      isEditingWallet: !prevState.isEditingWallet
+    }));
+  }
+  _updateWalletAddress(newAddress) {
+    this.setState({ walletAddress: newAddress });
+  }
 
   render() {
+    const { activeMenu } = this.state;
+
     // FIXME: fix the following auth logic below
-    // if (!this.props.isLoggedIn) {
-    if (!localStorage.getItem('userData')) {
-      return <Redirect to={'/'} />;
+    if (!this.props.isLoggedIn) {
+      if (!localStorage.getItem('userData')) {
+        return <Redirect to={'/'} />;
+      }
     }
 
     return (
@@ -130,17 +142,24 @@ class MyPage extends Component {
               <Header as="h1">My Page</Header>
             </Grid.Row>
             <Grid.Row>
-              <div>
-                <Tab
-                  menu={{
-                    id: 'onlytab',
-                    inverted: true,
-                    attached: false,
-                    tabular: false
-                  }}
-                  panes={this.state.panes}
+              <Menu attached="top" tabular>
+                <Menu.Item
+                  name="Manage Wallet"
+                  active={activeMenu === 'Manage Wallet'}
+                  onClick={this._handleMenuClick}
                 />
-              </div>
+                <Menu.Item
+                  name="Game Record"
+                  active={activeMenu === 'Game Record'}
+                  onClick={this._handleMenuClick}
+                />
+              </Menu>
+
+              <Segment attached="bottom">
+                {activeMenu === 'Manage Wallet'
+                  ? this._manageWalletContent()
+                  : this._gameRecordContent()}
+              </Segment>
             </Grid.Row>
           </Grid>
         </Segment>
