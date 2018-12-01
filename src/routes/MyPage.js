@@ -6,20 +6,20 @@ import {
   Header,
   Button,
   Segment,
-  Input,
+  Divider,
   Menu,
   Table
 } from 'semantic-ui-react';
 import './MyPage.scss';
 import WalletInfo from '../components/MyPage/walletInfo';
-import EditWalletForm from '../components/MyPage/editWalletForm';
+import WalletForm from '../components/MyPage/walletForm';
 
 class MyPage extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      // walletAddress: localStorage.getItem('walletAddress'),
-      walletAddress: 'hxc4193cda4a75526bf50896ec242d6713bb6b02a3',
+      walletAddress: '',
+      // walletAddress: 'hxc4193cda4a75526bf50896ec242d6713bb6b02a3',
       activeMenu: 'Manage Wallet',
       isEditingWallet: false
     };
@@ -29,7 +29,7 @@ class MyPage extends Component {
     return this.state.walletAddress ? (
       <div>
         {this.state.isEditingWallet ? (
-          <EditWalletForm
+          <WalletForm
             walletAddress={this.state.walletAddress}
             handleEditWallet={() => this._handleEditWallet()}
             updateWalletAddress={arg => this._updateWalletAddress(arg)}
@@ -43,27 +43,31 @@ class MyPage extends Component {
       </div>
     ) : (
       <div>
-        <div>
-          <Input
-            size="tiny"
-            style={{ width: '100%', color: 'teal' }}
-            icon="chain"
-            iconPosition="left"
-            action={{
-              color: 'teal',
-              content: 'Register Wallet',
-              onClick: () => this._handleRegisterWallet()
-            }}
-          />
-        </div>
-        <div style={{ textAlign: 'center', marginTop: '15px' }}>
-          <Button
-            onClick={this._handleCreateWallet}
-            style={{ backgroundColor: '#1aaaba', color: '#FFFFFF' }}
-          >
-            Create Wallet
-          </Button>
-        </div>
+        <Segment placeholder>
+          <Grid columns={2} stackable textAlign="center">
+            <Divider vertical>Or</Divider>
+
+            <Grid.Row verticalAlign="middle">
+              <Grid.Column>
+                <Header>Already have a wallet?</Header>
+                <WalletForm
+                  walletAddress={this.state.walletAddress}
+                  handleEditWallet={() => this._handleEditWallet()}
+                  updateWalletAddress={arg => this._updateWalletAddress(arg)}
+                />
+              </Grid.Column>
+
+              <Grid.Column>
+                <Header>Don't have a wallet yet?</Header>
+                <div style={{ textAlign: 'center', marginTop: '15px' }}>
+                  <Button positive onClick={this._handleCreateWallet}>
+                    Create Wallet
+                  </Button>
+                </div>
+              </Grid.Column>
+            </Grid.Row>
+          </Grid>
+        </Segment>
       </div>
     );
   }
@@ -113,6 +117,9 @@ class MyPage extends Component {
 
   _handleCreateWallet() {
     console.log('clicked handleCreateWallet');
+    // TODO:
+    // call API request for createWallet
+    // if returned set it to localStorage
   }
 
   _handleEditWallet() {
@@ -122,6 +129,10 @@ class MyPage extends Component {
   }
   _updateWalletAddress(newAddress) {
     this.setState({ walletAddress: newAddress });
+  }
+
+  componentDidMount() {
+    this.setState({ walletAddress: localStorage.getItem('walletAddress') });
   }
 
   render() {
