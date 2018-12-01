@@ -13,16 +13,42 @@ import {
 import './MyPage.scss';
 import WalletInfo from '../components/MyPage/walletInfo';
 import WalletForm from '../components/MyPage/walletForm';
+import Modal from '../components/MyPage/modal';
+import axios from 'axios';
 
 class MyPage extends Component {
   constructor(props) {
     super(props);
     this.state = {
       walletAddress: '',
+      walletKey: '',
       // walletAddress: 'hxc4193cda4a75526bf50896ec242d6713bb6b02a3',
       activeMenu: 'Manage Wallet',
-      isEditingWallet: false
+      isEditingWallet: false,
+      isWalletCreated: false
     };
+  }
+
+  _toggleModal() {
+    return this.state.isWalletCreated ? (
+      <React.Fragment>
+        <WalletInfo
+          walletAddress={this.state.walletAddress}
+          handleEditWallet={() => this._handleEditWallet()}
+        />
+        <Modal
+          walletAddress={this.state.walletAddress}
+          walletKey={this.state.walletKey}
+        />
+      </React.Fragment>
+    ) : (
+      <React.Fragment>
+        <WalletInfo
+          walletAddress={this.state.walletAddress}
+          handleEditWallet={() => this._handleEditWallet()}
+        />
+      </React.Fragment>
+    );
   }
 
   _manageWalletContent() {
@@ -35,40 +61,35 @@ class MyPage extends Component {
             updateWalletAddress={arg => this._updateWalletAddress(arg)}
           />
         ) : (
-          <WalletInfo
-            walletAddress={this.state.walletAddress}
-            handleEditWallet={() => this._handleEditWallet()}
-          />
+          this._toggleModal()
         )}
       </div>
     ) : (
-      <div>
-        <Segment placeholder>
-          <Grid columns={2} stackable textAlign="center">
-            <Divider vertical>Or</Divider>
+      <Segment placeholder>
+        <Grid columns={2} stackable textAlign="center">
+          <Divider vertical>Or</Divider>
 
-            <Grid.Row verticalAlign="middle">
-              <Grid.Column>
-                <Header>Already have a wallet?</Header>
-                <WalletForm
-                  walletAddress={this.state.walletAddress}
-                  handleEditWallet={() => this._handleEditWallet()}
-                  updateWalletAddress={arg => this._updateWalletAddress(arg)}
-                />
-              </Grid.Column>
+          <Grid.Row verticalAlign="middle">
+            <Grid.Column>
+              <Header>Already have a wallet?</Header>
+              <WalletForm
+                walletAddress={this.state.walletAddress}
+                handleEditWallet={() => this._handleEditWallet()}
+                updateWalletAddress={arg => this._updateWalletAddress(arg)}
+              />
+            </Grid.Column>
 
-              <Grid.Column>
-                <Header>Don't have a wallet yet?</Header>
-                <div style={{ textAlign: 'center', marginTop: '15px' }}>
-                  <Button positive onClick={this._handleCreateWallet}>
-                    Create Wallet
-                  </Button>
-                </div>
-              </Grid.Column>
-            </Grid.Row>
-          </Grid>
-        </Segment>
-      </div>
+            <Grid.Column>
+              <Header>Don't have a wallet yet?</Header>
+              <div style={{ textAlign: 'center', marginTop: '15px' }}>
+                <Button positive onClick={() => this._handleCreateWallet()}>
+                  Create Wallet
+                </Button>
+              </div>
+            </Grid.Column>
+          </Grid.Row>
+        </Grid>
+      </Segment>
     );
   }
 
@@ -117,9 +138,44 @@ class MyPage extends Component {
 
   _handleCreateWallet() {
     console.log('clicked handleCreateWallet');
-    // TODO:
     // call API request for createWallet
     // if returned set it to localStorage
+    // req body
+    // {'email':'k@i.com', 'service_provider':'google', 'user_pid':'109268495254631984078'}
+    // res
+    //  {"address": "hxf93bdeb0a2e7ccc19e217d427c084f8bf98e67df", "key": "52df7adc707cf555f75534414c56a753a34e89bafeacca9b9582939d15dde93f"}
+    const userData = JSON.parse(localStorage.getItem('userData'));
+    const { email, provider, provider_id } = userData;
+    const reqBody = {
+      email,
+      service_provider: provider,
+      user_pid: provider_id
+    };
+
+    // console.log(JSON.stringify(reqBody));
+
+    axios
+      .post('http://54.180.114.119:8000/wallet/create', JSON.stringify(reqBody))
+      .then(res => {
+        console.log(res);
+        // {'address': 'hxdbc6b65ce1f0753be17487b992bc814bbea4c9e4', 'key': '62b263d4bcdf6522fad757780d1c4937a4d466cd82fc6756b15035fd6a0a3e73'}
+        // let data = JSON.parse(res.data);
+        // console.log(data);
+        // save address to localStorage
+        // localStorage.setItem('walletAddress', res.data.address);
+
+        // setState so it renders a modal
+        this.setState({
+          isWalletCreated: true,
+          walletAddress: '12345',
+          walletKey: 'asdf'
+        });
+      })
+      .catch(err => {
+        throw err;
+      });
+
+    // save wallet address to localStorage
   }
 
   _handleEditWallet() {
@@ -172,6 +228,9 @@ class MyPage extends Component {
                   : this._gameRecordContent()}
               </Segment>
             </Grid.Row>
+            {/* {this.state.isWalletCreated ? (
+              <Modal walletAddress={'dslkjsdf'} walletKey={'1209'} />
+            ) : null} */}
           </Grid>
         </Segment>
       </Container>
