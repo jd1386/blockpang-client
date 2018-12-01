@@ -120,6 +120,57 @@ class Dashboard extends Component {
       { name: 'FACEBOOK USER', value: 500 }
     ];
 
+    const recentPlays = [
+      {
+        name: 'Lena0',
+        icx: 22,
+        provider: 'google',
+        userImg:
+          'https://lh4.googleusercontent.com/-HXmSZTtRF6M/AAAAAAAAAAI/AAAAAAAAAAc/PpkY31C_F_0/s96-c/photo.jpg',
+        time: '2018-11-29T08:17:17.256'
+      },
+      {
+        name: 'Lena1',
+        icx: 22,
+        provider: 'facebook',
+        userImg:
+          'https://lh4.googleusercontent.com/-HXmSZTtRF6M/AAAAAAAAAAI/AAAAAAAAAAc/PpkY31C_F_0/s96-c/photo.jpg',
+        time: '2018-11-29T08:17:17.256'
+      },
+      {
+        name: 'Lena2',
+        icx: 22,
+        provider: 'google',
+        userImg:
+          'https://lh4.googleusercontent.com/-HXmSZTtRF6M/AAAAAAAAAAI/AAAAAAAAAAc/PpkY31C_F_0/s96-c/photo.jpg',
+        time: '2018-11-29T08:17:17.256'
+      },
+      {
+        name: 'Lena3',
+        icx: 22,
+        provider: 'google',
+        userImg:
+          'https://lh4.googleusercontent.com/-HXmSZTtRF6M/AAAAAAAAAAI/AAAAAAAAAAc/PpkY31C_F_0/s96-c/photo.jpg',
+        time: '2018-11-29T08:17:17.256'
+      },
+      {
+        name: 'Lena4',
+        icx: 22,
+        provider: 'google',
+        userImg:
+          'https://lh4.googleusercontent.com/-HXmSZTtRF6M/AAAAAAAAAAI/AAAAAAAAAAc/PpkY31C_F_0/s96-c/photo.jpg',
+        time: '2018-11-29T08:17:17.256'
+      },
+      {
+        name: 'Lena5',
+        icx: 22,
+        provider: 'google',
+        userImg:
+          'https://lh4.googleusercontent.com/-HXmSZTtRF6M/AAAAAAAAAAI/AAAAAAAAAAc/PpkY31C_F_0/s96-c/photo.jpg',
+        time: '2018-11-29T08:17:17.256'
+      }
+    ];
+
     const COLORS = ['#dd4b39', '#3b5998'];
     // Colors[0] google+ color
     // Colors[1] facebook color
@@ -142,7 +193,7 @@ class Dashboard extends Component {
             </Grid.Column>
           </Grid.Row>
 
-          <Grid.Row>
+          {/* <Grid.Row>
             <Grid.Column width={4}>
               <Card>
                 <Card.Content>
@@ -160,25 +211,6 @@ class Dashboard extends Component {
                 </Card.Content>
               </Card>
             </Grid.Column>
-
-            {/* <Grid.Column width={4}>
-              <Segment padded textAlign="center">
-                <Statistic>
-                  <Statistic.Value>390,110</Statistic.Value>
-                  <Statistic.Label>Total Plays</Statistic.Label>
-                </Statistic>
-                <ResponsiveContainer width="100%" minHeight={140}>
-                  <BarChart
-                    data={data}
-                  >
-                    <XAxis hide={true} dataKey="day" />
-
-                    <Bar type="monotone" dataKey="plays" stroke="#8884d8" />
-                    <Tooltip />
-                  </BarChart>
-                </ResponsiveContainer>
-              </Segment>
-            </Grid.Column> */}
 
             <Grid.Column width={4}>
               <Card style={{ backgroundColor: '#20c997' }}>
@@ -233,9 +265,9 @@ class Dashboard extends Component {
                 </Card.Content>
               </Card>
             </Grid.Column>
-          </Grid.Row>
+          </Grid.Row> */}
 
-          <Grid.Row margin={{ top: 30 }}>
+          {/* <Grid.Row style={{ marginTop: 30 }}>
             <Grid.Column width={10}>
               <Segment padded>
                 {' '}
@@ -251,12 +283,6 @@ class Dashboard extends Component {
                     <Tooltip />
                     <Legend verticalAlign="top" />
                     <XAxis dataKey="day">
-                      {/* <Label
-                        value="Daily Sign-Ups"
-                        offset={0}
-                        margin={{ top: 15 }}
-                        position="insideBottom"
-                      /> */}
                     </XAxis>
                     <YAxis />
 
@@ -270,38 +296,37 @@ class Dashboard extends Component {
                 </ResponsiveContainer>
               </Segment>
             </Grid.Column>
-            <Segment>
-              <Header as="h2" floated="left">
-                Provider Distribution
-              </Header>
-              <Grid.Column width={4}>
-                {/* <ResponsiveContainer width={300} minHeight="50%">pie차트는 responsive불가 */}
-                <PieChart width={300} height={300}>
+
+            <Grid.Column width={6}>
+              <Segment style={{ boxShadow: 'none', border: 'none' }}>
+                <Header as="h2" floated="left">
+                  Provider Distribution
+                </Header>
+                <PieChart width={300} height={250}>
                   <Pie
                     isAnimationActive={false}
                     data={data01}
-                    cx="30%"
-                    // cx={300}
-                    cy="30%"
-                    // cy={300}
+                    cx="50%"
+                    cy="50%"
                     outerRadius={80}
                     fill="#8884d8"
                     labelLine={false}
                     label={this.renderCustomizedLabel}
+                    dataKey={data01.value}
                   >
                     {data01.map((entry, index) => (
-                      <Cell fill={COLORS[index % COLORS.length]} />
+                      <Cell fill={COLORS[index % COLORS.length]} key={index} />
                     ))}
                   </Pie>
                   <Tooltip />
                 </PieChart>
-              </Grid.Column>
-            </Segment>
-          </Grid.Row>
+              </Segment>
+            </Grid.Column>
+          </Grid.Row> */}
 
           <Grid.Row style={{ marginBottom: 50 }}>
             <Grid.Column width={10}>
-              <Segment>
+              {/* <Segment>
                 <Header as="h2" floated="left">
                   {'Plays & ICXPaid'}
                 </Header>
@@ -325,10 +350,13 @@ class Dashboard extends Component {
                     <Line type="monotone" dataKey="ICXPaid" stroke="#82ca9d" />
                   </LineChart>
                 </ResponsiveContainer>
-              </Segment>
+              </Segment> */}
             </Grid.Column>
 
             <Grid.Column width={6}>
+              <Header as="h2" floated="left">
+                Recent Plays
+              </Header>
               <Table basic="very" celled collapsing>
                 <Table.Header>
                   <Table.Row>
@@ -339,74 +367,28 @@ class Dashboard extends Component {
                 </Table.Header>
 
                 <Table.Body>
-                  <Table.Row>
-                    <Table.Cell>
-                      <Header as="h4" image>
-                        <Image
-                          src="https://lh4.googleusercontent.com/-HXmSZTtRF6M/AAAAAAAAAAI/AAAAAAAAAAc/PpkY31C_F_0/s96-c/photo.jpg"
-                          rounded
-                          size="mini"
-                        />
-                        <Header.Content>
-                          Lena
-                          <Header.Subheader>facebook</Header.Subheader>
-                        </Header.Content>
-                      </Header>
-                    </Table.Cell>
-                    <Table.Cell>22</Table.Cell>
-                    <Table.Cell>13:22:30</Table.Cell>
-                  </Table.Row>
-                  <Table.Row>
-                    <Table.Cell>
-                      <Header as="h4" image>
-                        <Image
-                          src="https://lh4.googleusercontent.com/-HXmSZTtRF6M/AAAAAAAAAAI/AAAAAAAAAAc/PpkY31C_F_0/s96-c/photo.jpg"
-                          rounded
-                          size="mini"
-                        />
-                        <Header.Content>
-                          Matthew
-                          <Header.Subheader>google</Header.Subheader>
-                        </Header.Content>
-                      </Header>
-                    </Table.Cell>
-                    <Table.Cell>15</Table.Cell>
-                    <Table.Cell>13:22:30</Table.Cell>
-                  </Table.Row>
-                  <Table.Row>
-                    <Table.Cell>
-                      <Header as="h4" image>
-                        <Image
-                          src="https://lh4.googleusercontent.com/-HXmSZTtRF6M/AAAAAAAAAAI/AAAAAAAAAAc/PpkY31C_F_0/s96-c/photo.jpg"
-                          rounded
-                          size="mini"
-                        />
-                        <Header.Content>
-                          Lindsay
-                          <Header.Subheader>google</Header.Subheader>
-                        </Header.Content>
-                      </Header>
-                    </Table.Cell>
-                    <Table.Cell>12</Table.Cell>
-                    <Table.Cell>13:22:30</Table.Cell>
-                  </Table.Row>
-                  <Table.Row>
-                    <Table.Cell>
-                      <Header as="h4" image>
-                        <Image
-                          src="https://lh4.googleusercontent.com/-HXmSZTtRF6M/AAAAAAAAAAI/AAAAAAAAAAc/PpkY31C_F_0/s96-c/photo.jpg"
-                          rounded
-                          size="mini"
-                        />
-                        <Header.Content>
-                          Mark
-                          <Header.Subheader>facebook</Header.Subheader>
-                        </Header.Content>
-                      </Header>
-                    </Table.Cell>
-                    <Table.Cell>11</Table.Cell>
-                    <Table.Cell>13:22:30</Table.Cell>
-                  </Table.Row>
+                  {recentPlays.map((play, index) => {
+                    {
+                      // console.log('play', play, 'index', index);
+                    }
+                    return index < 5 ? (
+                      <Table.Row key={index}>
+                        <Table.Cell>
+                          <Header as="h4" image>
+                            <Image src={play.userImg} rounded size="mini" />
+                            <Header.Content>
+                              {play.name}
+                              <Header.Subheader>
+                                {play.provider}
+                              </Header.Subheader>
+                            </Header.Content>
+                          </Header>
+                        </Table.Cell>
+                        <Table.Cell>{play.icx}</Table.Cell>
+                        <Table.Cell>{play.time}</Table.Cell>
+                      </Table.Row>
+                    ) : null;
+                  })}
                 </Table.Body>
               </Table>
             </Grid.Column>
