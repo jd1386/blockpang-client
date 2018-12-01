@@ -7,12 +7,12 @@ import {
   Button,
   Segment,
   Divider,
-  Menu,
-  Table
+  Menu
 } from 'semantic-ui-react';
 import './MyPage.scss';
 import WalletInfo from '../components/MyPage/walletInfo';
 import WalletForm from '../components/MyPage/walletForm';
+import GameRecord from '../components/MyPage/gameRecord';
 import Modal from '../components/MyPage/modal';
 import axios from 'axios';
 
@@ -41,12 +41,10 @@ class MyPage extends Component {
         />
       </React.Fragment>
     ) : (
-      <React.Fragment>
-        <WalletInfo
-          walletAddress={this.state.walletAddress}
-          handleEditWallet={() => this._handleEditWallet()}
-        />
-      </React.Fragment>
+      <WalletInfo
+        walletAddress={this.state.walletAddress}
+        handleEditWallet={() => this._handleEditWallet()}
+      />
     );
   }
 
@@ -92,57 +90,10 @@ class MyPage extends Component {
     );
   }
 
-  _gameRecordContent() {
-    return (
-      <Table basic="very" celled collapsing style={{ width: '100%' }}>
-        <Table.Header>
-          <Table.Row>
-            <Table.HeaderCell>Time</Table.HeaderCell>
-            <Table.HeaderCell>Score</Table.HeaderCell>
-            <Table.HeaderCell>ICX won</Table.HeaderCell>
-          </Table.Row>
-        </Table.Header>
-
-        <Table.Body>
-          <Table.Row>
-            <Table.Cell>12:30pm</Table.Cell>
-            <Table.Cell>22</Table.Cell>
-            <Table.Cell>22</Table.Cell>
-          </Table.Row>
-          <Table.Row>
-            <Table.Cell>12:30pm</Table.Cell>
-            <Table.Cell>22</Table.Cell>
-            <Table.Cell>22</Table.Cell>
-          </Table.Row>
-          <Table.Row>
-            <Table.Cell>12:30pm</Table.Cell>
-            <Table.Cell>22</Table.Cell>
-            <Table.Cell>22</Table.Cell>
-          </Table.Row>
-          <Table.Row>
-            <Table.Cell>12:30pm</Table.Cell>
-            <Table.Cell>22</Table.Cell>
-            <Table.Cell>22</Table.Cell>
-          </Table.Row>
-        </Table.Body>
-      </Table>
-    );
-  }
-
   _handleMenuClick = (e, { name }) => this.setState({ activeMenu: name });
 
-  _handleRegisterWallet() {
-    console.log('clicked handleRegisterWallet');
-  }
-
   _handleCreateWallet() {
-    console.log('clicked handleCreateWallet');
-    // call API request for createWallet
-    // if returned set it to localStorage
-    // req body
-    // {'email':'k@i.com', 'service_provider':'google', 'user_pid':'109268495254631984078'}
-    // res
-    //  {"address": "hxf93bdeb0a2e7ccc19e217d427c084f8bf98e67df", "key": "52df7adc707cf555f75534414c56a753a34e89bafeacca9b9582939d15dde93f"}
+    // get user data from localStorage for API use
     const userData = JSON.parse(localStorage.getItem('userData'));
     const { email, provider, provider_id } = userData;
     const reqBody = {
@@ -151,12 +102,10 @@ class MyPage extends Component {
       user_pid: provider_id
     };
 
-    // console.log(JSON.stringify(reqBody));
-
+    // API call to create a new wallet
     axios
       .post('http://54.180.114.119:8000/wallet/create', JSON.stringify(reqBody))
       .then(res => {
-        console.log(res.data);
         // save address to localStorage
         localStorage.setItem('walletAddress', res.data.address);
 
@@ -170,8 +119,6 @@ class MyPage extends Component {
       .catch(err => {
         throw err;
       });
-
-    // save wallet address to localStorage
   }
 
   _handleEditWallet() {
@@ -180,7 +127,26 @@ class MyPage extends Component {
     }));
   }
   _updateWalletAddress(newAddress) {
-    this.setState({ walletAddress: newAddress });
+    // get user data from localStorage for API use
+    const userData = JSON.parse(localStorage.getItem('userData'));
+    const { email, provider, provider_id } = userData;
+    const reqBody = {
+      email,
+      service_provider: provider,
+      user_pid: provider_id,
+      wallet: newAddress
+    };
+
+    // call update API
+    axios
+      .post('http://54.180.114.119:8000/wallet/update', JSON.stringify(reqBody))
+      .then(res => {
+        this.setState({ walletAddress: newAddress });
+        localStorage.setItem('walletAddress', newAddress);
+      })
+      .catch(err => {
+        throw err;
+      });
   }
 
   componentDidMount() {
@@ -219,14 +185,13 @@ class MyPage extends Component {
               </Menu>
 
               <Segment attached="bottom">
-                {activeMenu === 'Manage Wallet'
-                  ? this._manageWalletContent()
-                  : this._gameRecordContent()}
+                {activeMenu === 'Manage Wallet' ? (
+                  this._manageWalletContent()
+                ) : (
+                  <GameRecord />
+                )}
               </Segment>
             </Grid.Row>
-            {/* {this.state.isWalletCreated ? (
-              <Modal walletAddress={'dslkjsdf'} walletKey={'1209'} />
-            ) : null} */}
           </Grid>
         </Segment>
       </Container>

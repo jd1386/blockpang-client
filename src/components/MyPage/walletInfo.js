@@ -7,7 +7,10 @@ class WalletInfo extends Component {
       <div>
         Your wallet address: {this.props.walletAddress}
         <Button
-          onClick={() => this.props.handleEditWallet()}
+          onClick={() => {
+            console.log('clicked');
+            this.props.handleEditWallet();
+          }}
           style={{
             backgroundColor: '#1aaaba',
             color: '#FFFFFF',
