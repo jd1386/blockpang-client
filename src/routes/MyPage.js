@@ -22,7 +22,6 @@ class MyPage extends Component {
     this.state = {
       walletAddress: '',
       walletKey: '',
-      // walletAddress: 'hxc4193cda4a75526bf50896ec242d6713bb6b02a3',
       activeMenu: 'Manage Wallet',
       isEditingWallet: false,
       isWalletCreated: false
@@ -157,18 +156,15 @@ class MyPage extends Component {
     axios
       .post('http://54.180.114.119:8000/wallet/create', JSON.stringify(reqBody))
       .then(res => {
-        console.log(res);
-        // {'address': 'hxdbc6b65ce1f0753be17487b992bc814bbea4c9e4', 'key': '62b263d4bcdf6522fad757780d1c4937a4d466cd82fc6756b15035fd6a0a3e73'}
-        // let data = JSON.parse(res.data);
-        // console.log(data);
+        console.log(res.data);
         // save address to localStorage
-        // localStorage.setItem('walletAddress', res.data.address);
+        localStorage.setItem('walletAddress', res.data.address);
 
         // setState so it renders a modal
         this.setState({
           isWalletCreated: true,
-          walletAddress: '12345',
-          walletKey: 'asdf'
+          walletAddress: res.data.address,
+          walletKey: res.data.key
         });
       })
       .catch(err => {
