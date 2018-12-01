@@ -122,6 +122,8 @@ class MyPage extends Component {
   }
 
   _handleEditWallet() {
+    console.log('handleEditWallet called');
+    console.log('before', this.state.isEditingWallet);
     this.setState(prevState => ({
       isEditingWallet: !prevState.isEditingWallet
     }));
