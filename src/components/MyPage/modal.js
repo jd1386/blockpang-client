@@ -1,17 +1,23 @@
 import React, { Component } from 'react';
 import { Button, Header, Icon, Modal } from 'semantic-ui-react';
+import download from 'js-file-download';
 
 class modal extends Component {
   state = { modalOpen: true };
 
-  // handleOpen = () => this.setState({ modalOpen: true });
+  handleClose = () => {
+    this.setState({ modalOpen: false });
 
-  handleClose = () => this.setState({ modalOpen: false });
+    // download txt file that contains user's wallet address and key
+    download(
+      `address: ${this.props.walletAddress}\nkey: ${this.props.walletKey}`,
+      'icx.txt'
+    );
+  };
 
   render() {
     return (
       <Modal
-        // trigger={<Button onClick={this.handleOpen}>Show Modal</Button>}
         open={this.state.modalOpen}
         onClose={this.handleClose}
         basic
