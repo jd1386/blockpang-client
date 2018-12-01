@@ -1,0 +1,13 @@
+.sidebar {
+  background: #1b1c1d;
+  background-image: url('/space.jpg');
+}
+
+a.item.menu-item {
+  color: #fff;
+}
+
+/* override */
+.ui.fluid.pointing.secondary.vertical.menu {
+  font-size: 1.2em;
+}
