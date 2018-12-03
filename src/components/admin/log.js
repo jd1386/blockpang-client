@@ -3,13 +3,13 @@ import { Link, Redirect } from 'react-router-dom';
 import { BrowserRouter as Router, Route } from 'react-router-dom';
 import { Container, Grid, Header, Button, Segment } from 'semantic-ui-react';
 
-class Page2 extends Component {
+class Page3 extends Component {
   render() {
     return (
       <Segment vertical>
         <Grid container stackable verticalAlign="middle">
           <Grid.Row>
-            <Header as="h1">Page 2</Header>
+            <Header as="h1">Play Log</Header>
           </Grid.Row>
           <Grid.Row>
             <Grid.Column>
@@ -41,4 +41,4 @@ class Page2 extends Component {
   }
 }
 
-export default Page2;
+export default Page3;

@@ -26,18 +26,18 @@ class LeftSidebar extends Component {
           to="/admin/"
         />
         <Menu.Item
-          name="page-2"
-          active={activeItem === 'page-2'}
+          name="settings"
+          active={activeItem === 'settings'}
           onClick={this.handleItemClick}
           as={Link}
-          to="/admin/page-2"
+          to="/admin/settings"
         />
         <Menu.Item
-          name="page-3"
-          active={activeItem === 'page-3'}
+          name="log"
+          active={activeItem === 'log'}
           onClick={this.handleItemClick}
           as={Link}
-          to="/admin/page-3"
+          to="/admin/log"
         />
       </Menu>
     );

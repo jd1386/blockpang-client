@@ -9,8 +9,8 @@ import { Container, Grid, Header, Button, Segment } from 'semantic-ui-react';
 import Sidebar from '../components/admin/sidebar';
 import '../components/admin/style.scss';
 import Dashboard from '../components/admin/dashboard';
-import Page2 from '../components/admin/page2';
-import Page3 from '../components/admin/page3';
+import Settings from '../components/admin/settings';
+import Log from '../components/admin/log';
 
 class Admin extends Component {
   render() {
@@ -30,8 +30,8 @@ class Admin extends Component {
             </Grid.Column>
             <Grid.Column width={13}>
               <Route exact path="/admin" component={Dashboard} />
-              <Route path="/admin/page-2" component={Page2} />
-              <Route path="/admin/page-3" component={Page3} />
+              <Route path="/admin/settings" component={Settings} />
+              <Route path="/admin/log" component={Log} />
             </Grid.Column>
           </Grid>
         </div>
