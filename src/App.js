@@ -6,6 +6,7 @@ import Navbar from './components/Navbar/';
 import Main from './routes/Main';
 import Login from './routes/Login';
 import MyPage from './routes/MyPage';
+import Leaderboard from './routes/Leaderboard';
 import Admin from './routes/Admin';
 import Footer from './components/Footer/';
 
@@ -44,12 +45,13 @@ class App extends React.Component {
           <Navbar isLoggedIn={this.state.isLoggedIn} logout={this.logout} />
           <div className="site-content">
             <Route exact path="/" component={Main} />
-            <Route path="/login" render={() => <Login login={this.login} />} />
-            <Route path="/admin" component={Admin} />
             <Route
               path="/mypage"
               render={() => <MyPage isLoggedIn={this.state.isLoggedIn} />}
             />
+            <Route path="/leaderboard" component={Leaderboard} />
+            <Route path="/login" render={() => <Login login={this.login} />} />
+            <Route path="/admin" component={Admin} />
           </div>
           <Footer />
         </div>

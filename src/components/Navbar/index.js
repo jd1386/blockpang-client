@@ -4,7 +4,7 @@ import { Container, Image, Button, Menu } from 'semantic-ui-react';
 import './style.css';
 
 class Navbar extends Component {
-  menuChange = () => {
+  _menuChange = () => {
     let userData;
     if (localStorage.getItem('userData'))
       userData = JSON.parse(localStorage.getItem('userData'));
@@ -42,13 +42,16 @@ class Navbar extends Component {
               />
               블록팡
             </Menu.Item>
+            <Menu.Item as={Link} to="/leaderboard">
+              Leaderboard
+            </Menu.Item>
             <Menu.Item as={Link} to="/mypage">
               My Page
             </Menu.Item>
             <Menu.Item as={Link} to="/admin">
               Admin
             </Menu.Item>
-            {this.menuChange()}
+            {this._menuChange()}
           </Container>
         </Menu>
       </React.Fragment>
@@ -65,7 +68,7 @@ class Navbar extends Component {
               />
               블록팡
             </Menu.Item>
-            {this.menuChange()}
+            {this._menuChange()}
           </Container>
         </Menu>
       </React.Fragment>
