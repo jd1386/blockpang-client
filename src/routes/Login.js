@@ -15,7 +15,7 @@ class Login extends Component {
     isLoginSuccessful: false
   };
 
-  signup(res, provider) {
+  _signup(res, provider) {
     let userData;
     if (provider === 'google' && res.profileObj.email) {
       userData = {
@@ -41,7 +41,7 @@ class Login extends Component {
 
     const responseGoogle = res => {
       // console.log('google-res', res);
-      this.signup(res, 'google');
+      this._signup(res, 'google');
     };
 
     return (

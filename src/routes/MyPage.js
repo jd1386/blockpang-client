@@ -95,9 +95,11 @@ class MyPage extends Component {
   _handleCreateWallet() {
     // get user data from localStorage for API use
     const userData = JSON.parse(localStorage.getItem('userData'));
-    const { email, provider, provider_id } = userData;
+    const { email, provider, provider_id, provider_pic, name } = userData;
     const reqBody = {
       email,
+      profile_image_url: provider_pic,
+      nickname: name,
       service_provider: provider,
       user_pid: provider_id
     };
@@ -131,9 +133,11 @@ class MyPage extends Component {
   _updateWalletAddress(newAddress) {
     // get user data from localStorage for API use
     const userData = JSON.parse(localStorage.getItem('userData'));
-    const { email, provider, provider_id } = userData;
+    const { email, provider, provider_id, provider_pic, name } = userData;
     const reqBody = {
       email,
+      profile_image_url: provider_pic,
+      nickname: name,
       service_provider: provider,
       user_pid: provider_id,
       wallet: newAddress
