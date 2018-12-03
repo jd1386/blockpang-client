@@ -67,7 +67,7 @@ const recentPlays = [
     time: '2018-11-29T08:17:17.256'
   }
 ];
-class Page3 extends Component {
+class Log extends Component {
   constructor(props) {
     super(props);
     this.state = {
@@ -199,4 +199,4 @@ class Page3 extends Component {
   }
 }
 
-export default Page3;
+export default Log;
