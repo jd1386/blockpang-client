@@ -19,17 +19,6 @@ class Gameover extends Component {
     };
   }
 
-  _requestTransfer(userData) {
-    axios
-      .post('http://34.217.9.241/transfer', userData)
-      .then(res => {
-        console.log(res.data);
-      })
-      .catch(err => {
-        throw err;
-      });
-  }
-
   _animateScore(score) {
     return (
       <Spring from={{ number: 0 }} to={{ number: score }} delay={350}>
@@ -40,12 +29,21 @@ class Gameover extends Component {
     );
   }
 
+  _requestTransfer(userData) {
+    axios
+      .post('http://54.180.114.119:8000/transfer', userData)
+      .then(res => {
+        console.log(res.data);
+      })
+      .catch(err => {
+        throw err;
+      });
+  }
+
   componentDidMount() {
-    // FIXME: replace the following hardcoded address
-    // with the user's registered wallet address
     const userData = {
-      address: 'asldkfjljklasdjflkewljasd09u1230asdlk',
-      value: this.props.score
+      wallet: localStorage.getItem('walletAddress'),
+      game_score: this.props.score / 100
     };
 
     // use setTimeout to give more room between

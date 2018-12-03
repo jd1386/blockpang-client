@@ -7,22 +7,45 @@ import {
   Button,
   Segment,
   Divider,
-  Menu,
-  Table
+  Menu
 } from 'semantic-ui-react';
 import './MyPage.scss';
 import WalletInfo from '../components/MyPage/walletInfo';
 import WalletForm from '../components/MyPage/walletForm';
+import GameRecord from '../components/MyPage/gameRecord';
+import Modal from '../components/MyPage/modal';
+import axios from 'axios';
 
 class MyPage extends Component {
   constructor(props) {
     super(props);
     this.state = {
       walletAddress: '',
-      // walletAddress: 'hxc4193cda4a75526bf50896ec242d6713bb6b02a3',
+      walletKey: '',
       activeMenu: 'Manage Wallet',
-      isEditingWallet: false
+      isEditingWallet: false,
+      isWalletCreated: false
     };
+  }
+
+  _toggleModal() {
+    return this.state.isWalletCreated ? (
+      <React.Fragment>
+        <WalletInfo
+          walletAddress={this.state.walletAddress}
+          handleEditWallet={() => this._handleEditWallet()}
+        />
+        <Modal
+          walletAddress={this.state.walletAddress}
+          walletKey={this.state.walletKey}
+        />
+      </React.Fragment>
+    ) : (
+      <WalletInfo
+        walletAddress={this.state.walletAddress}
+        handleEditWallet={() => this._handleEditWallet()}
+      />
+    );
   }
 
   _manageWalletContent() {
@@ -35,100 +58,97 @@ class MyPage extends Component {
             updateWalletAddress={arg => this._updateWalletAddress(arg)}
           />
         ) : (
-          <WalletInfo
-            walletAddress={this.state.walletAddress}
-            handleEditWallet={() => this._handleEditWallet()}
-          />
+          this._toggleModal()
         )}
       </div>
     ) : (
-      <div>
-        <Segment placeholder>
-          <Grid columns={2} stackable textAlign="center">
-            <Divider vertical>Or</Divider>
+      <Segment placeholder>
+        <Grid columns={2} stackable textAlign="center">
+          <Divider vertical>Or</Divider>
 
-            <Grid.Row verticalAlign="middle">
-              <Grid.Column>
-                <Header>Already have a wallet?</Header>
-                <WalletForm
-                  walletAddress={this.state.walletAddress}
-                  handleEditWallet={() => this._handleEditWallet()}
-                  updateWalletAddress={arg => this._updateWalletAddress(arg)}
-                />
-              </Grid.Column>
+          <Grid.Row verticalAlign="middle">
+            <Grid.Column>
+              <Header>Already have a wallet?</Header>
+              <WalletForm
+                walletAddress={this.state.walletAddress}
+                handleEditWallet={() => this._handleEditWallet()}
+                updateWalletAddress={arg => this._updateWalletAddress(arg)}
+              />
+            </Grid.Column>
 
-              <Grid.Column>
-                <Header>Don't have a wallet yet?</Header>
-                <div style={{ textAlign: 'center', marginTop: '15px' }}>
-                  <Button positive onClick={this._handleCreateWallet}>
-                    Create Wallet
-                  </Button>
-                </div>
-              </Grid.Column>
-            </Grid.Row>
-          </Grid>
-        </Segment>
-      </div>
-    );
-  }
-
-  _gameRecordContent() {
-    return (
-      <Table basic="very" celled collapsing style={{ width: '100%' }}>
-        <Table.Header>
-          <Table.Row>
-            <Table.HeaderCell>Time</Table.HeaderCell>
-            <Table.HeaderCell>Score</Table.HeaderCell>
-            <Table.HeaderCell>ICX won</Table.HeaderCell>
-          </Table.Row>
-        </Table.Header>
-
-        <Table.Body>
-          <Table.Row>
-            <Table.Cell>12:30pm</Table.Cell>
-            <Table.Cell>22</Table.Cell>
-            <Table.Cell>22</Table.Cell>
-          </Table.Row>
-          <Table.Row>
-            <Table.Cell>12:30pm</Table.Cell>
-            <Table.Cell>22</Table.Cell>
-            <Table.Cell>22</Table.Cell>
-          </Table.Row>
-          <Table.Row>
-            <Table.Cell>12:30pm</Table.Cell>
-            <Table.Cell>22</Table.Cell>
-            <Table.Cell>22</Table.Cell>
-          </Table.Row>
-          <Table.Row>
-            <Table.Cell>12:30pm</Table.Cell>
-            <Table.Cell>22</Table.Cell>
-            <Table.Cell>22</Table.Cell>
-          </Table.Row>
-        </Table.Body>
-      </Table>
+            <Grid.Column>
+              <Header>Don't have a wallet yet?</Header>
+              <div style={{ textAlign: 'center', marginTop: '15px' }}>
+                <Button positive onClick={() => this._handleCreateWallet()}>
+                  Create Wallet
+                </Button>
+              </div>
+            </Grid.Column>
+          </Grid.Row>
+        </Grid>
+      </Segment>
     );
   }
 
   _handleMenuClick = (e, { name }) => this.setState({ activeMenu: name });
 
-  _handleRegisterWallet() {
-    console.log('clicked handleRegisterWallet');
-  }
-
   _handleCreateWallet() {
-    console.log('clicked handleCreateWallet');
-    // TODO:
-    // call API request for createWallet
-    // if returned set it to localStorage
+    // get user data from localStorage for API use
+    const userData = JSON.parse(localStorage.getItem('userData'));
+    const { email, provider, provider_id } = userData;
+    const reqBody = {
+      email,
+      service_provider: provider,
+      user_pid: provider_id
+    };
+
+    // API call to create a new wallet
+    axios
+      .post('http://54.180.114.119:8000/wallet/create', JSON.stringify(reqBody))
+      .then(res => {
+        // save address to localStorage
+        localStorage.setItem('walletAddress', res.data.address);
+
+        // setState so it renders a modal
+        this.setState({
+          isWalletCreated: true,
+          walletAddress: res.data.address,
+          walletKey: res.data.key
+        });
+      })
+      .catch(err => {
+        throw err;
+      });
   }
 
   _handleEditWallet() {
+    console.log('handleEditWallet called');
+    console.log('before', this.state.isEditingWallet);
     this.setState(prevState => ({
       isEditingWallet: !prevState.isEditingWallet
     }));
   }
   _updateWalletAddress(newAddress) {
-    this.setState({ walletAddress: newAddress });
+    // get user data from localStorage for API use
+    const userData = JSON.parse(localStorage.getItem('userData'));
+    const { email, provider, provider_id } = userData;
+    const reqBody = {
+      email,
+      service_provider: provider,
+      user_pid: provider_id,
+      wallet: newAddress
+    };
+
+    // call update API
+    axios
+      .post('http://54.180.114.119:8000/wallet/update', JSON.stringify(reqBody))
+      .then(res => {
+        this.setState({ walletAddress: newAddress });
+        localStorage.setItem('walletAddress', newAddress);
+      })
+      .catch(err => {
+        throw err;
+      });
   }
 
   componentDidMount() {
@@ -167,9 +187,11 @@ class MyPage extends Component {
               </Menu>
 
               <Segment attached="bottom">
-                {activeMenu === 'Manage Wallet'
-                  ? this._manageWalletContent()
-                  : this._gameRecordContent()}
+                {activeMenu === 'Manage Wallet' ? (
+                  this._manageWalletContent()
+                ) : (
+                  <GameRecord />
+                )}
               </Segment>
             </Grid.Row>
           </Grid>
