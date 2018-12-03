@@ -10,7 +10,9 @@ import {
   Table,
   Image,
   Icon,
-  Label
+  Label,
+  Loader,
+  Dimmer
 } from 'semantic-ui-react';
 import axios from 'axios';
 
@@ -75,7 +77,7 @@ class Page3 extends Component {
 
   _requestData() {
     axios
-      .get('http://54.180.114.119:8000/db/transaction')
+      .get('http://54.180.114.119:8000/db/latest')
       .then(res => {
         console.log('res', res.data);
         this.setState({
@@ -99,7 +101,15 @@ class Page3 extends Component {
 
   render() {
     if (!this.state.recentPlays || this.state.recentPlays.length <= 0) {
-      return <div style={{ textAlign: 'center' }}>No Transaction Data</div>;
+      return (
+        // <div style={{ textAlign: 'center' }}>
+        //   Data Loading... If you continue to see this message, you may not be
+        //   able to connect to the server or have no data.
+        // </div>
+        <Loader active inline="centered">
+          Loading
+        </Loader>
+      );
     }
     return (
       <Segment vertical textAlign="center">
@@ -120,6 +130,7 @@ class Page3 extends Component {
                 <Icon name="users" />
               </Table.HeaderCell>
               <Table.HeaderCell>Recent Players</Table.HeaderCell>
+              <Table.HeaderCell>Email</Table.HeaderCell>
               <Table.HeaderCell>Earn TestICX</Table.HeaderCell>
               <Table.HeaderCell>Time</Table.HeaderCell>
             </Table.Row>
@@ -135,35 +146,47 @@ class Page3 extends Component {
               return index >= 0 ? (
                 <Table.Row key={index}>
                   <Table.Cell textAlign="center">
-                    <Image
-                      src={play.userImg}
-                      rounded
-                      size="mini"
-                      style={{
-                        marginLeft: 'auto',
-                        marginRight: 'auto'
-                      }}
-                    />
+                    {play.profile_img_url ? (
+                      <Image
+                        src={play.profile_img_url}
+                        rounded
+                        size="mini"
+                        style={{
+                          marginLeft: 'auto',
+                          marginRight: 'auto'
+                        }}
+                      />
+                    ) : (
+                      <Icon
+                        name="user"
+                        style={{
+                          marginLeft: 'auto',
+                          marginRight: 'auto'
+                        }}
+                      />
+                    )}
                   </Table.Cell>
                   <Table.Cell>
                     <Header as="h4">
                       <Header.Content>
-                        {play.name}
+                        {play.nickname ? play.nickname : 'no data'}
+                        {/* {play.nickname ? play.nickname : play.email} */}
                         <Header.Subheader>
                           <Label
                             style={{
                               color: 'white',
                               backgroundColor: this._providerColor(
-                                play.provider
+                                play.service_provider
                               )
                             }}
                           >
-                            {play.provider}
+                            {play.service_provider}
                           </Label>
                         </Header.Subheader>
                       </Header.Content>
                     </Header>
                   </Table.Cell>
+                  <Table.Cell>{play.email}</Table.Cell>
                   <Table.Cell>{play.amount}</Table.Cell>
                   <Table.Cell>{play.timestamp}</Table.Cell>
                 </Table.Row>
