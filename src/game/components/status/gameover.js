@@ -15,7 +15,8 @@ class Gameover extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      isLoggedIn: localStorage.getItem('userData') || false
+      isLoggedIn: false,
+      walletAddress: ''
     };
   }
 
@@ -46,36 +47,56 @@ class Gameover extends Component {
       game_score: this.props.score / 100
     };
 
+    userData.wallet
+      ? this.setState({ isLoggedIn: true, walletAddress: userData.wallet })
+      : this.setState({ isLoggedIn: true });
+
     // use setTimeout to give more room between
     // render and _requestTransfer call
-    setTimeout(() => {
-      this._requestTransfer(userData);
-    }, 2000);
+    if (userData.wallet) {
+      setTimeout(() => {
+        this._requestTransfer(userData);
+      }, 2000);
+    }
   }
 
   render() {
     return this.state.isLoggedIn ? (
-      <div className="game-status-main">
-        <div className="header gameover">Game Over</div>
-        <div className="content gameover">
-          <div className="prize">
-            You've won <span>{this._animateScore(this.props.score)}</span> ICX!
-            <br />
-            Check back my page soon
-          </div>
-          <div className="gameover-message">
-            <div>{gameoverMessages[this.props.reason]}</div>
-            <div className="flash">Press W KEY to restart</div>
+      this.state.walletAddress ? (
+        <div className="game-status-main">
+          <div className="header gameover">Game Over</div>
+          <div className="content gameover">
+            <div className="prize">
+              You've won <span>{this._animateScore(this.props.score)} </span>
+              ICX!
+              <br />
+              Visit my page to view transactions
+            </div>
+            <div className="gameover-message">
+              <div>{gameoverMessages[this.props.reason]}</div>
+              <div className="flash">Press W KEY to restart</div>
+            </div>
           </div>
         </div>
-      </div>
+      ) : (
+        <div className="game-status-main">
+          <div className="header gameover">Game Over</div>
+          <div className="content gameover">
+            <div className="prize">
+              Your wallet is not registred. Please register on My Page.
+            </div>
+            <div className="gameover-message">
+              <div className="flash">Press W KEY to restart</div>
+            </div>
+          </div>
+        </div>
+      )
     ) : (
       <div className="game-status-main">
         <div className="header gameover">Game Over</div>
         <div className="content gameover">
           <div className="prize">Log in to get your test ICX</div>
           <div className="gameover-message">
-            <div>{gameoverMessages[this.props.reason]}</div>
             <div className="flash">Press W KEY to restart</div>
           </div>
         </div>
