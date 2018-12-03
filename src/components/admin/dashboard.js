@@ -11,7 +11,9 @@ import {
   Statistic,
   Segment,
   Card,
-  Table
+  Table,
+  Icon,
+  Loader
 } from 'semantic-ui-react';
 import {
   AreaChart,
@@ -20,20 +22,30 @@ import {
   BarChart,
   LineChart,
   Line,
-  Label,
   Tooltip,
   XAxis,
   YAxis,
   PieChart,
   Pie,
+  Label,
   CartesianGrid,
   Legend,
   ResponsiveContainer,
   Cell
 } from 'recharts';
+import axios from 'axios';
 
 class Dashboard extends Component {
   // TODO: : axios로 정보 받아오고 data에 넣어주기
+
+  constructor(props) {
+    super(props);
+    this.state = {
+      default_score: '',
+      currentBalance: '',
+      recentPlays: ''
+    };
+  }
 
   renderCustomizedLabel = ({
     cx,
@@ -61,6 +73,54 @@ class Dashboard extends Component {
       </text>
     );
   };
+
+  // _requestData() {
+  //   axios
+  //     .get('http://54.180.114.119:8000/admin/current_balance')
+  //     .then(res => {
+  //       console.log('res', res.data);
+  //       this.setState({
+  //         default_score: res.data.default_score,
+  //         currentBalance: res.data.current_balance
+  //       });
+  //     })
+  //     .catch(err => {
+  //       console.log('err', err);
+  //     });
+  // }
+
+  _providerColor(provider) {
+    let COLORS = ['#dd4b39', '#3b5998'];
+    if (provider === 'google') return COLORS[0];
+    else if (provider === 'facebook') return COLORS[1];
+  }
+
+  setStateAsync(state) {
+    return new Promise(resolve => {
+      this.setState(state, resolve);
+    });
+  }
+  async componentDidMount() {
+    const firstRequest = await axios.get(
+      'http://54.180.114.119:8000/admin/current_balance'
+    );
+    const secondRequest = await axios.get(
+      'http://54.180.114.119:8000/db/latest'
+    );
+    // const thridRequest = await axios.get(
+    //   'http://54.180.114.119:8000/admin/current_balance'
+    // );
+
+    console.log('firstRequest', firstRequest);
+
+    await this.setStateAsync({
+      default_score: firstRequest.data.default_score,
+      currentBalance: firstRequest.data.current_balance,
+      recentPlays: secondRequest.data
+    });
+
+    // this._requestData();
+  }
 
   render() {
     const data = [
@@ -120,9 +180,69 @@ class Dashboard extends Component {
       { name: 'FACEBOOK USER', value: 500 }
     ];
 
+    // const recentPlays = [
+    //   {
+    //     name: 'Lena0',
+    //     icx: 22,
+    //     provider: 'google',
+    //     userImg:
+    //       'https://lh4.googleusercontent.com/-HXmSZTtRF6M/AAAAAAAAAAI/AAAAAAAAAAc/PpkY31C_F_0/s96-c/photo.jpg',
+    //     time: '2018-11-29T08:17:17.256'
+    //   },
+    //   {
+    //     name: 'Lena1',
+    //     icx: 22,
+    //     provider: 'facebook',
+    //     userImg:
+    //       'https://lh4.googleusercontent.com/-HXmSZTtRF6M/AAAAAAAAAAI/AAAAAAAAAAc/PpkY31C_F_0/s96-c/photo.jpg',
+    //     time: '2018-11-29T08:17:17.256'
+    //   },
+    //   {
+    //     name: 'Lena2',
+    //     icx: 22,
+    //     provider: 'google',
+    //     userImg:
+    //       'https://lh4.googleusercontent.com/-HXmSZTtRF6M/AAAAAAAAAAI/AAAAAAAAAAc/PpkY31C_F_0/s96-c/photo.jpg',
+    //     time: '2018-11-29T08:17:17.256'
+    //   },
+    //   {
+    //     name: 'Lena3',
+    //     icx: 22,
+    //     provider: 'google',
+    //     userImg:
+    //       'https://lh4.googleusercontent.com/-HXmSZTtRF6M/AAAAAAAAAAI/AAAAAAAAAAc/PpkY31C_F_0/s96-c/photo.jpg',
+    //     time: '2018-11-29T08:17:17.256'
+    //   },
+    //   {
+    //     name: 'Lena4',
+    //     icx: 22,
+    //     provider: 'google',
+    //     userImg:
+    //       'https://lh4.googleusercontent.com/-HXmSZTtRF6M/AAAAAAAAAAI/AAAAAAAAAAc/PpkY31C_F_0/s96-c/photo.jpg',
+    //     time: '2018-11-29T08:17:17.256'
+    //   },
+    //   {
+    //     name: 'Lena5',
+    //     icx: 22,
+    //     provider: 'google',
+    //     userImg:
+    //       'https://lh4.googleusercontent.com/-HXmSZTtRF6M/AAAAAAAAAAI/AAAAAAAAAAc/PpkY31C_F_0/s96-c/photo.jpg',
+    //     time: '2018-11-29T08:17:17.256'
+    //   }
+    // ];
+
     const COLORS = ['#dd4b39', '#3b5998'];
     // Colors[0] google+ color
     // Colors[1] facebook color
+
+    if (!this.state.recentPlays || this.state.recentPlays.length <= 0) {
+      return (
+        <Loader active inline="centered">
+          Loading
+        </Loader>
+      );
+      // return <div style={{ textAlign: 'center' }}>Data Loading...</div>;
+    }
 
     return (
       <Segment vertical>
@@ -144,6 +264,14 @@ class Dashboard extends Component {
 
           <Grid.Row>
             <Grid.Column width={4}>
+              <Segment>
+                Admin Wallet Balance : {this.state.currentBalance}
+              </Segment>
+            </Grid.Column>
+          </Grid.Row>
+
+          <Grid.Row>
+            <Grid.Column width={4}>
               <Card>
                 <Card.Content>
                   <Statistic>
@@ -160,25 +288,6 @@ class Dashboard extends Component {
                 </Card.Content>
               </Card>
             </Grid.Column>
-
-            {/* <Grid.Column width={4}>
-              <Segment padded textAlign="center">
-                <Statistic>
-                  <Statistic.Value>390,110</Statistic.Value>
-                  <Statistic.Label>Total Plays</Statistic.Label>
-                </Statistic>
-                <ResponsiveContainer width="100%" minHeight={140}>
-                  <BarChart
-                    data={data}
-                  >
-                    <XAxis hide={true} dataKey="day" />
-
-                    <Bar type="monotone" dataKey="plays" stroke="#8884d8" />
-                    <Tooltip />
-                  </BarChart>
-                </ResponsiveContainer>
-              </Segment>
-            </Grid.Column> */}
 
             <Grid.Column width={4}>
               <Card style={{ backgroundColor: '#20c997' }}>
@@ -217,9 +326,9 @@ class Dashboard extends Component {
             </Grid.Column>
 
             <Grid.Column width={4}>
-              <Card>
+              <Card style={{ backgroundColor: '#20c997' }}>
                 <Card.Content>
-                  <Statistic>
+                  <Statistic inverted>
                     <Statistic.Value>56,023</Statistic.Value>
                     <Statistic.Label>Total Test ICX Paid</Statistic.Label>
                   </Statistic>
@@ -235,7 +344,7 @@ class Dashboard extends Component {
             </Grid.Column>
           </Grid.Row>
 
-          <Grid.Row margin={{ top: 30 }}>
+          <Grid.Row style={{ marginTop: 30 }}>
             <Grid.Column width={10}>
               <Segment padded>
                 {' '}
@@ -250,14 +359,7 @@ class Dashboard extends Component {
                     <CartesianGrid strokeDasharray="3 3" />
                     <Tooltip />
                     <Legend verticalAlign="top" />
-                    <XAxis dataKey="day">
-                      {/* <Label
-                        value="Daily Sign-Ups"
-                        offset={0}
-                        margin={{ top: 15 }}
-                        position="insideBottom"
-                      /> */}
-                    </XAxis>
+                    <XAxis dataKey="day" />
                     <YAxis />
 
                     <Area type="monotone" dataKey="googleUser" stroke="blue" />
@@ -270,33 +372,32 @@ class Dashboard extends Component {
                 </ResponsiveContainer>
               </Segment>
             </Grid.Column>
-            <Segment>
-              <Header as="h2" floated="left">
-                Provider Distribution
-              </Header>
-              <Grid.Column width={4}>
-                {/* <ResponsiveContainer width={300} minHeight="50%">pie차트는 responsive불가 */}
-                <PieChart width={300} height={300}>
+
+            <Grid.Column width={6}>
+              <Segment style={{ boxShadow: 'none', border: 'none' }}>
+                <Header as="h2" floated="left">
+                  Provider Distribution
+                </Header>
+                <PieChart width={300} height={250}>
                   <Pie
                     isAnimationActive={false}
                     data={data01}
-                    cx="30%"
-                    // cx={300}
-                    cy="30%"
-                    // cy={300}
+                    cx="50%"
+                    cy="50%"
                     outerRadius={80}
                     fill="#8884d8"
                     labelLine={false}
                     label={this.renderCustomizedLabel}
+                    dataKey={data01.value}
                   >
                     {data01.map((entry, index) => (
-                      <Cell fill={COLORS[index % COLORS.length]} />
+                      <Cell fill={COLORS[index % COLORS.length]} key={index} />
                     ))}
                   </Pie>
                   <Tooltip />
                 </PieChart>
-              </Grid.Column>
-            </Segment>
+              </Segment>
+            </Grid.Column>
           </Grid.Row>
 
           <Grid.Row style={{ marginBottom: 50 }}>
@@ -329,6 +430,9 @@ class Dashboard extends Component {
             </Grid.Column>
 
             <Grid.Column width={6}>
+              <Header as="h2" floated="left">
+                Recent Plays
+              </Header>
               <Table basic="very" celled collapsing>
                 <Table.Header>
                   <Table.Row>
@@ -339,74 +443,46 @@ class Dashboard extends Component {
                 </Table.Header>
 
                 <Table.Body>
-                  <Table.Row>
-                    <Table.Cell>
-                      <Header as="h4" image>
-                        <Image
-                          src="https://lh4.googleusercontent.com/-HXmSZTtRF6M/AAAAAAAAAAI/AAAAAAAAAAc/PpkY31C_F_0/s96-c/photo.jpg"
-                          rounded
-                          size="mini"
-                        />
-                        <Header.Content>
-                          Lena
-                          <Header.Subheader>facebook</Header.Subheader>
-                        </Header.Content>
-                      </Header>
-                    </Table.Cell>
-                    <Table.Cell>22</Table.Cell>
-                    <Table.Cell>13:22:30</Table.Cell>
-                  </Table.Row>
-                  <Table.Row>
-                    <Table.Cell>
-                      <Header as="h4" image>
-                        <Image
-                          src="https://lh4.googleusercontent.com/-HXmSZTtRF6M/AAAAAAAAAAI/AAAAAAAAAAc/PpkY31C_F_0/s96-c/photo.jpg"
-                          rounded
-                          size="mini"
-                        />
-                        <Header.Content>
-                          Matthew
-                          <Header.Subheader>google</Header.Subheader>
-                        </Header.Content>
-                      </Header>
-                    </Table.Cell>
-                    <Table.Cell>15</Table.Cell>
-                    <Table.Cell>13:22:30</Table.Cell>
-                  </Table.Row>
-                  <Table.Row>
-                    <Table.Cell>
-                      <Header as="h4" image>
-                        <Image
-                          src="https://lh4.googleusercontent.com/-HXmSZTtRF6M/AAAAAAAAAAI/AAAAAAAAAAc/PpkY31C_F_0/s96-c/photo.jpg"
-                          rounded
-                          size="mini"
-                        />
-                        <Header.Content>
-                          Lindsay
-                          <Header.Subheader>google</Header.Subheader>
-                        </Header.Content>
-                      </Header>
-                    </Table.Cell>
-                    <Table.Cell>12</Table.Cell>
-                    <Table.Cell>13:22:30</Table.Cell>
-                  </Table.Row>
-                  <Table.Row>
-                    <Table.Cell>
-                      <Header as="h4" image>
-                        <Image
-                          src="https://lh4.googleusercontent.com/-HXmSZTtRF6M/AAAAAAAAAAI/AAAAAAAAAAc/PpkY31C_F_0/s96-c/photo.jpg"
-                          rounded
-                          size="mini"
-                        />
-                        <Header.Content>
-                          Mark
-                          <Header.Subheader>facebook</Header.Subheader>
-                        </Header.Content>
-                      </Header>
-                    </Table.Cell>
-                    <Table.Cell>11</Table.Cell>
-                    <Table.Cell>13:22:30</Table.Cell>
-                  </Table.Row>
+                  {this.state.recentPlays.map((play, index) => {
+                    {
+                      // console.log('play', play, 'index', index);
+                    }
+                    return index < 5 ? (
+                      <Table.Row key={index}>
+                        <Table.Cell>
+                          <Header as="h4" image>
+                            {play.profile_img_url ? (
+                              <Image
+                                src={play.profile_img_url}
+                                rounded
+                                size="mini"
+                                style={{
+                                  marginLeft: 'auto',
+                                  marginRight: 'auto'
+                                }}
+                              />
+                            ) : (
+                              <Icon
+                                name="user"
+                                style={{
+                                  marginLeft: 'auto',
+                                  marginRight: 'auto'
+                                }}
+                              />
+                            )}
+                            <Header.Content>
+                              {play.nickname ? play.nickname : play.email}
+                              <Header.Subheader>
+                                {play.service_provider}
+                              </Header.Subheader>
+                            </Header.Content>
+                          </Header>
+                        </Table.Cell>
+                        <Table.Cell>{play.amount}</Table.Cell>
+                        <Table.Cell>{play.timestamp}</Table.Cell>
+                      </Table.Row>
+                    ) : null;
+                  })}
                 </Table.Body>
               </Table>
             </Grid.Column>
