@@ -19,17 +19,65 @@ class Settings extends Component {
     adminEmail: null,
     scoreAddress: null,
     currentBalance: null,
-    openModal: false
+    enteredInputValue: '',
+    openModal: false,
+    modalType: ''
   };
 
-  _openModal() {
-    this.setState({ openModal: true });
-    console.log('modal open');
+  _openModal(modalType) {
+    this.setState({
+      openModal: true,
+      modalType
+    });
   }
 
   _closeModal() {
-    this.setState({ openModal: false });
-    console.log('modal closed');
+    this.setState({ openModal: false, modalType: '', enteredInputValue: '' });
+  }
+
+  _handleOnSubmit() {
+    // eslint-disable-next-line default-case
+    switch (this.state.modalType) {
+      case 'resetAmountLimit':
+        // API call to reset amount limit
+        axios
+          .post(util.API_URLS['admin_set_limit'], {
+            amount_limit: this.state.enteredInputValue,
+            block_limit: this.state.blockLimit
+          })
+          .then(res => {
+            // setState so that the page re-renders
+            this.setState({
+              amountLimit: res.data.amountlimit,
+              blockLimit: res.data.blocklimit,
+              openModal: false
+            });
+          })
+          .catch(err => {
+            throw err;
+          });
+        break;
+
+      case 'resetBlockLimit':
+        // API call to reset block limit
+        axios
+          .post(util.API_URLS['admin_set_limit'], {
+            amount_limit: this.state.amountLimit,
+            block_limit: this.state.enteredInputValue
+          })
+          .then(res => {
+            // setState so that the page re-renders
+            this.setState({
+              amountLimit: res.data.amountlimit,
+              blockLimit: res.data.blocklimit,
+              openModal: false
+            });
+          })
+          .catch(err => {
+            throw err;
+          });
+        break;
+    }
   }
 
   _modalContent() {
@@ -49,14 +97,12 @@ class Settings extends Component {
             focus
             placeholder="Enter new value"
             onChange={(e, data) => {
-              this.setState({ enteredWalletAddress: data.value });
-              this._validateWallet(data.value);
+              this.setState({ enteredInputValue: data.value });
             }}
             action={{
               color: 'teal',
-              content: 'Submit'
-              // onClick: () =>
-              //   this._handleOnClick(this.state.enteredWalletAddress)
+              content: 'Submit',
+              onClick: () => this._handleOnSubmit()
             }}
           />
         </Modal.Content>
@@ -67,22 +113,21 @@ class Settings extends Component {
 
   componentDidMount() {
     // TODO: authentication
-    // get_limit
-    axios.get(util.API_URLS['admin_get_limit']).then(res => {
-      console.log(res.data);
+    // admin_summary
+
+    axios.get(util.API_URLS['admin_summary']).then(res => {
       this.setState({
-        amountLimit: res.data.amountlimit,
-        blockLimit: res.data.blocklimit,
-        adminEmail: res.data.admin_email
+        adminEmail: res.data.admin_email,
+        scoreAddress: res.data.score_address,
+        currentBalance: res.data.current_balance
       });
     });
 
-    // current_balance
-    axios.get(util.API_URLS['admin_current_balance']).then(res => {
-      console.log(res.data);
+    // set_limit
+    axios.get(util.API_URLS['admin_get_limit']).then(res => {
       this.setState({
-        scoreAddress: res.data.default_score,
-        currentBalance: res.data.current_balance
+        amountLimit: res.data.amountlimit,
+        blockLimit: res.data.blocklimit
       });
     });
   }
@@ -120,7 +165,9 @@ class Settings extends Component {
                         <Table.Cell>Amount Limit</Table.Cell>
                         <Table.Cell>{this.state.amountLimit}</Table.Cell>
                         <Table.Cell>
-                          <Button onClick={() => this._openModal()}>
+                          <Button
+                            onClick={() => this._openModal('resetAmountLimit')}
+                          >
                             Edit
                           </Button>
                         </Table.Cell>
@@ -129,7 +176,9 @@ class Settings extends Component {
                         <Table.Cell>Block Limit</Table.Cell>
                         <Table.Cell>{this.state.blockLimit}</Table.Cell>
                         <Table.Cell>
-                          <Button onClick={() => this._openModal()}>
+                          <Button
+                            onClick={() => this._openModal('resetBlockLimit')}
+                          >
                             Edit
                           </Button>
                         </Table.Cell>
@@ -147,7 +196,13 @@ class Settings extends Component {
                 <Segment>
                   <Header as="h2">Current Admin</Header>
                   <div>
-                    Email: {this.state.adminEmail || 'someadminemail@gmail.com'}{' '}
+                    Email: {this.state.adminEmail || 'someadminemail@gmail.com'}
+                    <Button
+                      size="tiny"
+                      onClick={() => this._openModal('resetBlockLimit')}
+                    >
+                      Edit
+                    </Button>
                   </div>
                 </Segment>
               </Grid.Column>
