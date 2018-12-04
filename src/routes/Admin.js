@@ -9,6 +9,7 @@ import { Container, Grid, Header, Button, Segment } from 'semantic-ui-react';
 import Sidebar from '../components/admin/sidebar';
 import '../components/admin/style.scss';
 import Dashboard from '../components/admin/dashboard';
+import Login from '../components/admin/login';
 import Settings from '../components/admin/settings';
 import Log from '../components/admin/log';
 
@@ -30,6 +31,7 @@ class Admin extends Component {
             </Grid.Column>
             <Grid.Column width={13}>
               <Route exact path="/admin" component={Dashboard} />
+              <Route path="/admin/login" component={Login} />
               <Route path="/admin/settings" component={Settings} />
               <Route path="/admin/log" component={Log} />
             </Grid.Column>
