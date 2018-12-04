@@ -160,6 +160,7 @@ class Log extends Component {
           />
         </Segment>
       </Grid.Row>
+    );
   }
 }
 

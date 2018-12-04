@@ -67,7 +67,7 @@ class Dashboard extends Component {
       // 'http://54.180.114.119:8000/db/transaction'
       util.API_URLS['transaction']
     );
-    const secondRequest = await axios.get(util.API_URLS['latest']);
+    // const secondRequest = await axios.get(util.API_URLS['latest']);
     // const thridRequest = await axios.get(
     //   'http://54.180.114.119:8000/admin/current_balance'
     // );
