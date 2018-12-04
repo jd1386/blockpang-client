@@ -29,21 +29,25 @@ class MyPage extends Component {
     };
   }
 
-  _requestTransfer(gameScore) {
+  _requestTransfer(game_score) {
     const userData = {
       user: JSON.parse(localStorage.getItem('userData')),
       wallet: localStorage.getItem('walletAddress'),
-      gameScore
+      game_score
     };
 
     axios
-      .post('http://54.180.114.119:8000/transfer', userData)
+      .post(util.API_URLS['transfer'], userData)
       .then(res => {
         console.log(res.data);
       })
       .catch(err => {
         throw err;
       });
+  }
+
+  _handleModalClose() {
+    this.setState({ isWalletCreated: false });
   }
 
   _toggleModal() {
@@ -56,6 +60,7 @@ class MyPage extends Component {
         <Modal
           walletAddress={this.state.walletAddress}
           walletKey={this.state.walletKey}
+          onClose={() => this._handleModalClose()}
         />
       </React.Fragment>
     ) : (
@@ -162,6 +167,7 @@ class MyPage extends Component {
       isEditingWallet: !prevState.isEditingWallet
     }));
   }
+
   _updateWalletAddress(newAddress) {
     // get user data from localStorage for API use
     const {
