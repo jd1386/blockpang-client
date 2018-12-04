@@ -3,6 +3,7 @@ import './style.scss';
 import { Spring } from 'react-spring';
 import PropTypes from 'prop-types';
 import axios from 'axios';
+import util from '../../../util';
 
 const gameoverMessages = {
   exceedBlockLimit: 'You have too many blocks',
@@ -43,7 +44,7 @@ class Gameover extends Component {
 
   componentDidMount() {
     const userData = {
-      wallet: localStorage.getItem('walletAddress'),
+      wallet: util.walletAddress(),
       game_score: this.props.score / 100
     };
 
