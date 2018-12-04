@@ -443,6 +443,19 @@ class App extends React.Component {
     this.intervalId = setInterval(() => this._tick(), 10);
   };
 
+  _renderWalletMissing() {
+    return (
+      <Board
+        boardBackground={this.boardBackground}
+        time={this.state.time}
+        currentScore={this.state.score}
+        stage={this.state.currentStage}
+      >
+        <Status.WalletMissing />
+      </Board>
+    );
+  }
+
   _shouldMakeBlock = () => {
     if (
       this.state.time === this.state.nextBlockTime &&
@@ -475,7 +488,19 @@ class App extends React.Component {
 
   render() {
     if (this.state.isFirstPlaying) {
-      return this._renderGamestart();
+      // logged in
+      if (localStorage.getItem('userData')) {
+        // wallet registered
+        if (localStorage.getItem('walletAddress')) {
+          return this._renderGamestart();
+        } else {
+          // wallet not registered
+          return this._renderWalletMissing();
+        }
+      } else {
+        // not logged in
+        return this._renderGamestart();
+      }
     }
 
     if (this.state.isPlaying) {

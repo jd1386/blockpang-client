@@ -48,9 +48,19 @@ class Gameover extends Component {
       game_score: this.props.score / 100
     };
 
-    userData.wallet
-      ? this.setState({ isLoggedIn: true, walletAddress: userData.wallet })
-      : this.setState({ isLoggedIn: true });
+    if (userData.user) {
+      if (userData.wallet) {
+        this.setState({ isLoggedIn: true, walletAddress: userData.wallet });
+      } else {
+        this.setState({ isLoggedIn: true });
+        localStorage.setItem('previousGameScore', userData.gameScore);
+      }
+    } else {
+      // user is not logged in
+      // save game score to localStorage
+      // to give the user when she logs in
+      localStorage.setItem('previousGameScore', userData.gameScore);
+    }
 
     // use setTimeout to give more room between
     // render and _requestTransfer call
@@ -96,9 +106,14 @@ class Gameover extends Component {
       <div className="game-status-main">
         <div className="header gameover">Game Over</div>
         <div className="content gameover">
-          <div className="prize">Log in to get your test ICX</div>
+          <div className="prize">
+            You've won <span>{this._animateScore(this.props.score)} </span>
+            ICX!
+            <br />
+            Log in now to claim your ICX
+          </div>
           <div className="gameover-message">
-            <div className="flash">Press W KEY to restart</div>
+            <div className="flash">Log in to claim your ICX</div>
           </div>
         </div>
       </div>

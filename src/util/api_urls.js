@@ -6,7 +6,7 @@ export default {
   transfer: `${BASE_URL}/transfer`,
   leaderboard: `${BASE_URL}/leaderboard`,
   transaction: `${BASE_URL}/db/transaction`,
-  latest: `${BASE_URL}/db/latest`,
+  admin_summary: `${BASE_URL}/db/summary`,
   admin_get_limit: `${BASE_URL}/admin/get_limit`,
-  admin_current_balance: `${BASE_URL}/admin/current_balance`
+  admin_set_limit: `${BASE_URL}/admin/set_limit`
 };

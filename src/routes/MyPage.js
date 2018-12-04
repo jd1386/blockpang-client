@@ -29,6 +29,23 @@ class MyPage extends Component {
     };
   }
 
+  _requestTransfer(gameScore) {
+    const userData = {
+      user: JSON.parse(localStorage.getItem('userData')),
+      wallet: localStorage.getItem('walletAddress'),
+      gameScore
+    };
+
+    axios
+      .post('http://54.180.114.119:8000/transfer', userData)
+      .then(res => {
+        console.log(res.data);
+      })
+      .catch(err => {
+        throw err;
+      });
+  }
+
   _toggleModal() {
     return this.state.isWalletCreated ? (
       <React.Fragment>
@@ -104,16 +121,17 @@ class MyPage extends Component {
     } = util.userData();
     const reqBody = {
       email,
-      profile_image_url: provider_pic,
+      profile_img_url: provider_pic,
       nickname: name,
       service_provider: provider,
       user_pid: provider_id
     };
-
+    console.log('reqBody', JSON.stringify(reqBody));
     // API call to create a new wallet
     axios
       .post(util.API_URLS['create_wallet'], JSON.stringify(reqBody))
       .then(res => {
+        console.log('reqBody', reqBody);
         // save address to localStorage
         util.setWalletAddress(res.data.address);
 
@@ -123,6 +141,14 @@ class MyPage extends Component {
           walletAddress: res.data.address,
           walletKey: res.data.key
         });
+
+        // if previousGameScore, transfer coin
+        if (localStorage.getItem('previousGameScore')) {
+          const previousGameScore = localStorage.getItem('previousGameScore');
+          this._requestTransfer(previousGameScore);
+          // reset previousGameScore
+          localStorage.setItem('previousGameScore', '');
+        }
       })
       .catch(err => {
         throw err;
@@ -147,7 +173,7 @@ class MyPage extends Component {
     } = util.userData();
     const reqBody = {
       email,
-      profile_image_url: provider_pic,
+      profile_img_url: provider_pic,
       nickname: name,
       service_provider: provider,
       user_pid: provider_id,
