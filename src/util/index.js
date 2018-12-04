@@ -1,4 +1,5 @@
 import moment from 'moment';
+import API_URLS from './api_urls';
 
 const isLoggedIn = () => {
   return localStorage.getItem('userData') !== null;
@@ -33,5 +34,6 @@ export default {
   setUserData,
   walletAddress,
   setWalletAddress,
-  toKoreanTime
+  toKoreanTime,
+  API_URLS
 };

@@ -83,7 +83,7 @@ class GameRecord extends Component {
   componentDidMount() {
     // TODO: replace all transactions with transactions by user
     axios
-      .get('http://54.180.114.119:8000/db/transaction')
+      .get(util.API_URLS['transaction'])
       .then(res => {
         let transactionsArray = [];
 

@@ -34,6 +34,7 @@ import {
   Cell
 } from 'recharts';
 import axios from 'axios';
+import util from '../../util';
 
 class Dashboard extends Component {
   // TODO: : axios로 정보 받아오고 data에 넣어주기
@@ -102,11 +103,9 @@ class Dashboard extends Component {
   }
   async componentDidMount() {
     const firstRequest = await axios.get(
-      'http://54.180.114.119:8000/admin/current_balance'
+      util.API_URLS['admin_current_balance']
     );
-    const secondRequest = await axios.get(
-      'http://54.180.114.119:8000/db/latest'
-    );
+    const secondRequest = await axios.get(util.API_URLS['latest']);
     // const thridRequest = await axios.get(
     //   'http://54.180.114.119:8000/admin/current_balance'
     // );

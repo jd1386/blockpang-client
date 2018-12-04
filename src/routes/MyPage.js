@@ -112,7 +112,7 @@ class MyPage extends Component {
 
     // API call to create a new wallet
     axios
-      .post('http://54.180.114.119:8000/wallet/create', JSON.stringify(reqBody))
+      .post(util.API_URLS['create_wallet'], JSON.stringify(reqBody))
       .then(res => {
         // save address to localStorage
         util.setWalletAddress(res.data.address);
@@ -156,7 +156,7 @@ class MyPage extends Component {
 
     // call update API
     axios
-      .post('http://54.180.114.119:8000/wallet/update', JSON.stringify(reqBody))
+      .post(util.API_URLS['update_wallet'], JSON.stringify(reqBody))
       .then(res => {
         this.setState({ walletAddress: newAddress });
         util.setWalletAddress(newAddress);
