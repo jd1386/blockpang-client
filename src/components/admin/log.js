@@ -15,6 +15,7 @@ import {
   Dimmer
 } from 'semantic-ui-react';
 import axios from 'axios';
+import util from '../../util';
 
 const recentPlay2 = [];
 const recentPlays = [
@@ -77,7 +78,7 @@ class Log extends Component {
 
   _requestData() {
     axios
-      .get('http://54.180.114.119:8000/db/latest')
+      .get(util.API_URLS['latest'])
       .then(res => {
         console.log('res', res.data);
         this.setState({

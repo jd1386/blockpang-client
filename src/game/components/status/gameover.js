@@ -3,6 +3,7 @@ import './style.scss';
 import { Spring } from 'react-spring';
 import PropTypes from 'prop-types';
 import axios from 'axios';
+import util from '../../../util';
 
 const gameoverMessages = {
   exceedBlockLimit: 'You have too many blocks',
@@ -32,7 +33,7 @@ class Gameover extends Component {
 
   _requestTransfer(userData) {
     axios
-      .post('http://54.180.114.119:8000/transfer', userData)
+      .post(util.API_URLS['transfer'], userData)
       .then(res => {
         console.log(res.data);
       })
@@ -43,9 +44,8 @@ class Gameover extends Component {
 
   componentDidMount() {
     const userData = {
-      user: JSON.parse(localStorage.getItem('userData')),
-      wallet: localStorage.getItem('walletAddress'),
-      gameScore: this.props.score
+      wallet: util.walletAddress(),
+      game_score: this.props.score / 100
     };
 
     if (userData.user) {

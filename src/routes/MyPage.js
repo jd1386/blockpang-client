@@ -15,6 +15,7 @@ import WalletForm from '../components/MyPage/walletForm';
 import GameRecord from '../components/MyPage/gameRecord';
 import Modal from '../components/MyPage/modal';
 import axios from 'axios';
+import util from '../util';
 
 class MyPage extends Component {
   constructor(props) {
@@ -111,8 +112,13 @@ class MyPage extends Component {
 
   _handleCreateWallet() {
     // get user data from localStorage for API use
-    const userData = JSON.parse(localStorage.getItem('userData'));
-    const { email, provider, provider_id, provider_pic, name } = userData;
+    const {
+      email,
+      provider,
+      provider_id,
+      provider_pic,
+      name
+    } = util.userData();
     const reqBody = {
       email,
       profile_image_url: provider_pic,
@@ -123,10 +129,10 @@ class MyPage extends Component {
 
     // API call to create a new wallet
     axios
-      .post('http://54.180.114.119:8000/wallet/create', JSON.stringify(reqBody))
+      .post(util.API_URLS['create_wallet'], JSON.stringify(reqBody))
       .then(res => {
         // save address to localStorage
-        localStorage.setItem('walletAddress', res.data.address);
+        util.setWalletAddress(res.data.address);
 
         // setState so it renders a modal
         this.setState({
@@ -157,8 +163,13 @@ class MyPage extends Component {
   }
   _updateWalletAddress(newAddress) {
     // get user data from localStorage for API use
-    const userData = JSON.parse(localStorage.getItem('userData'));
-    const { email, provider, provider_id, provider_pic, name } = userData;
+    const {
+      email,
+      provider,
+      provider_id,
+      provider_pic,
+      name
+    } = util.userData();
     const reqBody = {
       email,
       profile_image_url: provider_pic,
@@ -170,10 +181,10 @@ class MyPage extends Component {
 
     // call update API
     axios
-      .post('http://54.180.114.119:8000/wallet/update', JSON.stringify(reqBody))
+      .post(util.API_URLS['update_wallet'], JSON.stringify(reqBody))
       .then(res => {
         this.setState({ walletAddress: newAddress });
-        localStorage.setItem('walletAddress', newAddress);
+        util.setWalletAddress(newAddress);
       })
       .catch(err => {
         throw err;
@@ -181,7 +192,7 @@ class MyPage extends Component {
   }
 
   componentDidMount() {
-    this.setState({ walletAddress: localStorage.getItem('walletAddress') });
+    this.setState({ walletAddress: util.walletAddress() });
   }
 
   render() {
@@ -189,7 +200,7 @@ class MyPage extends Component {
 
     // FIXME: fix the following auth logic below
     if (!this.props.isLoggedIn) {
-      if (!localStorage.getItem('userData')) {
+      if (!util.isLoggedIn()) {
         return <Redirect to={'/'} />;
       }
     }

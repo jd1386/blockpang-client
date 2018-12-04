@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import { Input, Label } from 'semantic-ui-react';
 import WalletInfo from './walletInfo';
+import util from '../../util';
 
 class WalletForm extends Component {
   constructor(props) {
@@ -34,7 +35,8 @@ class WalletForm extends Component {
         finishedEditing: true,
         isValidWalletAddress: true
       });
-      localStorage.setItem('walletAddress', newAddress);
+
+      util.setWalletAddress(newAddress);
     }
   }
 
