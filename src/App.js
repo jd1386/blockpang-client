@@ -9,6 +9,7 @@ import MyPage from './routes/MyPage';
 import Leaderboard from './routes/Leaderboard';
 import Admin from './routes/Admin';
 import Footer from './components/Footer/';
+import util from './util';
 
 class App extends React.Component {
   state = {
@@ -31,7 +32,7 @@ class App extends React.Component {
   };
 
   componentDidMount() {
-    if (window.localStorage.getItem('userData')) {
+    if (util.isLoggedIn()) {
       this.login();
     } else {
       this.logout();

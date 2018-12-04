@@ -9,6 +9,7 @@ import {
   Icon
 } from 'semantic-ui-react';
 import GoogleLogin from 'react-google-login';
+import util from '../util';
 
 class Login extends Component {
   state = {
@@ -28,14 +29,14 @@ class Login extends Component {
       };
     }
     if (userData) {
-      localStorage.setItem('userData', JSON.stringify(userData));
+      util.setUserData(JSON.stringify(userData));
       this.setState({ isLoginSuccessful: true });
     }
     this.props.login();
   }
 
   render() {
-    if (this.state.isLoginSuccessful || localStorage.getItem('userData')) {
+    if (this.state.isLoginSuccessful || util.isLoggedIn()) {
       return <Redirect to={'/'} />;
     }
 

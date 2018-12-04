@@ -12,11 +12,12 @@ import Dashboard from '../components/admin/dashboard';
 import Login from '../components/admin/login';
 import Settings from '../components/admin/settings';
 import Log from '../components/admin/log';
+import util from '../util';
 
 class Admin extends Component {
   render() {
     //FIXME: fix the following auth logic below
-    if (!localStorage.getItem('userData')) {
+    if (!util.isLoggedIn()) {
       return <Redirect to={'/'} />;
     }
 

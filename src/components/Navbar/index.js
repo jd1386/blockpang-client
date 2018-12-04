@@ -2,12 +2,14 @@ import React, { Component } from 'react';
 import { Link } from 'react-router-dom';
 import { Container, Image, Button, Menu } from 'semantic-ui-react';
 import './style.css';
+import util from '../../util';
 
 class Navbar extends Component {
   _menuChange = () => {
     let userData;
-    if (localStorage.getItem('userData'))
-      userData = JSON.parse(localStorage.getItem('userData'));
+    if (util.isLoggedIn()) {
+      userData = util.userData();
+    }
 
     return this.props.isLoggedIn ? (
       <Menu.Item position="right">

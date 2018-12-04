@@ -70,9 +70,7 @@ class GameRecord extends Component {
     return (
       <div style={{ textAlign: 'center', marginTop: '2em' }}>
         <a
-          href={`https://tracker.icon.foundation/address/${localStorage.getItem(
-            'walletAddress'
-          )}`}
+          href={`https://tracker.icon.foundation/address/${util.walletAddress()}`}
           rel="noopener noreferrer"
           target="_blank"
         >
