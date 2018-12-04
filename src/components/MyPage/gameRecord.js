@@ -55,7 +55,11 @@ class GameRecord extends Component {
 
   _renderGraph() {
     return (
-      <BarChart width={400} height={400} data={this.state.transactions}>
+      <BarChart
+        width={400}
+        height={400}
+        data={this.state.transactions.reverse()}
+      >
         <XAxis dataKey="timestamp" />
         <YAxis />
         <Tooltip />
@@ -92,7 +96,7 @@ class GameRecord extends Component {
           transactionsArray.push(pick(transaction, ['amount', 'timestamp']));
         });
 
-        this.setState({ transactions: transactionsArray.reverse() });
+        this.setState({ transactions: transactionsArray });
       })
       .catch(err => {
         throw err;
