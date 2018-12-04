@@ -15,7 +15,8 @@ import {
 
 class GameRecord extends Component {
   state = {
-    transactions: []
+    recentTransfers: [],
+    dailyTransfers: []
   };
 
   _loader() {
@@ -35,14 +36,12 @@ class GameRecord extends Component {
           </Table.Header>
 
           <Table.Body>
-            {this.state.transactions.map((transaction, index) => {
+            {this.state.recentTransfers.map((tr, index) => {
               return (
                 <Table.Row key={index}>
-                  <Table.Cell>
-                    {util.toKoreanTime(transaction.timestamp)}
-                  </Table.Cell>
-                  <Table.Cell>{transaction.amount * 100}</Table.Cell>
-                  <Table.Cell>{transaction.amount}</Table.Cell>
+                  <Table.Cell>{util.toKoreanTime(tr.timestamp)}</Table.Cell>
+                  <Table.Cell>{tr.amount * 100}</Table.Cell>
+                  <Table.Cell>{tr.amount}</Table.Cell>
                 </Table.Row>
               );
             })}
@@ -55,7 +54,11 @@ class GameRecord extends Component {
 
   _renderGraph() {
     return (
-      <BarChart width={400} height={400} data={this.state.transactions}>
+      <BarChart
+        width={400}
+        height={400}
+        data={this.state.dailyTransfers.reverse()}
+      >
         <XAxis dataKey="timestamp" />
         <YAxis />
         <Tooltip />
@@ -81,18 +84,31 @@ class GameRecord extends Component {
   }
 
   componentDidMount() {
-    // TODO: replace all transactions with transactions by user
     axios
-      .get(util.API_URLS['transaction'])
+      .post(util.API_URLS['admin_stat'], {
+        user: util.userData().email
+      })
       .then(res => {
-        let transactionsArray = [];
+        console.log(res.data);
 
-        // get the most recent 10 transactions
-        takeRight(res.data, 10).forEach(transaction => {
-          transactionsArray.push(pick(transaction, ['amount', 'timestamp']));
+        let recentTransfers = [];
+        let dailyTransfers = [];
+
+        // transaction list
+        res.data.transaction_list.forEach(tr => {
+          recentTransfers.push(pick(tr, ['amount', 'timestamp']));
         });
 
-        this.setState({ transactions: transactionsArray.reverse() });
+        // daily transfers
+        res.data.daily.forEach(daily => {
+          dailyTransfers.push({
+            timestamp: util.toKoreanTime(daily.date_trunc, 'short'),
+            amount: daily.sum
+          });
+        });
+        console.log(dailyTransfers);
+
+        this.setState({ recentTransfers, dailyTransfers });
       })
       .catch(err => {
         throw err;
@@ -106,17 +122,17 @@ class GameRecord extends Component {
           <Grid.Row>
             <Grid.Column>
               <div style={{ textAlign: 'center', marginBottom: '1em' }}>
-                <h2>Recent Transactions</h2>
+                <h2>Recent Transfer</h2>
               </div>
-              {this.state.transactions.length
+              {this.state.recentTransfers.length
                 ? this._renderTable()
                 : this._loader()}
             </Grid.Column>
             <Grid.Column>
               <div style={{ textAlign: 'center', marginBottom: '1em' }}>
-                <h2>ICX Payout by timeline</h2>
+                <h2>Daily ICX Transfer</h2>
               </div>
-              {this.state.transactions.length
+              {this.state.recentTransfers.length
                 ? this._renderGraph()
                 : this._loader()}
             </Grid.Column>
