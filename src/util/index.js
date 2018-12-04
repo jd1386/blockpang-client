@@ -1,6 +1,11 @@
 import moment from 'moment';
 import API_URLS from './api_urls';
 
+const DATE_FORMATS = {
+  long: 'M-DD-YYYY, h:mm:ss a',
+  short: 'M-DD-YYYY'
+};
+
 const isLoggedIn = () => {
   return localStorage.getItem('userData') !== null;
 };
@@ -21,11 +26,11 @@ const setWalletAddress = newAddress => {
   localStorage.setItem('walletAddress', newAddress);
 };
 
-const toKoreanTime = originalTime => {
+const toKoreanTime = (originalTime, format = 'long') => {
   return moment
     .parseZone(originalTime)
     .utcOffset(9)
-    .format('M-DD-YYYY, h:mm:ss a');
+    .format(DATE_FORMATS[format]);
 };
 
 const _providerColor = provider => {
