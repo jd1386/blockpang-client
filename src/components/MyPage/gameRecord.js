@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import axios from 'axios';
+import util from '../../util';
 import { takeRight, pick } from 'lodash';
 import { Table, Container, Grid, Button, Loader } from 'semantic-ui-react';
 import {
@@ -37,7 +38,9 @@ class GameRecord extends Component {
             {this.state.transactions.map((transaction, index) => {
               return (
                 <Table.Row key={index}>
-                  <Table.Cell>{transaction.timestamp}</Table.Cell>
+                  <Table.Cell>
+                    {util.toKoreanTime(transaction.timestamp)}
+                  </Table.Cell>
                   <Table.Cell>{transaction.amount * 100}</Table.Cell>
                   <Table.Cell>{transaction.amount}</Table.Cell>
                 </Table.Row>
@@ -67,9 +70,7 @@ class GameRecord extends Component {
     return (
       <div style={{ textAlign: 'center', marginTop: '2em' }}>
         <a
-          href={`https://tracker.icon.foundation/address/${localStorage.getItem(
-            'walletAddress'
-          )}`}
+          href={`https://tracker.icon.foundation/address/${util.walletAddress()}`}
           rel="noopener noreferrer"
           target="_blank"
         >
@@ -82,7 +83,7 @@ class GameRecord extends Component {
   componentDidMount() {
     // TODO: replace all transactions with transactions by user
     axios
-      .get('http://54.180.114.119:8000/db/transaction')
+      .get(util.API_URLS['transaction'])
       .then(res => {
         let transactionsArray = [];
 
@@ -91,7 +92,7 @@ class GameRecord extends Component {
           transactionsArray.push(pick(transaction, ['amount', 'timestamp']));
         });
 
-        this.setState({ transactions: transactionsArray });
+        this.setState({ transactions: transactionsArray.reverse() });
       })
       .catch(err => {
         throw err;

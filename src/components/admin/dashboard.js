@@ -33,6 +33,7 @@ import {
 import axios from 'axios';
 import ReactTable from 'react-table';
 import 'react-table/react-table.css';
+import util from '../../util';
 
 class Dashboard extends Component {
   // TODO: : axios로 정보 받아오고 data에 넣어주기
@@ -59,12 +60,14 @@ class Dashboard extends Component {
   }
   async componentDidMount() {
     const firstRequest = await axios.get(
-      'http://54.180.114.119:8000/db/summary'
+      util.API_URLS['admin_summary']
       // 'http://54.180.114.119:8000/admin/current_balance'
     );
     const secondRequest = await axios.get(
-      'http://54.180.114.119:8000/db/transaction'
+      // 'http://54.180.114.119:8000/db/transaction'
+      util.API_URLS['transaction']
     );
+    const secondRequest = await axios.get(util.API_URLS['latest']);
     // const thridRequest = await axios.get(
     //   'http://54.180.114.119:8000/admin/current_balance'
     // );

@@ -17,6 +17,7 @@ import {
 import axios from 'axios';
 import ReactTable from 'react-table';
 import 'react-table/react-table.css';
+import util from '../../util';
 
 class Log extends Component {
   constructor(props) {
@@ -28,7 +29,7 @@ class Log extends Component {
 
   _requestData() {
     axios
-      .get('http://54.180.114.119:8000/db/transaction')
+      .get(util.API_URLS['transaction'])
       .then(res => {
         console.log('res', res.data);
         this.setState({
