@@ -8,6 +8,8 @@ class modal extends Component {
   handleClose = () => {
     this.setState({ modalOpen: false });
 
+    this.props.onClose();
+
     // download txt file that contains user's wallet address and key
     download(
       `address: ${this.props.walletAddress}\nkey: ${this.props.walletKey}`,
