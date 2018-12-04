@@ -149,7 +149,8 @@ class Log extends Component {
                 columns: [
                   {
                     Header: 'Time',
-                    accessor: 'timestamp'
+                    accessor: 'timestamp',
+                    Cell: props => <span>{util.toKoreanTime(props.value)}</span>
                   }
                 ]
               }

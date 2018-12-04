@@ -13,7 +13,8 @@ import {
   Card,
   Table,
   Icon,
-  Loader
+  Loader,
+  Label
 } from 'semantic-ui-react';
 import {
   // AreaChart,
@@ -25,7 +26,7 @@ import {
   Tooltip,
   XAxis,
   YAxis,
-  Label,
+  // Label,
   CartesianGrid,
   Legend,
   ResponsiveContainer
@@ -36,14 +37,12 @@ import 'react-table/react-table.css';
 import util from '../../util';
 
 class Dashboard extends Component {
-  // TODO: : axios로 정보 받아오고 data에 넣어주기
-
   constructor(props) {
     super(props);
     this.state = {
       default_score: '',
       currentBalance: '',
-      recentPlays: ''
+      recentPlays: []
     };
   }
 
@@ -339,7 +338,106 @@ class Dashboard extends Component {
         </Grid>
 
         <Grid.Row>
-          <Segment padded />
+          <Segment vertical textAlign="center">
+            <Header as="h2">Recent Transfer</Header>
+            <ReactTable
+              data={this.state.recentPlays}
+              getTrProps={(state, rowInfo, column) => {
+                return {
+                  style: {
+                    textAlign: 'center'
+                  }
+                };
+              }}
+              columns={[
+                {
+                  columns: [
+                    {
+                      Header: <Icon name="users" />,
+                      textAlign: 'center',
+                      accessor: 'profile_img_url',
+                      Cell: props =>
+                        props.value ? (
+                          <Image
+                            src={props.value}
+                            rounded
+                            size="mini"
+                            style={{
+                              marginLeft: 'auto',
+                              marginRight: 'auto'
+                            }}
+                          />
+                        ) : (
+                          <Icon
+                            name="user"
+                            style={{
+                              marginLeft: 'auto',
+                              marginRight: 'auto',
+                              textAlign: 'center'
+                            }}
+                          />
+                        )
+                    }
+                  ]
+                },
+                {
+                  columns: [
+                    {
+                      Header: 'Nickname',
+                      accessor: 'nickname',
+                      Cell: props =>
+                        props.value ? (
+                          <span>{props.value}</span>
+                        ) : (
+                          <span style={{ textAlign: 'center' }}>no data</span>
+                        )
+                    },
+                    {
+                      Header: 'Provider',
+                      accessor: 'service_provider',
+                      Cell: props => (
+                        <Label
+                          style={{
+                            color: 'white',
+                            backgroundColor: this._providerColor(props.value)
+                          }}
+                        >
+                          {props.value}
+                        </Label>
+                      )
+                    },
+
+                    {
+                      Header: 'Email',
+                      accessor: 'email'
+                    }
+                  ]
+                },
+                {
+                  columns: [
+                    {
+                      Header: 'Received TEST ICX',
+                      accessor: 'amount'
+                    }
+                  ]
+                },
+                {
+                  columns: [
+                    {
+                      Header: 'Time',
+                      accessor: 'timestamp',
+                      Cell: props => (
+                        <span>{util.toKoreanTime(props.value)}</span>
+                      )
+                    }
+                  ]
+                }
+              ]}
+              defaultPageSize={5}
+              style={{ width: '95%' }}
+              className="-striped -highlight"
+            />
+          </Segment>
         </Grid.Row>
 
         <Grid.Row>
