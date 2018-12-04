@@ -92,7 +92,7 @@ class GameRecord extends Component {
           transactionsArray.push(pick(transaction, ['amount', 'timestamp']));
         });
 
-        this.setState({ transactions: transactionsArray });
+        this.setState({ transactions: transactionsArray.reverse() });
       })
       .catch(err => {
         throw err;
