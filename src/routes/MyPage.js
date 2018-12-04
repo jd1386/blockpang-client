@@ -121,16 +121,17 @@ class MyPage extends Component {
     } = util.userData();
     const reqBody = {
       email,
-      profile_image_url: provider_pic,
+      profile_img_url: provider_pic,
       nickname: name,
       service_provider: provider,
       user_pid: provider_id
     };
-
+    console.log('reqBody', JSON.stringify(reqBody));
     // API call to create a new wallet
     axios
       .post(util.API_URLS['create_wallet'], JSON.stringify(reqBody))
       .then(res => {
+        console.log('reqBody', reqBody);
         // save address to localStorage
         util.setWalletAddress(res.data.address);
 
@@ -172,7 +173,7 @@ class MyPage extends Component {
     } = util.userData();
     const reqBody = {
       email,
-      profile_image_url: provider_pic,
+      profile_img_url: provider_pic,
       nickname: name,
       service_provider: provider,
       user_pid: provider_id,
