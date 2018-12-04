@@ -33,7 +33,7 @@ class Gameover extends Component {
 
   _requestTransfer(userData) {
     axios
-      .post('http://54.180.114.119:8000/transfer', userData)
+      .post(util.API_URLS['transfer'], userData)
       .then(res => {
         console.log(res.data);
       })

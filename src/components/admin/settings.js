@@ -10,6 +10,7 @@ import {
   Input
 } from 'semantic-ui-react';
 import axios from 'axios';
+import util from '../../util';
 
 class Settings extends Component {
   state = {
@@ -67,7 +68,7 @@ class Settings extends Component {
   componentDidMount() {
     // TODO: authentication
     // get_limit
-    axios.get('http://54.180.114.119:8000/admin/get_limit').then(res => {
+    axios.get(util.API_URLS['admin_get_limit']).then(res => {
       console.log(res.data);
       this.setState({
         amountLimit: res.data.amountlimit,
@@ -77,7 +78,7 @@ class Settings extends Component {
     });
 
     // current_balance
-    axios.get('http://54.180.114.119:8000/admin/current_balance').then(res => {
+    axios.get(util.API_URLS['admin_current_balance']).then(res => {
       console.log(res.data);
       this.setState({
         scoreAddress: res.data.default_score,

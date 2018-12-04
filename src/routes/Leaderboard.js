@@ -8,6 +8,7 @@ import {
   Loader
 } from 'semantic-ui-react';
 import axios from 'axios';
+import util from '../util';
 
 class Main extends Component {
   state = {
@@ -15,7 +16,7 @@ class Main extends Component {
   };
 
   componentDidMount() {
-    axios.get('http://54.180.114.119:8000/leaderboard').then(res => {
+    axios.get(util.API_URLS['leaderboard']).then(res => {
       this.setState({ records: res.data });
     });
   }
