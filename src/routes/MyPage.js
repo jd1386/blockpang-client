@@ -28,6 +28,23 @@ class MyPage extends Component {
     };
   }
 
+  _requestTransfer(gameScore) {
+    const userData = {
+      user: JSON.parse(localStorage.getItem('userData')),
+      wallet: localStorage.getItem('walletAddress'),
+      gameScore
+    };
+
+    axios
+      .post('http://54.180.114.119:8000/transfer', userData)
+      .then(res => {
+        console.log(res.data);
+      })
+      .catch(err => {
+        throw err;
+      });
+  }
+
   _toggleModal() {
     return this.state.isWalletCreated ? (
       <React.Fragment>
@@ -117,6 +134,14 @@ class MyPage extends Component {
           walletAddress: res.data.address,
           walletKey: res.data.key
         });
+
+        // if previousGameScore, transfer coin
+        if (localStorage.getItem('previousGameScore')) {
+          const previousGameScore = localStorage.getItem('previousGameScore');
+          this._requestTransfer(previousGameScore);
+          // reset previousGameScore
+          localStorage.setItem('previousGameScore', '');
+        }
       })
       .catch(err => {
         throw err;
