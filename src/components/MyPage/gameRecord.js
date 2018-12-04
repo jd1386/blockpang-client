@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import axios from 'axios';
+import util from '../../util';
 import { takeRight, pick } from 'lodash';
 import { Table, Container, Grid, Button, Loader } from 'semantic-ui-react';
 import {
@@ -37,7 +38,9 @@ class GameRecord extends Component {
             {this.state.transactions.map((transaction, index) => {
               return (
                 <Table.Row key={index}>
-                  <Table.Cell>{transaction.timestamp}</Table.Cell>
+                  <Table.Cell>
+                    {util.toKoreanTime(transaction.timestamp)}
+                  </Table.Cell>
                   <Table.Cell>{transaction.amount * 100}</Table.Cell>
                   <Table.Cell>{transaction.amount}</Table.Cell>
                 </Table.Row>
