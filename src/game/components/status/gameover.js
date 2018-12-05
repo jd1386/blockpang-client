@@ -64,7 +64,7 @@ class Gameover extends Component {
 
     // use setTimeout to give more room between
     // render and _requestTransfer call
-    if (userData.wallet) {
+    if (userData.wallet && userData.game_score > 0) {
       setTimeout(() => {
         this._requestTransfer(userData);
       }, 2000);
