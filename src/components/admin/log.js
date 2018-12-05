@@ -23,17 +23,22 @@ class Log extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      recentPlays: []
+      loading: false,
+      recentTransfer: []
     };
   }
 
   _requestData() {
+    this.setState({
+      loading: true
+    });
     axios
       .get(util.API_URLS['transaction'])
       .then(res => {
         console.log('res', res.data);
         this.setState({
-          recentPlays: res.data
+          recentTransfer: res.data,
+          loading: false
         });
       })
       .catch(err => {
@@ -41,31 +46,24 @@ class Log extends Component {
       });
   }
 
-  _providerColor(provider) {
-    let COLORS = ['#dd4b39', '#3b5998'];
-    if (provider === 'google') return COLORS[0];
-    else if (provider === 'facebook') return COLORS[1];
-  }
-
   componentDidMount() {
     this._requestData();
   }
 
   render() {
-    if (!this.state.recentPlays || this.state.recentPlays.length <= 0) {
-      return (
-        <Loader active inline="centered">
-          Loading
-        </Loader>
-      );
-    }
-    return (
+    const { loading, recentTransfer } = this.state;
+
+    return loading ? (
+      <Loader active inline="centered">
+        Loading
+      </Loader>
+    ) : (
       <Grid.Row>
         <Segment vertical textAlign="center">
           <Header as="h2">Recent Transfer</Header>
 
           <ReactTable
-            data={this.state.recentPlays}
+            data={recentTransfer}
             getTrProps={(state, rowInfo, column) => {
               return {
                 style: {
@@ -73,12 +71,21 @@ class Log extends Component {
                 }
               };
             }}
+            filterable
+            defaultFilterMethod={
+              (filter, row) =>
+                // String(row[filter.id]) === filter.value
+                String(row[filter.id]).includes(filter.value)
+              // String(row[filter.id]) === filter.value
+            }
             columns={[
               {
                 columns: [
                   {
                     Header: <Icon name="users" />,
                     textAlign: 'center',
+                    maxWidth: 60,
+                    filterable: false,
                     accessor: 'profile_img_url',
                     Cell: props =>
                       props.value ? (
@@ -115,15 +122,25 @@ class Log extends Component {
                       ) : (
                         <span style={{ textAlign: 'center' }}>no data</span>
                       )
+                    // filterMethod: (filter, row) =>
+                    //   row[filter.id]
+                    //     ? row[filter.id].startsWith(filter.value) &&
+                    //       row[filter.id].endsWith(filter.value)
+                    //     : null
+
+                    // filterMethod: (filter, row) =>
+                    // row[filter.id].startsWith(filter.value) &&
+                    // row[filter.id].endsWith(filter.value)
                   },
                   {
                     Header: 'Provider',
                     accessor: 'service_provider',
+                    maxWidth: 100,
                     Cell: props => (
                       <Label
                         style={{
                           color: 'white',
-                          backgroundColor: this._providerColor(props.value)
+                          backgroundColor: util._providerColor(props.value)
                         }}
                       >
                         {props.value}
