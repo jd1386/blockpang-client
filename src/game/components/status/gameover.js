@@ -44,6 +44,7 @@ class Gameover extends Component {
 
   componentDidMount() {
     const userData = {
+      user: util.userData(),
       wallet: util.walletAddress(),
       game_score: this.props.score
     };
