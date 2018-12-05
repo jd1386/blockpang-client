@@ -36,14 +36,14 @@ class Navbar extends Component {
       <React.Fragment>
         <Menu fixed="top" inverted>
           <Container>
-            <Menu.Item as={Link} to="/" header>
+            <Menu.Item as={Link} to="/" header id="logo">
               <Image
                 className="app-logo"
                 size="mini"
                 src={favicon}
                 style={{ marginRight: '1.5em' }}
               />
-              블록팡
+              BlockPang
             </Menu.Item>
             <Menu.Item as={Link} to="/leaderboard">
               Leaderboard
