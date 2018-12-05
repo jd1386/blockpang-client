@@ -9,7 +9,7 @@ import {
   Divider,
   Menu
 } from 'semantic-ui-react';
-import './MyPage.scss';
+import '../components/MyPage/style.scss';
 import WalletInfo from '../components/MyPage/walletInfo';
 import WalletForm from '../components/MyPage/walletForm';
 import GameRecord from '../components/MyPage/gameRecord';

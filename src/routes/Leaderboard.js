@@ -1,49 +1,24 @@
 import React, { Component } from 'react';
-import {
-  Container,
-  Header,
-  Grid,
-  Segment,
-  Table,
-  Loader
-} from 'semantic-ui-react';
+import LeaderboardTable from '../components/Leaderboard';
+import { Container, Grid, Segment, Loader } from 'semantic-ui-react';
 import axios from 'axios';
 import util from '../util';
 
-class Main extends Component {
+class Leaderboard extends Component {
   state = {
     records: []
   };
 
   componentDidMount() {
     axios.get(util.API_URLS['leaderboard']).then(res => {
+      console.log(res.data);
       this.setState({ records: res.data });
     });
   }
 
   _renderTable() {
     return this.state.records.length ? (
-      <Table basic="very" celled collapsing style={{ width: '100%' }}>
-        <Table.Header>
-          <Table.Row>
-            <Table.HeaderCell>Rank</Table.HeaderCell>
-            <Table.HeaderCell>Score</Table.HeaderCell>
-            <Table.HeaderCell>User</Table.HeaderCell>
-          </Table.Row>
-        </Table.Header>
-
-        <Table.Body>
-          {this.state.records.map((record, index) => {
-            return (
-              <Table.Row key={index}>
-                <Table.Cell>{index + 1}</Table.Cell>
-                <Table.Cell>{record.gscore}</Table.Cell>
-                <Table.Cell>{record.email}</Table.Cell>
-              </Table.Row>
-            );
-          })}
-        </Table.Body>
-      </Table>
+      <LeaderboardTable records={this.state.records} />
     ) : (
       <Loader active inline="centered" content="Loading" />
     );
@@ -51,13 +26,10 @@ class Main extends Component {
 
   render() {
     return (
-      <div>
+      <div style={{ background: 'black', color: 'white', minHeight: '100vh' }}>
         <Container>
           <Segment style={{ padding: '5.5em 0em' }} vertical>
-            <Grid container stackable verticalAlign="middle">
-              <Grid.Row>
-                <Header as="h1">Leaderboard</Header>
-              </Grid.Row>
+            <Grid container doubling verticalAlign="middle">
               <Grid.Row>
                 <Grid.Column>{this._renderTable()}</Grid.Column>
               </Grid.Row>
@@ -69,4 +41,4 @@ class Main extends Component {
   }
 }
 
-export default Main;
+export default Leaderboard;
