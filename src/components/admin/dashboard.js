@@ -13,7 +13,8 @@ import {
   Card,
   Table,
   Icon,
-  Loader
+  Loader,
+  Label
 } from 'semantic-ui-react';
 import {
   // AreaChart,
@@ -25,7 +26,7 @@ import {
   Tooltip,
   XAxis,
   YAxis,
-  Label,
+  // Label,
   CartesianGrid,
   Legend,
   ResponsiveContainer
@@ -35,22 +36,67 @@ import ReactTable from 'react-table';
 import 'react-table/react-table.css';
 import util from '../../util';
 
-class Dashboard extends Component {
-  // TODO: : axios로 정보 받아오고 data에 넣어주기
+const montlydata = [
+  {
+    month: '2018-07',
+    googleUser: 40,
+    facebookUser: 10,
+    plays: 2400,
+    ICXPaid: 2400
+  },
+  {
+    month: '2018-09',
+    googleUser: 30,
+    facebookUser: 0,
+    plays: 1398,
+    ICXPaid: 2210
+  },
+  {
+    month: '2018-10',
+    googleUser: 20,
+    facebookUser: 3,
+    plays: 6800,
+    ICXPaid: 2290
+  },
+  {
+    month: '2018-11',
+    googleUser: 27,
+    facebookUser: 5,
+    plays: 3908,
+    ICXPaid: 2000
+  },
+  {
+    month: '2018-12',
+    googleUser: 18,
+    facebookUser: 4,
+    plays: 4800,
+    ICXPaid: 2181
+  },
+  {
+    month: '2019-01',
+    googleUser: 2,
+    facebookUser: 10,
+    plays: 3800,
+    ICXPaid: 2500
+  },
+  {
+    month: '2019-02',
+    googleUser: 3,
+    facebookUser: 10,
+    plays: 4300,
+    amt: 2100
+  }
+];
 
+class Dashboard extends Component {
   constructor(props) {
     super(props);
     this.state = {
+      loading: false,
       default_score: '',
       currentBalance: '',
-      recentPlays: ''
+      recentTransfer: []
     };
-  }
-
-  _providerColor(provider) {
-    let COLORS = ['#dd4b39', '#3b5998'];
-    if (provider === 'google') return COLORS[0];
-    else if (provider === 'facebook') return COLORS[1];
   }
 
   setStateAsync(state) {
@@ -59,101 +105,40 @@ class Dashboard extends Component {
     });
   }
   async componentDidMount() {
-    const firstRequest = await axios.get(
-      util.API_URLS['admin_summary']
-      // 'http://54.180.114.119:8000/admin/current_balance'
-    );
-    const secondRequest = await axios.get(
-      // 'http://54.180.114.119:8000/db/transaction'
-      util.API_URLS['transaction']
-    );
-    // const secondRequest = await axios.get(util.API_URLS['latest']);
-    // const thridRequest = await axios.get(
-    //   'http://54.180.114.119:8000/admin/current_balance'
-    // );
-
-    console.log('firstRequest', firstRequest);
+    this.setState({
+      loading: true
+    });
+    const firstRequest = await axios.get(util.API_URLS['admin_summary']);
+    const secondRequest = await axios.get(util.API_URLS['transaction']);
+    const thirdRequest = await axios.get(util.API_URLS['totaluser']);
 
     await this.setStateAsync({
       totalTransfer: firstRequest.data.total_transfer,
       totalTransferAmount: firstRequest.data.total_transfer_amount,
-      totalUsers: firstRequest.data.total_users,
+      totalSignup: firstRequest.data.total_users,
       scoreAddress: firstRequest.data.score_address,
       currentBalance: firstRequest.data.current_balance,
-      recentPlays: secondRequest.data
+      recentTransfer: secondRequest.data,
+      totalUser: thirdRequest.data,
+      loading: false
     });
   }
 
   render() {
-    const data = [
-      {
-        month: '2018-07',
-        googleUser: 40,
-        facebookUser: 10,
-        plays: 2400,
-        ICXPaid: 2400
-      },
-      {
-        month: '2018-09',
-        googleUser: 30,
-        facebookUser: 0,
-        plays: 1398,
-        ICXPaid: 2210
-      },
-      {
-        month: '2018-10',
-        googleUser: 20,
-        facebookUser: 3,
-        plays: 6800,
-        ICXPaid: 2290
-      },
-      {
-        month: '2018-11',
-        googleUser: 27,
-        facebookUser: 5,
-        plays: 3908,
-        ICXPaid: 2000
-      },
-      {
-        month: '2018-12',
-        googleUser: 18,
-        facebookUser: 4,
-        plays: 4800,
-        ICXPaid: 2181
-      },
-      {
-        month: '2019-01',
-        googleUser: 2,
-        facebookUser: 10,
-        plays: 3800,
-        ICXPaid: 2500
-      },
-      {
-        month: '2019-02',
-        googleUser: 3,
-        facebookUser: 10,
-        plays: 4300,
-        amt: 2100
-      }
-    ];
+    const {
+      loading,
+      currentBalance,
+      totalTransferAmount,
+      totalSignup,
+      recentTransfer,
+      totalUser
+    } = this.state;
 
-    const data01 = [
-      { name: 'GOOGLE USER', value: 500 },
-      { name: 'FACEBOOK USER', value: 500 }
-    ];
-
-    const COLORS = ['#dd4b39', '#3b5998'];
-
-    if (!this.state.recentPlays || this.state.recentPlays.length <= 0) {
-      return (
-        <Loader active inline="centered">
-          Loading
-        </Loader>
-      );
-      // return <div style={{ textAlign: 'center' }}>Data Loading...</div>;
-    }
-
-    return (
+    return loading ? (
+      <Loader active inline="centered">
+        Loading
+      </Loader>
+    ) : (
       <Segment vertical>
         <Grid container stackable verticalAlign="middle">
           <Grid.Row>
@@ -172,79 +157,81 @@ class Dashboard extends Component {
           </Grid.Row>
 
           <Grid.Row>
-            <Card.Group>
-              <Card>
-                <Card.Content>
-                  <Card.Header
-                    style={{
-                      color: '#1aaaba',
-                      fontSize: '1em',
-                      textAlign: 'center'
-                    }}
-                  >
-                    ADMIN WALLET BALANCE
-                  </Card.Header>
-                  <Card.Description
-                    style={{
-                      fontFamily: `Lato,'Helvetica Neue',Arial,Helvetica,sans-serif`,
-                      fontSize: '4rem',
-                      textAlign: 'center',
-                      color: '#1b1c1d'
-                    }}
-                  >
-                    {this.state.currentBalance}
-                  </Card.Description>
-                </Card.Content>
-              </Card>
+            <Grid.Column width={15}>
+              <Card.Group>
+                <Card>
+                  <Card.Content>
+                    <Card.Header
+                      style={{
+                        color: '#1aaaba',
+                        fontSize: '1em',
+                        textAlign: 'center'
+                      }}
+                    >
+                      ADMIN WALLET BALANCE
+                    </Card.Header>
+                    <Card.Description
+                      style={{
+                        fontFamily: `Lato,'Helvetica Neue',Arial,Helvetica,sans-serif`,
+                        fontSize: '4rem',
+                        textAlign: 'center',
+                        color: '#1b1c1d'
+                      }}
+                    >
+                      {currentBalance}
+                    </Card.Description>
+                  </Card.Content>
+                </Card>
 
-              <Card>
-                <Card.Content>
-                  <Card.Header
-                    style={{
-                      color: '#1aaaba',
-                      fontSize: '1em',
-                      textAlign: 'center'
-                    }}
-                  >
-                    TOTAL ICX TRANSFER
-                  </Card.Header>
-                  <Card.Description
-                    style={{
-                      fontFamily: `Lato,'Helvetica Neue',Arial,Helvetica,sans-serif`,
-                      fontSize: '4rem',
-                      textAlign: 'center',
-                      color: '#1b1c1d'
-                    }}
-                  >
-                    {this.state.totalTransferAmount}
-                  </Card.Description>
-                </Card.Content>
-              </Card>
+                <Card>
+                  <Card.Content>
+                    <Card.Header
+                      style={{
+                        color: '#1aaaba',
+                        fontSize: '1em',
+                        textAlign: 'center'
+                      }}
+                    >
+                      TOTAL ICX TRANSFER
+                    </Card.Header>
+                    <Card.Description
+                      style={{
+                        fontFamily: `Lato,'Helvetica Neue',Arial,Helvetica,sans-serif`,
+                        fontSize: '4rem',
+                        textAlign: 'center',
+                        color: '#1b1c1d'
+                      }}
+                    >
+                      {totalTransferAmount}
+                    </Card.Description>
+                  </Card.Content>
+                </Card>
 
-              <Card>
-                <Card.Content>
-                  <Card.Header
-                    style={{
-                      color: '#1aaaba',
-                      fontSize: '1em',
-                      textAlign: 'center'
-                    }}
-                  >
-                    TOTAL SIGNUPS
-                  </Card.Header>
-                  <Card.Description
-                    style={{
-                      fontFamily: `Lato,'Helvetica Neue',Arial,Helvetica,sans-serif`,
-                      fontSize: '4rem',
-                      textAlign: 'center',
-                      color: '#1b1c1d'
-                    }}
-                  >
-                    {this.state.totalUsers}
-                  </Card.Description>
-                </Card.Content>
-              </Card>
-            </Card.Group>
+                <Card>
+                  <Card.Content>
+                    <Card.Header
+                      style={{
+                        color: '#1aaaba',
+                        fontSize: '1em',
+                        textAlign: 'center'
+                      }}
+                    >
+                      TOTAL SIGNUPS
+                    </Card.Header>
+                    <Card.Description
+                      style={{
+                        fontFamily: `Lato,'Helvetica Neue',Arial,Helvetica,sans-serif`,
+                        fontSize: '4rem',
+                        textAlign: 'center',
+                        color: '#1b1c1d'
+                      }}
+                    >
+                      {totalSignup}
+                    </Card.Description>
+                  </Card.Content>
+                </Card>
+              </Card.Group>
+            </Grid.Column>
           </Grid.Row>
 
           <Grid.Row style={{ marginBottom: 50 }}>
@@ -256,7 +243,7 @@ class Dashboard extends Component {
                 <ResponsiveContainer width="100%" height="100%" minHeight={300}>
                   <LineChart
                     width={800}
-                    data={data}
+                    data={montlydata}
                     margin={{ top: 5, right: 30, left: 20, bottom: 5 }}
                   >
                     <XAxis dataKey="month" />
@@ -277,74 +264,198 @@ class Dashboard extends Component {
             </Grid.Column>
           </Grid.Row>
 
-          <Grid.Row style={{ marginBottom: 50 }}>
-            <Grid.Column width={6}>
-              <Header as="h2" floated="left">
-                Recent Plays
-              </Header>
-              <Table compact="very" celled collapsing>
-                <Table.Header>
-                  <Table.Row>
-                    <Table.HeaderCell>Recent Players</Table.HeaderCell>
-                    <Table.HeaderCell>Earn TestICX</Table.HeaderCell>
-                    <Table.HeaderCell>Time</Table.HeaderCell>
-                  </Table.Row>
-                </Table.Header>
-
-                <Table.Body>
-                  {this.state.recentPlays.map((play, index) => {
-                    {
-                      // console.log('play', play, 'index', index);
+          <Grid.Row>
+            <Grid.Column width={16}>
+              <Header as="h2">Recent Transfer</Header>
+              <ReactTable
+                data={recentTransfer}
+                getTrProps={(state, rowInfo, column) => {
+                  return {
+                    style: {
+                      textAlign: 'center'
                     }
-                    return index < 10 ? (
-                      <Table.Row key={index}>
-                        <Table.Cell>
-                          <Header as="h4" image>
-                            {play.profile_img_url ? (
-                              <Image
-                                src={play.profile_img_url}
-                                rounded
-                                size="mini"
-                                style={{
-                                  marginLeft: 'auto',
-                                  marginRight: 'auto'
-                                }}
-                              />
-                            ) : (
-                              <Icon
-                                name="user"
-                                style={{
-                                  marginLeft: 'auto',
-                                  marginRight: 'auto'
-                                }}
-                              />
-                            )}
-                            <Header.Content>
-                              {play.nickname ? play.nickname : play.email}
-                              <Header.Subheader>
-                                {play.service_provider}
-                              </Header.Subheader>
-                            </Header.Content>
-                          </Header>
-                        </Table.Cell>
-                        <Table.Cell>{play.amount}</Table.Cell>
-                        <Table.Cell>{play.timestamp}</Table.Cell>
-                      </Table.Row>
-                    ) : null;
-                  })}
-                </Table.Body>
-              </Table>
+                  };
+                }}
+                filterable
+                defaultFilterMethod={(filter, row) =>
+                  String(row[filter.id]).includes(filter.value)
+                }
+                columns={[
+                  {
+                    columns: [
+                      {
+                        Header: <Icon name="users" />,
+                        textAlign: 'center',
+                        maxWidth: 60,
+                        filterable: false,
+                        accessor: 'profile_img_url',
+                        Cell: props =>
+                          props.value ? (
+                            <Image
+                              src={props.value}
+                              rounded
+                              size="mini"
+                              style={{
+                                marginLeft: 'auto',
+                                marginRight: 'auto'
+                              }}
+                            />
+                          ) : (
+                            <Icon
+                              name="user"
+                              style={{
+                                marginLeft: 'auto',
+                                marginRight: 'auto',
+                                textAlign: 'center'
+                              }}
+                            />
+                          )
+                      }
+                    ]
+                  },
+                  {
+                    columns: [
+                      {
+                        Header: 'Nickname',
+                        accessor: 'nickname',
+                        minWidth: 110,
+                        Cell: props =>
+                          props.value ? (
+                            <span>{props.value}</span>
+                          ) : (
+                            <span style={{ textAlign: 'center' }}>no data</span>
+                          )
+                      },
+
+                      {
+                        Header: 'Wallet',
+                        accessor: 'wallet',
+                        minWidth: 280
+                      }
+                    ]
+                  },
+                  {
+                    columns: [
+                      {
+                        Header: 'Received TEST ICX',
+                        accessor: 'amount'
+                      }
+                    ]
+                  },
+                  {
+                    columns: [
+                      {
+                        Header: 'Time',
+                        accessor: 'timestamp',
+                        Cell: props => (
+                          <span>{util.toKoreanTime(props.value)}</span>
+                        )
+                      }
+                    ]
+                  }
+                ]}
+                defaultPageSize={5}
+                className="-striped -highlight"
+              />
+              {/* </Segment> */}
+            </Grid.Column>
+          </Grid.Row>
+
+          <Grid.Row>
+            <Grid.Column width={16}>
+              <Header as="h2">Total User</Header>
+              <ReactTable
+                data={totalUser}
+                getTrProps={(state, rowInfo, column) => {
+                  return {
+                    style: {
+                      textAlign: 'center'
+                    }
+                  };
+                }}
+                filterable
+                defaultFilterMethod={(filter, row) =>
+                  String(row[filter.id]).includes(filter.value)
+                }
+                columns={[
+                  {
+                    columns: [
+                      {
+                        Header: <Icon name="users" />,
+                        textAlign: 'center',
+                        maxWidth: 60,
+                        filterable: false,
+                        accessor: 'profile_img_url',
+                        Cell: props =>
+                          props.value ? (
+                            <Image
+                              src={props.value}
+                              rounded
+                              size="mini"
+                              style={{
+                                marginLeft: 'auto',
+                                marginRight: 'auto'
+                              }}
+                            />
+                          ) : (
+                            <Icon
+                              name="user"
+                              style={{
+                                marginLeft: 'auto',
+                                marginRight: 'auto'
+                              }}
+                            />
+                          )
+                      }
+                    ]
+                  },
+                  {
+                    columns: [
+                      {
+                        Header: 'Nickname',
+                        accessor: 'nickname',
+                        Cell: props =>
+                          props.value ? (
+                            <span>{props.value}</span>
+                          ) : (
+                            <span style={{ textAlign: 'center' }}>no data</span>
+                          )
+                      },
+                      {
+                        Header: 'Provider',
+                        accessor: 'service_provider',
+                        maxWidth: 100,
+                        Cell: props => (
+                          <Label
+                            style={{
+                              color: 'white',
+                              backgroundColor: util._providerColor(props.value)
+                            }}
+                          >
+                            {props.value}
+                          </Label>
+                        )
+                      },
+                      {
+                        Header: 'Email',
+                        accessor: 'email'
+                      },
+
+                      {
+                        Header: 'SIGNUP DATE',
+                        accessor: 'timestamp',
+                        Cell: props => (
+                          <span>{util.toKoreanTime(props.value)}</span>
+                        )
+                      }
+                    ]
+                  }
+                ]}
+                defaultPageSize={5}
+              />
             </Grid.Column>
           </Grid.Row>
         </Grid>
-
-        <Grid.Row>
-          <Segment padded />
-        </Grid.Row>
-
-        <Grid.Row>
-          <Segment padded>Content here</Segment>
-        </Grid.Row>
       </Segment>
     );
   }

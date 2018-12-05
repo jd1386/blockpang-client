@@ -32,6 +32,11 @@ const toKoreanTime = (originalTime, format = 'long') => {
     .utcOffset(9)
     .format(DATE_FORMATS[format]);
 };
+const _providerColor = provider => {
+  let COLORS = ['#dd4b39', '#3b5998'];
+  if (provider === 'google') return COLORS[0];
+  else if (provider === 'facebook') return COLORS[1];
+};
 
 export default {
   isLoggedIn,
@@ -40,5 +45,6 @@ export default {
   walletAddress,
   setWalletAddress,
   toKoreanTime,
+  _providerColor,
   API_URLS
 };
