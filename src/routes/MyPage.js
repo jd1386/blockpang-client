@@ -199,7 +199,15 @@ class MyPage extends Component {
   }
 
   componentDidMount() {
-    this.setState({ walletAddress: util.walletAddress() });
+    if (!this.state.walletAddress) {
+      axios.get(util.API_URLS['totaluser']).then(res => {
+        const user = res.data.find(user => {
+          return user.email === util.userData().email;
+        });
+        this.setState({ walletAddress: user.wallet });
+        util.setWalletAddress(user.wallet);
+      });
+    }
   }
 
   render() {
