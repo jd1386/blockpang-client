@@ -1,14 +1,13 @@
 import React from 'react';
 import './App.scss';
 import { random } from 'lodash';
-// import { Spring, Transition } from 'react-spring';
-// import { VelocityComponent } from 'velocity-react';
 import Board from './components/board';
 import BlockList from './components/block/blockList';
 import Status from './components/status';
 import { Image } from 'semantic-ui-react';
 import Util from './utils';
 import gameConfig from './config';
+import coinImage from './assets/img/coin.gif';
 
 const config = gameConfig.test;
 // const config = gameConfig.normal;
@@ -272,7 +271,7 @@ class App extends React.Component {
   _generateBonusBlock() {
     let randomKeyIndex = random(config.eventBlock.keys.length - 1);
     return {
-      blockImage: <Image size="mini" src="coin.gif" className="block-image" />,
+      blockImage: <Image size="mini" src={coinImage} className="block-image" />,
       color: `${Util.getRandColor(4)}`,
       key: config.eventBlock.keys[randomKeyIndex].slice(),
       bonusScore: random(1, 30)

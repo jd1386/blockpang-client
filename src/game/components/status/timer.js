@@ -1,6 +1,7 @@
 import React from 'react';
 import { Image } from 'semantic-ui-react';
 import PropTypes from 'prop-types';
+import clockImage from '../../assets/img/clock.gif';
 
 const formatUnitOfTime = unitOfTime => {
   return unitOfTime < 10
@@ -16,7 +17,7 @@ const displayTime = time => {
 
 const timer = props => (
   <React.Fragment>
-    <Image id="onlycoin" size="mini" src="clock.gif" />
+    <Image id="onlycoin" size="mini" src={clockImage} />
     <span className="status-title">{displayTime(props.time)}</span>
   </React.Fragment>
 );

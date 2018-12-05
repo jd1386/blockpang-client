@@ -1,6 +1,7 @@
 import React from 'react';
 import { Image } from 'semantic-ui-react';
 import { Spring } from 'react-spring';
+import coinImage from '../../assets/img/coin.gif';
 
 class Score extends React.PureComponent {
   render() {
@@ -12,7 +13,7 @@ class Score extends React.PureComponent {
         {springProps => {
           return (
             <React.Fragment>
-              <Image id="onlycoin" size="mini" src="coin.gif" />
+              <Image id="onlycoin" size="mini" src={coinImage} />
               <span className="status-title">
                 {Math.round(springProps.number)}
               </span>

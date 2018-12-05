@@ -114,8 +114,8 @@ class Settings extends Component {
   componentDidMount() {
     // TODO: authentication
     // admin_summary
-
     axios.get(util.API_URLS['admin_summary']).then(res => {
+      console.log(res.data);
       this.setState({
         adminEmail: res.data.admin_email,
         scoreAddress: res.data.score_address,
@@ -125,10 +125,13 @@ class Settings extends Component {
 
     // set_limit
     axios.get(util.API_URLS['admin_get_limit']).then(res => {
-      this.setState({
-        amountLimit: res.data.amountlimit,
-        blockLimit: res.data.blocklimit
-      });
+      this.setState(
+        {
+          amountLimit: res.data.amountlimit,
+          blockLimit: res.data.blocklimit
+        },
+        () => console.log(this.state)
+      );
     });
   }
 
