@@ -93,9 +93,13 @@ class Dashboard extends Component {
     super(props);
     this.state = {
       loading: false,
+      totalTransfer: '',
+      totalTransferAmount: '',
+      totalSignup: '',
       default_score: '',
       currentBalance: '',
-      recentTransfer: []
+      recentTransfer: [],
+      totalUser: []
     };
   }
 
@@ -113,14 +117,14 @@ class Dashboard extends Component {
     const thirdRequest = await axios.get(util.API_URLS['totaluser']);
 
     await this.setStateAsync({
+      loading: false,
       totalTransfer: firstRequest.data.total_transfer,
       totalTransferAmount: firstRequest.data.total_transfer_amount,
       totalSignup: firstRequest.data.total_users,
-      scoreAddress: firstRequest.data.score_address,
+      // scoreAddress: firstRequest.data.score_address,
       currentBalance: firstRequest.data.current_balance,
       recentTransfer: secondRequest.data,
-      totalUser: thirdRequest.data,
-      loading: false
+      totalUser: thirdRequest.data.reverse()
     });
   }
 
