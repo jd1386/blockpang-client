@@ -3,6 +3,7 @@ import { Link } from 'react-router-dom';
 import { Container, Image, Button, Menu } from 'semantic-ui-react';
 import './style.scss';
 import util from '../../util';
+import favicon from '../../assets/img/favicon.ico';
 
 class Navbar extends Component {
   _menuChange = () => {
@@ -39,7 +40,7 @@ class Navbar extends Component {
               <Image
                 className="app-logo"
                 size="mini"
-                src="favicon.ico"
+                src={favicon}
                 style={{ marginRight: '1.5em' }}
               />
               블록팡

@@ -1,5 +1,6 @@
 import React from 'react';
 import { Image } from 'semantic-ui-react';
+import iconImage from '../../assets/img/icon.png';
 import PropTypes from 'prop-types';
 
 class Stage extends React.PureComponent {
@@ -9,7 +10,7 @@ class Stage extends React.PureComponent {
         <Image
           id="onlycoin"
           size="mini"
-          src="icon.png"
+          src={iconImage}
           style={{ width: '4vw' }}
         />
         <span className="status-title">X {this.props.stage}</span>
