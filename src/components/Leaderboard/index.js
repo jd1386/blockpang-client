@@ -17,7 +17,7 @@ class Leaderboard extends Component {
     }
   }
 
-  _displayEmail(email) {
+  _obfuscateEmail(email) {
     const chars = email.split('@');
     const userName = chars[0];
     const domainName = '@' + '*'.repeat(chars[1].length - 1);
@@ -36,7 +36,7 @@ class Leaderboard extends Component {
             <Table.Header>
               <Table.Row>
                 <Table.HeaderCell textAlign="center">Rank</Table.HeaderCell>
-                <Table.HeaderCell textAlign="right">Score</Table.HeaderCell>
+                <Table.HeaderCell textAlign="center">Score</Table.HeaderCell>
                 <Table.HeaderCell textAlign="center">User</Table.HeaderCell>
               </Table.Row>
             </Table.Header>
@@ -48,11 +48,9 @@ class Leaderboard extends Component {
                     <Table.Cell textAlign="center">
                       {this._nth(index + 1)}
                     </Table.Cell>
-                    <Table.Cell textAlign="right">
-                      {record.gscore} ICX
-                    </Table.Cell>
+                    <Table.Cell textAlign="center">{record.gscore}</Table.Cell>
                     <Table.Cell textAlign="center">
-                      {record.nickname || this._displayEmail(record.email)}
+                      {record.nickname || this._obfuscateEmail(record.email)}
                     </Table.Cell>
                   </Table.Row>
                 );
