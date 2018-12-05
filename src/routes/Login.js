@@ -9,6 +9,7 @@ import {
   Icon
 } from 'semantic-ui-react';
 import GoogleLogin from 'react-google-login';
+import FacebookLogin from 'react-facebook-login';
 import util from '../util';
 
 class Login extends Component {
@@ -28,22 +29,38 @@ class Login extends Component {
         provider
       };
     }
+    if (provider === 'facebook' && res.email) {
+      userData = {
+        name: res.name,
+        email: res.email,
+        provider_id: res.id,
+        provider_pic: res.picture.data.url,
+        token: res.accessToken,
+        provider
+      };
+    }
     if (userData) {
       util.setUserData(JSON.stringify(userData));
       this.setState({ isLoginSuccessful: true });
+      this.props.login();
     }
-    this.props.login();
   }
+
+  _responseGoogle = res => {
+    // console.log('google-res', res);
+    this._signup(res, 'google');
+  };
+
+  _responseFacebook = res => {
+    // console.log('facebook-res', res);
+    this._signup(res, 'facebook');
+  };
 
   render() {
     if (this.state.isLoginSuccessful || util.isLoggedIn()) {
       return <Redirect to={'/'} />;
     }
-
-    const responseGoogle = res => {
-      // console.log('google-res', res);
-      this._signup(res, 'google');
-    };
+    const { _responseGoogle, _responseFacebook } = this;
 
     return (
       <Container>
@@ -68,14 +85,20 @@ class Login extends Component {
                     </Button>
                   )}
                   buttonText="Login"
-                  onSuccess={responseGoogle}
-                  onFailure={responseGoogle}
+                  onSuccess={_responseGoogle}
+                  onFailure={_responseGoogle}
                 />
               </Grid.Column>
               <Grid.Column>
-                <Button icon fluid size="huge">
-                  <Icon name="facebook" /> Login with Facebook
-                </Button>
+                <FacebookLogin
+                  appId="493696594477030"
+                  autoLoad={false}
+                  fields="name,email,picture"
+                  callback={_responseFacebook}
+                  cssClass="ui huge fluid icon button"
+                  icon="fa-facebook"
+                  textButton=" Login with Facebook"
+                />
               </Grid.Column>
             </Grid.Row>
           </Grid>
