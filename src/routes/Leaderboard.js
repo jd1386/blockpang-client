@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import LeaderboardTable from '../components/Leaderboard';
-import { Container, Header, Grid, Segment, Loader } from 'semantic-ui-react';
+import { Container, Grid, Segment, Loader } from 'semantic-ui-react';
 import axios from 'axios';
 import util from '../util';
 
@@ -11,6 +11,7 @@ class Leaderboard extends Component {
 
   componentDidMount() {
     axios.get(util.API_URLS['leaderboard']).then(res => {
+      console.log(res.data);
       this.setState({ records: res.data });
     });
   }
@@ -28,7 +29,7 @@ class Leaderboard extends Component {
       <div style={{ background: 'black', color: 'white', minHeight: '100vh' }}>
         <Container>
           <Segment style={{ padding: '5.5em 0em' }} vertical>
-            <Grid container stackable verticalAlign="middle">
+            <Grid container doubling verticalAlign="middle">
               <Grid.Row>
                 <Grid.Column>{this._renderTable()}</Grid.Column>
               </Grid.Row>

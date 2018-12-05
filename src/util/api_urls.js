@@ -4,7 +4,7 @@ export default {
   create_wallet: `${BASE_URL}/wallet/create`,
   update_wallet: `${BASE_URL}/wallet/update`,
   transfer: `${BASE_URL}/transfer`,
-  leaderboard: `${BASE_URL}/leaderboard`,
+  leaderboard: `${BASE_URL}/db/leaderboard`,
   transaction: `${BASE_URL}/db/transaction`,
   admin_summary: `${BASE_URL}/db/summary`,
   admin_stat: `${BASE_URL}/admin/stat`,

@@ -1,13 +1,29 @@
-.leaderboard h1,
-th,
+@font-face {
+  font-family: 'Press Start 2P';
+  src: local('Press Start 2P'), url('./PressStart2P-Regular.ttf');
+}
+
+@font-face {
+  font-family: 'DungGeunMo';
+  src: local('DungGeunMo'), url('./DungGeunMo.ttf');
+}
+
+.leaderboard {
+  margin-top: 2em;
+}
+
+.leaderboard th,
 td {
   color: white !important;
+  font-family: 'DungGeunMo' !important;
 }
 
 .leaderboard-header {
-  color: white !important;
+  color: yellow !important;
   text-align: center;
-  font-size: 4em !important;
+  font-size: 3em !important;
+  font-family: 'Press Start 2P' !important;
+  text-shadow: 2px 2px 0px #ca0000;
 }
 
 .table-container {
@@ -16,5 +32,54 @@ td {
 
 .leaderboard table.table {
   margin: 0 auto;
-  font-size: 2em;
+
+  th {
+    font-size: 1.8em;
+    font-family: 'Press Start 2P' !important;
+  }
+
+  tr:nth-child(1) td {
+    color: #fd6201 !important;
+  }
+
+  tr:nth-child(2) td {
+    color: #ffa17a !important;
+  }
+
+  tr:nth-child(3) td {
+    color: #ffb98b !important;
+  }
+
+  tr:nth-child(4) td {
+    color: #ffd800 !important;
+  }
+
+  tr:nth-child(5) td {
+    color: #fff564 !important;
+  }
+
+  tr:nth-child(6) td {
+    color: #fdf8af !important;
+  }
+
+  tr:nth-child(7) td {
+    color: #05b8ff !important;
+  }
+
+  tr:nth-child(8) td {
+    color: #59d0ff !important;
+  }
+
+  tr:nth-child(9) td {
+    color: #b4e7fc !important;
+  }
+
+  tr:nth-child(10) td {
+    color: #e9f9ff !important;
+  }
+
+  td {
+    font-size: 2em;
+    text-shadow: 2px 2px 0px #676767;
+  }
 }
