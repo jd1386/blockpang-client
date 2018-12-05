@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { Link } from 'react-router-dom';
 import { Container, Image, Button, Menu } from 'semantic-ui-react';
-import './style.css';
+import './style.scss';
 import util from '../../util';
 
 class Navbar extends Component {
