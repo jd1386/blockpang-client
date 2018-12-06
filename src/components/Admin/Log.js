@@ -33,7 +33,7 @@ class Log extends Component {
     axios
       .get(util.API_URLS['transaction'])
       .then(res => {
-        console.log('res', res.data);
+        // console.log('res', res.data);
         this.setState({
           recentTransfer: res.data,
           loading: false
