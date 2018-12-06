@@ -31,6 +31,7 @@ class Navbar extends Component {
       </Menu.Item>
     );
   };
+
   render() {
     return this.props.isLoggedIn ? (
       <React.Fragment>
@@ -67,6 +68,9 @@ class Navbar extends Component {
                 style={{ marginRight: '1.5em' }}
               />
               BlockPang
+            </Menu.Item>
+            <Menu.Item as={Link} to="/leaderboard">
+              Leaderboard
             </Menu.Item>
             {this._menuChange()}
           </Container>
