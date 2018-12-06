@@ -3,7 +3,8 @@ import API_URLS from './api_urls';
 
 const DATE_FORMATS = {
   long: 'M-DD-YYYY, h:mm:ss a',
-  short: 'M-DD-YYYY'
+  short: 'M-DD-YYYY',
+  month: 'YYYY-M'
 };
 
 const isLoggedIn = () => {

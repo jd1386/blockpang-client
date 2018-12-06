@@ -1,18 +1,16 @@
 import React, { Component } from 'react';
-import { Link, Redirect } from 'react-router-dom';
-import { BrowserRouter as Router, Route } from 'react-router-dom';
+// import { Link, Redirect } from 'react-router-dom';
+// import { BrowserRouter as Router, Route } from 'react-router-dom';
 import {
-  Container,
+  // Container,
   Grid,
   Header,
-  Button,
+  // Button,
   Segment,
-  Table,
   Image,
   Icon,
   Label,
-  Loader,
-  Dimmer
+  Loader
 } from 'semantic-ui-react';
 import axios from 'axios';
 import ReactTable from 'react-table';
@@ -122,15 +120,6 @@ class Log extends Component {
                       ) : (
                         <span style={{ textAlign: 'center' }}>no data</span>
                       )
-                    // filterMethod: (filter, row) =>
-                    //   row[filter.id]
-                    //     ? row[filter.id].startsWith(filter.value) &&
-                    //       row[filter.id].endsWith(filter.value)
-                    //     : null
-
-                    // filterMethod: (filter, row) =>
-                    // row[filter.id].startsWith(filter.value) &&
-                    // row[filter.id].endsWith(filter.value)
                   },
                   {
                     Header: 'Provider',
