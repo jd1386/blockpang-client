@@ -10,7 +10,7 @@ class BlockList extends React.Component {
   }
 
   render() {
-    // test
+    // for test
     // console.log('Block', Date.now(), this.props.blocks);
     //
 
