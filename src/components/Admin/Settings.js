@@ -77,6 +77,23 @@ class Settings extends Component {
             throw err;
           });
         break;
+
+      case 'resetAdminEmail':
+        console.log(this.state.enteredInputValue);
+        axios
+          .post(util.API_URLS['admin_update_email'], {
+            cmd: 'edit',
+            username: 'sungun',
+            email: this.state.enteredInputValue
+          })
+          .then(res => {
+            this.setState({
+              adminEmail: res.data.admin[0],
+              openModal: false,
+              enteredInputValue: ''
+            });
+            console.log('success');
+          });
     }
   }
 
@@ -169,6 +186,7 @@ class Settings extends Component {
                         <Table.Cell>{this.state.amountLimit}</Table.Cell>
                         <Table.Cell>
                           <Button
+                            size="tiny"
                             onClick={() => this._openModal('resetAmountLimit')}
                           >
                             Edit
@@ -180,6 +198,7 @@ class Settings extends Component {
                         <Table.Cell>{this.state.blockLimit}</Table.Cell>
                         <Table.Cell>
                           <Button
+                            size="tiny"
                             onClick={() => this._openModal('resetBlockLimit')}
                           >
                             Edit
@@ -194,15 +213,18 @@ class Settings extends Component {
                 <Segment>
                   <Header as="h2">Faucet Information</Header>
                   <div>Score: {this.state.scoreAddress} </div>
-                  <div>Balance: {this.state.currentBalance}</div>
+                  <div>
+                    Balance: <strong>{this.state.currentBalance}</strong>
+                  </div>
                 </Segment>
                 <Segment>
                   <Header as="h2">Current Admin</Header>
                   <div>
-                    Email: {this.state.adminEmail || 'someadminemail@gmail.com'}
+                    Email: {this.state.adminEmail}
                     <Button
                       size="tiny"
-                      onClick={() => this._openModal('resetBlockLimit')}
+                      onClick={() => this._openModal('resetAdminEmail')}
+                      style={{ float: 'right' }}
                     >
                       Edit
                     </Button>
