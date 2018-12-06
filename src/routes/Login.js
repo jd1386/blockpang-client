@@ -15,11 +15,13 @@ import util from '../util';
 
 class Login extends Component {
   state = {
-    isLoginSuccessful: false
+    isLoginSuccessful: false,
+    isFailTryToLogin: false
   };
 
   async _signup(res, provider) {
     let userData;
+
     if (provider === 'google' && res.profileObj.email) {
       userData = {
         email: res.profileObj.email,
@@ -62,20 +64,28 @@ class Login extends Component {
   }
 
   _responseGoogle = res => {
-    // console.log('google-res', res);
-    this._signup(res, 'google');
+    console.log('google-res', res);
+    // this._signup(res, 'google');
   };
 
   _responseFacebook = res => {
-    // console.log('facebook-res', res);
-    this._signup(res, 'facebook');
+    console.log('facebook-res', res);
+    // this._signup(res, 'facebook');
+  };
+
+  _responseFail = res => {
+    console.log('failed-login', res);
+    this.setState(prevState => ({
+      isFailTryToLogin: true
+    }));
   };
 
   render() {
     if (this.state.isLoginSuccessful || util.isLoggedIn()) {
       return <Redirect to={'/'} />;
     }
-    const { _responseGoogle, _responseFacebook } = this;
+    const { _responseGoogle, _responseFacebook, _responseFail } = this;
+    const { isFailTryToLogin } = this.state;
 
     return (
       <Container>
@@ -101,7 +111,7 @@ class Login extends Component {
                   )}
                   buttonText="Login"
                   onSuccess={_responseGoogle}
-                  onFailure={_responseGoogle}
+                  onFailure={_responseFail}
                 />
               </Grid.Column>
               <Grid.Column>
@@ -113,8 +123,14 @@ class Login extends Component {
                   cssClass="ui huge fluid icon button"
                   icon="fa-facebook"
                   textButton=" Login with Facebook"
+                  onFailure={_responseFail}
                 />
               </Grid.Column>
+              {isFailTryToLogin ? (
+                <Segment as="h2">
+                  You failed to Log in. Please, try again.
+                </Segment>
+              ) : null}
             </Grid.Row>
           </Grid>
         </Segment>
