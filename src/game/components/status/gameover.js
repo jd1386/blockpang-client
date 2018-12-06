@@ -2,7 +2,6 @@ import React, { Component } from 'react';
 import './style.scss';
 import { Spring } from 'react-spring';
 import PropTypes from 'prop-types';
-import axios from 'axios';
 import util from '../../../util';
 
 const gameoverMessages = {
@@ -10,6 +9,15 @@ const gameoverMessages = {
   missInput: 'You must type the right key',
   timeover: 'time over',
   inputSourceKorean: '재시작하려면 영문 자판으로 변환 후 w를 눌러주세요!'
+};
+
+const GameoverMessage = props => {
+  return (
+    <div className="game-status-main">
+      <div className="header gameover">Game Over</div>
+      <div className="content gameover">{props.children}</div>
+    </div>
+  );
 };
 
 class Gameover extends Component {
@@ -31,17 +39,6 @@ class Gameover extends Component {
     );
   }
 
-  _requestTransfer(userData) {
-    axios
-      .post(util.API_URLS['transfer'], userData)
-      .then(res => {
-        console.log(res.data);
-      })
-      .catch(err => {
-        throw err;
-      });
-  }
-
   componentDidMount() {
     const userData = {
       user: util.userData(),
@@ -54,70 +51,61 @@ class Gameover extends Component {
         this.setState({ isLoggedIn: true, walletAddress: userData.wallet });
       } else {
         this.setState({ isLoggedIn: true });
-        localStorage.setItem('previousGameScore', userData.gameScore);
+        localStorage.setItem('previousGameScore', userData.game_score);
       }
     } else {
       // user is not logged in
       // save game score to localStorage
       // to give the user when she logs in
-      localStorage.setItem('previousGameScore', userData.gameScore);
+      localStorage.setItem('previousGameScore', userData.game_score);
     }
 
     // use setTimeout to give more room between
     // render and _requestTransfer call
     if (userData.wallet && userData.game_score > 0) {
       setTimeout(() => {
-        this._requestTransfer(userData);
-      }, 2000);
+        util.requestTransfer(userData.game_score);
+      }, 1000);
     }
   }
 
   render() {
     return this.state.isLoggedIn ? (
       this.state.walletAddress ? (
-        <div className="game-status-main">
-          <div className="header gameover">Game Over</div>
-          <div className="content gameover">
-            <div className="prize">
-              You've won <span>{this._animateScore(this.props.score)} </span>
-              ICX!
-              <br />
-              Visit my page to view transactions
-            </div>
-            <div className="gameover-message">
-              <div>{gameoverMessages[this.props.reason]}</div>
-              <div className="flash">Press W KEY to restart</div>
-            </div>
-          </div>
-        </div>
-      ) : (
-        <div className="game-status-main">
-          <div className="header gameover">Game Over</div>
-          <div className="content gameover">
-            <div className="prize">
-              Your wallet is not registred. Please register on My Page.
-            </div>
-            <div className="gameover-message">
-              <div className="flash">Press W KEY to restart</div>
-            </div>
-          </div>
-        </div>
-      )
-    ) : (
-      <div className="game-status-main">
-        <div className="header gameover">Game Over</div>
-        <div className="content gameover">
+        <GameoverMessage>
           <div className="prize">
             You've won <span>{this._animateScore(this.props.score)} </span>
             ICX!
             <br />
-            Log in now to claim your ICX
+            Visit my page to view transactions
           </div>
           <div className="gameover-message">
-            <div className="flash">Log in to claim your ICX</div>
+            <div>{gameoverMessages[this.props.reason]}</div>
+            <div className="flash">Press W KEY to restart</div>
           </div>
+        </GameoverMessage>
+      ) : (
+        <GameoverMessage>
+          <div className="prize">
+            Your wallet is not registred. Please register on My Page.
+          </div>
+          <div className="gameover-message">
+            <div className="flash">Press W KEY to restart</div>
+          </div>
+        </GameoverMessage>
+      )
+    ) : (
+      <GameoverMessage>
+        <div className="prize">
+          You've won <span>{this._animateScore(this.props.score)} </span>
+          ICX!
+          <br />
+          Log in now to claim your ICX
         </div>
-      </div>
+        <div className="gameover-message">
+          <div className="flash">Log in to claim your ICX</div>
+        </div>
+      </GameoverMessage>
     );
   }
 }

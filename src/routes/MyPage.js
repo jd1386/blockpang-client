@@ -21,29 +21,12 @@ class MyPage extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      walletAddress: '',
+      walletAddress: util.walletAddress(),
       walletKey: '',
       activeMenu: 'Manage Wallet',
       isEditingWallet: false,
       isWalletCreated: false
     };
-  }
-
-  _requestTransfer(game_score) {
-    const userData = {
-      user: JSON.parse(localStorage.getItem('userData')),
-      wallet: localStorage.getItem('walletAddress'),
-      game_score
-    };
-
-    axios
-      .post(util.API_URLS['transfer'], userData)
-      .then(res => {
-        console.log(res.data);
-      })
-      .catch(err => {
-        throw err;
-      });
   }
 
   _handleModalClose() {
@@ -115,6 +98,14 @@ class MyPage extends Component {
 
   _handleMenuClick = (e, { name }) => this.setState({ activeMenu: name });
 
+  _handleEditWallet() {
+    console.log('handleEditWallet called');
+    console.log('before', this.state.isEditingWallet);
+    this.setState(prevState => ({
+      isEditingWallet: !prevState.isEditingWallet
+    }));
+  }
+
   _handleCreateWallet() {
     // get user data from localStorage for API use
     const {
@@ -148,24 +139,11 @@ class MyPage extends Component {
         });
 
         // if previousGameScore, transfer coin
-        if (localStorage.getItem('previousGameScore')) {
-          const previousGameScore = localStorage.getItem('previousGameScore');
-          this._requestTransfer(previousGameScore);
-          // reset previousGameScore
-          localStorage.setItem('previousGameScore', '');
-        }
+        util.transferPreviousScore();
       })
       .catch(err => {
         throw err;
       });
-  }
-
-  _handleEditWallet() {
-    console.log('handleEditWallet called');
-    console.log('before', this.state.isEditingWallet);
-    this.setState(prevState => ({
-      isEditingWallet: !prevState.isEditingWallet
-    }));
   }
 
   _updateWalletAddress(newAddress) {
@@ -192,6 +170,7 @@ class MyPage extends Component {
       .then(res => {
         this.setState({ walletAddress: newAddress });
         util.setWalletAddress(newAddress);
+        util.transferPreviousScore();
       })
       .catch(err => {
         throw err;

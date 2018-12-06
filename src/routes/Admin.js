@@ -6,12 +6,12 @@ import {
   Route
 } from 'react-router-dom';
 import { Container, Grid, Header, Button, Segment } from 'semantic-ui-react';
-import Sidebar from '../components/admin/sidebar';
+import Sidebar from '../components/admin/Sidebar';
 import '../components/admin/style.scss';
-import Dashboard from '../components/admin/dashboard';
-import Login from '../components/admin/login';
-import Settings from '../components/admin/settings';
-import Log from '../components/admin/log';
+import Dashboard from '../components/admin/Dashboard';
+import Login from '../components/admin/Login';
+import Settings from '../components/admin/Settings';
+import Log from '../components/admin/Log';
 import util from '../util';
 
 class Admin extends Component {
