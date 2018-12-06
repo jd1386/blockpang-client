@@ -11,5 +11,6 @@ export default {
   stat: `${BASE_URL}/db/stat`,
   admin_summary: `${BASE_URL}/db/summary`,
   admin_get_limit: `${BASE_URL}/admin/get_limit`,
-  admin_set_limit: `${BASE_URL}/admin/set_limit`
+  admin_set_limit: `${BASE_URL}/admin/set_limit`,
+  admin_update_email: `${BASE_URL}/admin/update`
 };
