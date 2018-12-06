@@ -15,15 +15,15 @@ const displayTime = time => {
   return `${seconds}:${milliseconds}`;
 };
 
-const timer = props => (
+const Timer = props => (
   <React.Fragment>
     <Image id="onlycoin" size="mini" src={clockImage} />
     <span className="status-title">{displayTime(props.time)}</span>
   </React.Fragment>
 );
 
-timer.propTypes = {
+Timer.propTypes = {
   time: PropTypes.number.isRequired
 };
 
-export default timer;
+export default Timer;

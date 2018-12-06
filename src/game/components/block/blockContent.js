@@ -1,7 +1,7 @@
 import React from 'react';
 import './style.scss';
 
-const blockContent = props => {
+const BlockContent = props => {
   const { bonusScore, image, keyDown, health } = props.data;
   let bonusText = null;
   let healthText = null;
@@ -27,4 +27,4 @@ const blockContent = props => {
   );
 };
 
-export default blockContent;
+export default BlockContent;

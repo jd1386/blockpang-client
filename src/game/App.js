@@ -2,7 +2,7 @@ import React from 'react';
 import './App.scss';
 import { random } from 'lodash';
 import Board from './components/board';
-import BlockList from './components/block/blockList';
+import BlockList from './components/block/BlockList';
 import Status from './components/status';
 import { Image } from 'semantic-ui-react';
 import Util from './utils';
@@ -37,7 +37,8 @@ class App extends React.Component {
       gameMessage
     });
   }
-  isKoreanChar(ch) {
+
+  _isKoreanChar(ch) {
     let c = ch.charCodeAt(0);
     if (0x1100 <= c && c <= 0x11ff) return true;
     if (0x3130 <= c && c <= 0x318f) return true;
@@ -71,7 +72,7 @@ class App extends React.Component {
     let isStart;
     // console.log('user input key', e.key, 'user input keyCode', e.keyCode);
 
-    if (this.isKoreanChar(e.key))
+    if (this._isKoreanChar(e.key))
       return this._alertMessage('한글 자판을 영문 자판으로 변환해주세요!');
 
     if (!this.state.isPlaying) {
@@ -358,7 +359,7 @@ class App extends React.Component {
   };
 
   _restartGame = e => {
-    if (this.isKoreanChar(e.key))
+    if (this._isKoreanChar(e.key))
       return this.setState({ gameoverReason: 'inputSourceKorean' });
 
     if (e.keyCode === 32) {

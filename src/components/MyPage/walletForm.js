@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { Input, Label } from 'semantic-ui-react';
-import WalletInfo from './walletInfo';
+import WalletInfo from './WalletInfo';
 import util from '../../util';
 
 class WalletForm extends Component {
