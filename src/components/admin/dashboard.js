@@ -55,7 +55,7 @@ class Dashboard extends Component {
     const firstRequest = await axios.get(util.API_URLS['admin_summary']);
     const secondRequest = await axios.get(util.API_URLS['transaction']);
     const thirdRequest = await axios.get(util.API_URLS['totaluser']);
-    const fourthRequest = await axios.post(util.API_URLS['admin_stat'], {
+    const fourthRequest = await axios.post(util.API_URLS['stat'], {
       user: '*'
     });
 
