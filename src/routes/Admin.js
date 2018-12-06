@@ -5,23 +5,31 @@ import {
   BrowserRouter as Router,
   Route
 } from 'react-router-dom';
-import { Container, Grid, Header, Button, Segment } from 'semantic-ui-react';
-import Sidebar from '../components/admin/Sidebar';
-import '../components/admin/style.scss';
-import Dashboard from '../components/admin/Dashboard';
-import Login from '../components/admin/Login';
-import Settings from '../components/admin/Settings';
-import Log from '../components/admin/Log';
-import util from '../util';
+import { Grid } from 'semantic-ui-react';
+import Sidebar from '../components/Admin/Sidebar';
+import '../components/Admin/style.scss';
+import Dashboard from '../components/Admin/Dashboard';
+import Login from '../components/Admin/Login';
+import Settings from '../components/Admin/Settings';
+import Log from '../components/Admin/Log';
 
 class Admin extends Component {
-  render() {
-    //FIXME: fix the following auth logic below
-    if (!util.isLoggedIn()) {
-      return <Redirect to={'/'} />;
-    }
+  constructor(props) {
+    super(props);
+    this.adminToken = localStorage.getItem('adminToken') || null;
+    this.state = {
+      isAdminLoggedIn: this.adminToken || false
+    };
+  }
 
-    return (
+  _onLogIn() {
+    this.setState({ isAdminLoggedIn: true }, () => {
+      console.log('Admin logged in', this.state);
+    });
+  }
+
+  render() {
+    return this.state.isAdminLoggedIn ? (
       <Router>
         <div style={{ paddingTop: '4em' }}>
           <Grid
@@ -32,11 +40,24 @@ class Admin extends Component {
             </Grid.Column>
             <Grid.Column width={13}>
               <Route exact path="/admin" component={Dashboard} />
-              <Route path="/admin/login" component={Login} />
+              <Route
+                path="/admin/login"
+                render={() => <Redirect to="/admin" />}
+              />
               <Route path="/admin/settings" component={Settings} />
               <Route path="/admin/log" component={Log} />
             </Grid.Column>
           </Grid>
+        </div>
+      </Router>
+    ) : (
+      <Router>
+        <div>
+          <Route
+            exact
+            path="/admin/login"
+            render={() => <Login onLogIn={() => this._onLogIn()} />}
+          />
         </div>
       </Router>
     );

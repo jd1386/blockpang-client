@@ -7,6 +7,7 @@ export default {
   leaderboard: `${BASE_URL}/db/leaderboard`,
   transaction: `${BASE_URL}/db/transaction`,
   totaluser: `${BASE_URL}/db/users`,
+  token: `${BASE_URL}/token`,
   admin_summary: `${BASE_URL}/db/summary`,
   admin_stat: `${BASE_URL}/admin/stat`,
   admin_get_limit: `${BASE_URL}/admin/get_limit`,
