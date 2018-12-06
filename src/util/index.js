@@ -1,3 +1,4 @@
+import axios from 'axios';
 import moment from 'moment';
 import API_URLS from './api_urls';
 
@@ -26,12 +27,39 @@ const setWalletAddress = newAddress => {
   localStorage.setItem('walletAddress', newAddress);
 };
 
+const requestTransfer = game_score => {
+  const reqBody = {
+    user: userData(),
+    wallet: localStorage.getItem('walletAddress'),
+    game_score
+  };
+
+  axios
+    .post(API_URLS['transfer'], reqBody)
+    .then(res => {
+      console.log(res.data);
+    })
+    .catch(err => {
+      throw err;
+    });
+};
+
+const transferPreviousScore = () => {
+  const previousGameScore = localStorage.getItem('previousGameScore');
+  if (previousGameScore) {
+    requestTransfer(previousGameScore);
+    // reset previousGameScore to null
+    localStorage.setItem('previousGameScore', '');
+  }
+};
+
 const toKoreanTime = (originalTime, format = 'long') => {
   return moment
     .parseZone(originalTime)
     .utcOffset(9)
     .format(DATE_FORMATS[format]);
 };
+
 const _providerColor = provider => {
   let COLORS = ['#dd4b39', '#3b5998'];
   if (provider === 'google') return COLORS[0];
@@ -44,6 +72,8 @@ export default {
   setUserData,
   walletAddress,
   setWalletAddress,
+  requestTransfer,
+  transferPreviousScore,
   toKoreanTime,
   _providerColor,
   API_URLS

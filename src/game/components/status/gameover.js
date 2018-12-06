@@ -2,7 +2,6 @@ import React, { Component } from 'react';
 import './style.scss';
 import { Spring } from 'react-spring';
 import PropTypes from 'prop-types';
-import axios from 'axios';
 import util from '../../../util';
 
 const gameoverMessages = {
@@ -40,17 +39,6 @@ class Gameover extends Component {
     );
   }
 
-  _requestTransfer(userData) {
-    axios
-      .post(util.API_URLS['transfer'], userData)
-      .then(res => {
-        console.log(res.data);
-      })
-      .catch(err => {
-        throw err;
-      });
-  }
-
   componentDidMount() {
     const userData = {
       user: util.userData(),
@@ -76,8 +64,8 @@ class Gameover extends Component {
     // render and _requestTransfer call
     if (userData.wallet && userData.game_score > 0) {
       setTimeout(() => {
-        this._requestTransfer(userData);
-      }, 2000);
+        util.requestTransfer(userData.game_score);
+      }, 1000);
     }
   }
 
