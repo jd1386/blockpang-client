@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import axios from 'axios';
 import util from '../../util';
-import { takeRight, pick } from 'lodash';
+import { pick } from 'lodash';
 import { Table, Container, Grid, Button, Loader } from 'semantic-ui-react';
 import {
   BarChart,

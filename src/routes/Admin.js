@@ -24,9 +24,8 @@ class Admin extends Component {
   }
 
   _onLogIn() {
-    this.setState({ isAdminLoggedIn: true }, () => {
-      console.log('Admin logged in', this.state);
-    });
+    this.setState({ isAdminLoggedIn: true });
+    this.props.onAdminLogin();
   }
 
   render() {
@@ -43,11 +42,12 @@ class Admin extends Component {
               <Switch>
                 <Route exact path="/admin" component={Dashboard} />
                 <Route
+                  exact
                   path="/admin/login"
                   render={() => <Redirect to="/admin" />}
                 />
-                <Route path="/admin/settings" component={Settings} />
-                <Route path="/admin/log" component={Log} />
+                <Route exact path="/admin/settings" component={Settings} />
+                <Route exact path="/admin/log" component={Log} />
                 <Route component={NoPage} />
               </Switch>
             </Grid.Column>

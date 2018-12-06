@@ -52,6 +52,11 @@ class Navbar extends Component {
             <Menu.Item as={Link} to="/mypage">
               My Page
             </Menu.Item>
+            {this.props.isAdmin && (
+              <Menu.Item as={Link} to="/admin">
+                Admin
+              </Menu.Item>
+            )}
             {this._menuChange()}
           </Container>
         </Menu>
@@ -72,6 +77,11 @@ class Navbar extends Component {
             <Menu.Item as={Link} to="/leaderboard">
               Leaderboard
             </Menu.Item>
+            {this.props.isAdmin && (
+              <Menu.Item as={Link} to="/admin">
+                Admin
+              </Menu.Item>
+            )}
             {this._menuChange()}
           </Container>
         </Menu>

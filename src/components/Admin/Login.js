@@ -3,6 +3,8 @@ import { Redirect } from 'react-router-dom';
 import { Button, Form, Grid, Header, Image, Segment } from 'semantic-ui-react';
 import axios from 'axios';
 import util from '../../util';
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.min.css';
 
 class Login extends Component {
   state = {
@@ -12,21 +14,17 @@ class Login extends Component {
   };
 
   _handleOnSubmit() {
-    console.log('form submitted');
-    console.log(this.state);
-
     axios
       .post(util.API_URLS['token'], {
         username: this.state.enteredEmail,
         password: this.state.enteredPassword
       })
       .then(res => {
-        console.log(res.data);
         localStorage.setItem('adminToken', res.data.token);
         this.props.onLogIn();
       })
       .catch(err => {
-        throw err;
+        toast.error('Authentication failed');
       });
   }
 
@@ -80,6 +78,17 @@ class Login extends Component {
               </Form>
             </Grid.Column>
           </Grid>
+          <ToastContainer
+            position="top-right"
+            autoClose={3000}
+            hideProgressBar={false}
+            newestOnTop={false}
+            closeOnClick
+            rtl={false}
+            pauseOnVisibilityChange
+            draggable={false}
+            pauseOnHover
+          />
         </div>
       );
     } else {
