@@ -51,9 +51,6 @@ class Navbar extends Component {
             <Menu.Item as={Link} to="/mypage">
               My Page
             </Menu.Item>
-            <Menu.Item as={Link} to="/admin">
-              Admin
-            </Menu.Item>
             {this._menuChange()}
           </Container>
         </Menu>
@@ -62,14 +59,14 @@ class Navbar extends Component {
       <React.Fragment>
         <Menu fixed="top" inverted>
           <Container>
-            <Menu.Item as={Link} to="/" header>
+            <Menu.Item as={Link} to="/" header id="logo">
               <Image
                 className="app-logo"
                 size="mini"
-                src="favicon.ico"
+                src={favicon}
                 style={{ marginRight: '1.5em' }}
               />
-              블록팡
+              BlockPang
             </Menu.Item>
             {this._menuChange()}
           </Container>

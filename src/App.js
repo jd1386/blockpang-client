@@ -9,6 +9,7 @@ import MyPage from './routes/MyPage';
 import Leaderboard from './routes/Leaderboard';
 import Admin from './routes/Admin';
 import Footer from './components/Footer/';
+import NoPage from './routes/NoPage';
 import util from './util';
 
 class App extends React.Component {
@@ -53,6 +54,7 @@ class App extends React.Component {
             <Route path="/leaderboard" component={Leaderboard} />
             <Route path="/login" render={() => <Login login={this.login} />} />
             <Route path="/admin" component={Admin} />
+            <Route component={NoPage} />
           </div>
           <Footer />
         </div>

@@ -51,7 +51,7 @@ class Instruction extends Component {
         );
       case 'en':
         return (
-          <div className="game-instruction en">
+          <div className="game-instruction ko">
             <div className="header">How to Play BlockPang</div>
             <span onClick={() => this._handleOnClick()}>
               <Button>한국어로 보기</Button>
