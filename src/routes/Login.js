@@ -12,11 +12,12 @@ import GoogleLogin from 'react-google-login';
 import FacebookLogin from 'react-facebook-login';
 import axios from 'axios';
 import util from '../util';
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.min.css';
 
 class Login extends Component {
   state = {
-    isLoginSuccessful: false,
-    isFailTryToLogin: false
+    isLoginSuccessful: false
   };
 
   async _signup(res, provider) {
@@ -64,28 +65,36 @@ class Login extends Component {
   }
 
   _responseGoogle = res => {
-    console.log('google-res', res);
-    // this._signup(res, 'google');
+    // console.log('google-res', res);
+    this._signup(res, 'google');
   };
 
   _responseFacebook = res => {
-    console.log('facebook-res', res);
-    // this._signup(res, 'facebook');
+    // console.log('facebook-res', res);
+    this._signup(res, 'facebook');
   };
 
   _responseFail = res => {
-    console.log('failed-login', res);
-    this.setState(prevState => ({
-      isFailTryToLogin: true
-    }));
+    this._notify('error', 'Failed to log you in. Please try again!');
   };
+
+  _notify(type, message) {
+    // eslint-disable-next-line default-case
+    switch (type) {
+      case 'success':
+        toast.info(message);
+        break;
+      case 'error':
+        toast.error(message);
+        break;
+    }
+  }
 
   render() {
     if (this.state.isLoginSuccessful || util.isLoggedIn()) {
       return <Redirect to={'/'} />;
     }
     const { _responseGoogle, _responseFacebook, _responseFail } = this;
-    const { isFailTryToLogin } = this.state;
 
     return (
       <Container>
@@ -126,13 +135,19 @@ class Login extends Component {
                   onFailure={_responseFail}
                 />
               </Grid.Column>
-              {isFailTryToLogin ? (
-                <Segment as="h2">
-                  You failed to Log in. Please, try again.
-                </Segment>
-              ) : null}
             </Grid.Row>
           </Grid>
+          <ToastContainer
+            position="top-right"
+            autoClose={3000}
+            hideProgressBar={false}
+            newestOnTop={false}
+            closeOnClick
+            rtl={false}
+            pauseOnVisibilityChange
+            draggable={false}
+            pauseOnHover
+          />
         </Segment>
       </Container>
     );
