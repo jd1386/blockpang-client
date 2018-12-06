@@ -9,6 +9,34 @@
   src: local('DungGeunMo'), url('../../assets/font/DungGeunMo.ttf');
 }
 
+.flash {
+  color: #505050;
+  -webkit-animation: flash linear 1.5s infinite;
+  animation: flash linear 1.5s infinite;
+}
+@-webkit-keyframes flash {
+  0% {
+    opacity: 1;
+  }
+  50% {
+    opacity: 0.1;
+  }
+  100% {
+    opacity: 1;
+  }
+}
+@keyframes flash {
+  0% {
+    opacity: 1;
+  }
+  50% {
+    opacity: 0.1;
+  }
+  100% {
+    opacity: 1;
+  }
+}
+
 .leaderboard {
   margin-top: 2em;
 }

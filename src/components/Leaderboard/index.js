@@ -29,7 +29,7 @@ class Leaderboard extends Component {
     return (
       <div className="leaderboard">
         <Grid.Row>
-          <Header className="leaderboard-header">Highest Score</Header>
+          <Header className="leaderboard-header flash">Highest Score</Header>
         </Grid.Row>
         <Grid.Row className="table-container">
           <Table basic="very" collapsing>
