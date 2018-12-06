@@ -1,13 +1,6 @@
 import React, { Component } from 'react';
 import { Link } from 'react-router-dom';
-import {
-  // Header,
-  // Icon,
-  // Image,
-  Menu
-  // Segment,
-  // Sidebar
-} from 'semantic-ui-react';
+import { Menu } from 'semantic-ui-react';
 import './style.scss';
 
 class LeftSidebar extends Component {

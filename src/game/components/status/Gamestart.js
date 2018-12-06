@@ -2,7 +2,7 @@ import React from 'react';
 import './style.scss';
 import PropTypes from 'prop-types';
 
-const gamestart = props => {
+const Gamestart = props => {
   return (
     <div className="game-status-main" onClick={props.onClick()}>
       <div className="header">
@@ -17,8 +17,8 @@ const gamestart = props => {
   );
 };
 
-gamestart.propTypes = {
+Gamestart.propTypes = {
   onClick: PropTypes.func.isRequired
 };
 
-export default gamestart;
+export default Gamestart;

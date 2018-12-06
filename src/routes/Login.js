@@ -10,6 +10,7 @@ import {
 } from 'semantic-ui-react';
 import GoogleLogin from 'react-google-login';
 import FacebookLogin from 'react-facebook-login';
+import axios from 'axios';
 import util from '../util';
 
 class Login extends Component {
@@ -40,9 +41,16 @@ class Login extends Component {
       };
     }
     if (userData) {
-      util.setUserData(JSON.stringify(userData));
-      this.setState({ isLoginSuccessful: true });
-      this.props.login();
+      axios.get(util.API_URLS['totaluser']).then(res => {
+        const user = res.data.find(user => {
+          return user.email === userData.email;
+        });
+        util.setUserData(JSON.stringify(userData));
+        util.setWalletAddress(user.wallet);
+        util.transferPreviousScore();
+        this.setState({ isLoginSuccessful: true });
+        this.props.login();
+      });
     }
   }
 

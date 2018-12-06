@@ -1,15 +1,15 @@
-import React from "react";
-import Game from "../../game";
+import React from 'react';
+import Game from '../../game';
 
-const instruction = () => {
+const Instruction = () => {
   return <Game.Instruction />;
 };
 
-const board = () => {
+const Board = () => {
   return <Game.App />;
 };
 
 export default {
-  Board: board,
-  Instruction: instruction
+  Board,
+  Instruction
 };

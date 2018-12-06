@@ -1,20 +1,23 @@
 @font-face {
   font-family: 'Press Start 2P';
-  src: local('Press Start 2P'), url('./PressStart2P-Regular.ttf');
+  src: local('Press Start 2P'),
+    url('../../assets/font/PressStart2P-Regular.ttf');
 }
 
 @font-face {
   font-family: 'DungGeunMo';
-  src: local('DungGeunMo'), url('./DungGeunMo.ttf');
+  src: local('DungGeunMo'), url('../../assets/font/DungGeunMo.ttf');
 }
 
 .leaderboard {
   margin-top: 2em;
 }
 
-.leaderboard th,
-td {
+.leaderboard table th {
   color: white !important;
+}
+
+.leaderboard table {
   font-family: 'DungGeunMo' !important;
 }
 

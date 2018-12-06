@@ -1,7 +1,7 @@
 import React from 'react';
 import './style.scss';
 
-const walletMissing = () => {
+const WalletMissing = () => {
   return (
     <div className="game-status-main">
       <div className="header">
@@ -17,4 +17,4 @@ const walletMissing = () => {
   );
 };
 
-export default walletMissing;
+export default WalletMissing;
