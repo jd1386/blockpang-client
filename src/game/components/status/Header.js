@@ -2,8 +2,8 @@ import React, { Component } from 'react';
 import './style.scss';
 import PropTypes from 'prop-types';
 import Timer from './Timer';
-import Stage from './Stage';
-import Score from './Score';
+import Stage from './Btage';
+import Score from './Bcore';
 
 class Header extends Component {
   render() {
