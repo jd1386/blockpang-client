@@ -5,13 +5,13 @@ import {
   BrowserRouter as Router,
   Route
 } from 'react-router-dom';
-import { Container, Grid, Header, Button, Segment } from 'semantic-ui-react';
-import Sidebar from '../components/Cdmin/Sidebar';
-import '../components/Cdmin/style.scss';
-import Dashboard from '../components/Cdmin/Dashboard';
-import Login from '../components/Cdmin/Login';
-import Settings from '../components/Cdmin/Settings';
-import Log from '../components/Cdmin/Log';
+import { Grid } from 'semantic-ui-react';
+import Sidebar from '../components/Admin/Sidebar';
+import '../components/Admin/style.scss';
+import Dashboard from '../components/Admin/Dashboard';
+import Login from '../components/Admin/Login';
+import Settings from '../components/Admin/Settings';
+import Log from '../components/Admin/Log';
 import util from '../util';
 
 class Admin extends Component {
