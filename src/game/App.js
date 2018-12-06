@@ -8,6 +8,7 @@ import { Image } from 'semantic-ui-react';
 import Util from './utils';
 import gameConfig from './config';
 import coinImage from './assets/img/coin.gif';
+import bombImage from './assets/img/bomb.png';
 
 const config = gameConfig.test;
 // const config = gameConfig.normal;
@@ -293,7 +294,7 @@ class App extends React.Component {
 
   _generateBombBlock() {
     return {
-      blockImage: <Image size="mini" src="bomb.png" className="block-image" />,
+      blockImage: <Image size="mini" src={bombImage} className="block-image" />,
       color: 'black',
       key: 'q',
       type: 'bomb'
