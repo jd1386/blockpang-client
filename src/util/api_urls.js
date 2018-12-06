@@ -9,6 +9,10 @@ export default {
   totaluser: `${BASE_URL}/db/users`,
   stat: `${BASE_URL}/db/stat`,
   admin_summary: `${BASE_URL}/db/summary`,
+<<<<<<< HEAD
+  admin_stat: `${BASE_URL}/db/stat`,
+=======
+>>>>>>> c6a8f1ebea778c88174370401d23c3f94babf7fb
   admin_get_limit: `${BASE_URL}/admin/get_limit`,
   admin_set_limit: `${BASE_URL}/admin/set_limit`
 };
