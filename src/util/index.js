@@ -30,7 +30,7 @@ const setWalletAddress = newAddress => {
 const requestTransfer = game_score => {
   const reqBody = {
     user: userData(),
-    wallet: localStorage.getItem('walletAddress'),
+    wallet: walletAddress(),
     game_score
   };
 

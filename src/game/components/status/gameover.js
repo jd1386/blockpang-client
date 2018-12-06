@@ -51,13 +51,13 @@ class Gameover extends Component {
         this.setState({ isLoggedIn: true, walletAddress: userData.wallet });
       } else {
         this.setState({ isLoggedIn: true });
-        localStorage.setItem('previousGameScore', userData.gameScore);
+        localStorage.setItem('previousGameScore', userData.game_score);
       }
     } else {
       // user is not logged in
       // save game score to localStorage
       // to give the user when she logs in
-      localStorage.setItem('previousGameScore', userData.gameScore);
+      localStorage.setItem('previousGameScore', userData.game_score);
     }
 
     // use setTimeout to give more room between
