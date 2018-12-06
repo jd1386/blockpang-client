@@ -18,7 +18,7 @@ class Login extends Component {
     isLoginSuccessful: false
   };
 
-  _signup(res, provider) {
+  async _signup(res, provider) {
     let userData;
     if (provider === 'google' && res.profileObj.email) {
       userData = {
@@ -40,17 +40,24 @@ class Login extends Component {
         provider
       };
     }
-    if (userData) {
-      axios.get(util.API_URLS['totaluser']).then(res => {
-        const user = res.data.find(user => {
-          return user.email === userData.email;
-        });
-        util.setUserData(JSON.stringify(userData));
-        if (user.wallet) util.setWalletAddress(user.wallet);
-        util.transferPreviousScore();
-        this.setState({ isLoginSuccessful: true });
-        this.props.login();
+
+    const user = await axios.get(util.API_URLS['totaluser']).then(res => {
+      console.log('res', res.data);
+      return res.data.find(user => {
+        return user.email === userData.email;
       });
+    });
+
+    if (user) {
+      util.setUserData(JSON.stringify(userData));
+      util.setWalletAddress(user.wallet);
+      util.transferPreviousScore();
+      this.setState({ isLoginSuccessful: true });
+      this.props.login();
+    } else {
+      util.setUserData(JSON.stringify(userData));
+      this.setState({ isLoginSuccessful: true });
+      this.props.login();
     }
   }
 

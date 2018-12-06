@@ -177,17 +177,20 @@ class MyPage extends Component {
       });
   }
 
-  componentDidMount() {
+  async componentDidMount() {
     if (!this.state.walletAddress) {
-      axios.get(util.API_URLS['totaluser']).then(res => {
-        const user = res.data.find(user => {
-          return user.email === util.userData().email;
+      const userFromDB = await axios
+        .get(util.API_URLS['totaluser'])
+        .then(res => {
+          return res.data.find(user => {
+            return user.email === util.userData().email;
+          });
         });
-        if (user.wallet) {
-          this.setState({ walletAddress: user.wallet });
-          util.setWalletAddress(user.wallet);
-        }
-      });
+
+      if (userFromDB && userFromDB.wallet) {
+        this.setState({ walletAddress: userFromDB.wallet });
+        util.setWalletAddress(userFromDB.wallet);
+      }
     }
   }
 

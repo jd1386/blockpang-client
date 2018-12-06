@@ -24,7 +24,7 @@ class GameRecord extends Component {
   }
 
   _renderTable() {
-    return (
+    return this.state.recentTransfers.length ? (
       <React.Fragment>
         <Table basic="very" celled collapsing style={{ width: '100%' }}>
           <Table.Header>
@@ -49,11 +49,13 @@ class GameRecord extends Component {
         </Table>
         {this._moreTransactionsBtn()}
       </React.Fragment>
+    ) : (
+      <div style={{ textAlign: 'center' }}>No data available yet</div>
     );
   }
 
   _renderGraph() {
-    return (
+    return this.state.dailyTransfers.length ? (
       <BarChart
         width={400}
         height={400}
@@ -66,6 +68,8 @@ class GameRecord extends Component {
         <Legend />
         <Bar dataKey="amount" fill="#24c2d4f2" />
       </BarChart>
+    ) : (
+      <div style={{ textAlign: 'center' }}>No data available yet</div>
     );
   }
 
@@ -89,8 +93,6 @@ class GameRecord extends Component {
         user: util.userData().email
       })
       .then(res => {
-        console.log(res.data);
-
         let recentTransfers = [];
         let dailyTransfers = [];
 
@@ -106,7 +108,6 @@ class GameRecord extends Component {
             amount: daily.sum
           });
         });
-        console.log(dailyTransfers);
 
         this.setState({ recentTransfers, dailyTransfers });
       })
@@ -124,17 +125,13 @@ class GameRecord extends Component {
               <div style={{ textAlign: 'center', marginBottom: '1em' }}>
                 <h2>Recent Transfer</h2>
               </div>
-              {this.state.recentTransfers.length
-                ? this._renderTable()
-                : this._loader()}
+              {this._renderTable()}
             </Grid.Column>
             <Grid.Column>
               <div style={{ textAlign: 'center', marginBottom: '1em' }}>
                 <h2>Daily ICX Transfer</h2>
               </div>
-              {this.state.recentTransfers.length
-                ? this._renderGraph()
-                : this._loader()}
+              {this._renderGraph()}
             </Grid.Column>
           </Grid.Row>
         </Grid>
