@@ -58,7 +58,7 @@ class Dashboard extends Component {
     const fourthRequest = await axios.post(util.API_URLS['stat'], {
       user: '*'
     });
-
+    await console.log(firstRequest);
     let monthlyData = await this._graphDataSet(
       fourthRequest.data.monthly.reverse()
     );
@@ -67,10 +67,11 @@ class Dashboard extends Component {
       loading: false,
       totalTransfer: firstRequest.data.total_transfer,
       totalTransferAmount: firstRequest.data.total_transfer_amount,
-      totalSignup: firstRequest.data.total_users,
+      totalSignup: firstRequest.data.total_user,
       currentBalance: firstRequest.data.current_balance,
       recentTransfer: secondRequest.data,
-      totalUser: thirdRequest.data.reverse(),
+      totalUser: thirdRequest.data,
+      // totalUser: thirdRequest.data.reverse(),
       monthlyData: monthlyData
     });
   }
