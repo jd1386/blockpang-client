@@ -58,7 +58,6 @@ class Dashboard extends Component {
     const fourthRequest = await axios.post(util.API_URLS['stat'], {
       user: '*'
     });
-    await console.log(firstRequest);
     let monthlyData = await this._graphDataSet(
       fourthRequest.data.monthly.reverse()
     );
