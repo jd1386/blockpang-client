@@ -21,7 +21,7 @@ class MyPage extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      walletAddress: '',
+      walletAddress: util.walletAddress(),
       walletKey: '',
       activeMenu: 'Manage Wallet',
       isEditingWallet: false,
