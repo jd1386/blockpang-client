@@ -11,6 +11,8 @@ import {
 } from 'semantic-ui-react';
 import axios from 'axios';
 import util from '../../util';
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.min.css';
 
 class Settings extends Component {
   state = {
@@ -29,6 +31,18 @@ class Settings extends Component {
       openModal: true,
       modalType
     });
+  }
+
+  _notify(type, message) {
+    // eslint-disable-next-line default-case
+    switch (type) {
+      case 'success':
+        toast.info(message);
+        break;
+      case 'error':
+        toast.error(message);
+        break;
+    }
   }
 
   _closeModal() {
@@ -52,6 +66,9 @@ class Settings extends Component {
               blockLimit: res.data.blocklimit,
               openModal: false
             });
+
+            // alert message
+            this._notify('success', 'Successfully updated!');
           })
           .catch(err => {
             throw err;
@@ -72,6 +89,9 @@ class Settings extends Component {
               blockLimit: res.data.blocklimit,
               openModal: false
             });
+
+            // alert message
+            this._notify('success', 'Successfully updated!');
           })
           .catch(err => {
             throw err;
@@ -92,8 +112,11 @@ class Settings extends Component {
               openModal: false,
               enteredInputValue: ''
             });
-            console.log('success');
+
+            // alert message
+            this._notify('success', 'Successfully updated!');
           });
+        break;
     }
   }
 
@@ -129,10 +152,8 @@ class Settings extends Component {
   }
 
   componentDidMount() {
-    // TODO: authentication
     // admin_summary
     axios.get(util.API_URLS['admin_summary']).then(res => {
-      console.log(res.data);
       this.setState({
         adminEmail: res.data.admin_email,
         scoreAddress: res.data.score_address,
@@ -142,13 +163,10 @@ class Settings extends Component {
 
     // set_limit
     axios.get(util.API_URLS['admin_get_limit']).then(res => {
-      this.setState(
-        {
-          amountLimit: res.data.amountlimit,
-          blockLimit: res.data.blocklimit
-        },
-        () => console.log(this.state)
-      );
+      this.setState({
+        amountLimit: res.data.amountlimit,
+        blockLimit: res.data.blocklimit
+      });
     });
   }
 
@@ -235,6 +253,17 @@ class Settings extends Component {
           </Grid>
         </Segment>
         {this._modalContent()}
+        <ToastContainer
+          position="top-right"
+          autoClose={3000}
+          hideProgressBar={false}
+          newestOnTop={false}
+          closeOnClick
+          rtl={false}
+          pauseOnVisibilityChange
+          draggable={false}
+          pauseOnHover
+        />
       </Container>
     );
   }
