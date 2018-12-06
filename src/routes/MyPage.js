@@ -183,8 +183,10 @@ class MyPage extends Component {
         const user = res.data.find(user => {
           return user.email === util.userData().email;
         });
-        this.setState({ walletAddress: user.wallet });
-        util.setWalletAddress(user.wallet);
+        if (user.wallet) {
+          this.setState({ walletAddress: user.wallet });
+          util.setWalletAddress(user.wallet);
+        }
       });
     }
   }

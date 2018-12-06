@@ -46,7 +46,7 @@ class Login extends Component {
           return user.email === userData.email;
         });
         util.setUserData(JSON.stringify(userData));
-        util.setWalletAddress(user.wallet);
+        if (user.wallet) util.setWalletAddress(user.wallet);
         util.transferPreviousScore();
         this.setState({ isLoginSuccessful: true });
         this.props.login();
