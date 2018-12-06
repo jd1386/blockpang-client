@@ -10,10 +10,6 @@ class BlockList extends React.Component {
   }
 
   render() {
-    // for test
-    // console.log('Block', Date.now(), this.props.blocks);
-    //
-
     return this.props.blocks.map((block, index) => {
       return (
         <div className="block-wrapper" key={index}>
