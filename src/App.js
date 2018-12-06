@@ -1,6 +1,6 @@
 import * as React from 'react';
 import './App.scss';
-import { BrowserRouter as Router, Route } from 'react-router-dom';
+import { Switch, BrowserRouter as Router, Route } from 'react-router-dom';
 import { hot } from 'react-hot-loader';
 import Navbar from './components/Navbar/';
 import Main from './routes/Main';
@@ -46,15 +46,20 @@ class App extends React.Component {
         <div id="App">
           <Navbar isLoggedIn={this.state.isLoggedIn} logout={this.logout} />
           <div className="site-content">
-            <Route exact path="/" component={Main} />
-            <Route
-              path="/mypage"
-              render={() => <MyPage isLoggedIn={this.state.isLoggedIn} />}
-            />
-            <Route path="/leaderboard" component={Leaderboard} />
-            <Route path="/login" render={() => <Login login={this.login} />} />
-            <Route path="/admin" component={Admin} />
-            <Route component={NoPage} />
+            <Switch>
+              <Route exact path="/" component={Main} />
+              <Route
+                path="/mypage"
+                render={() => <MyPage isLoggedIn={this.state.isLoggedIn} />}
+              />
+              <Route path="/leaderboard" component={Leaderboard} />
+              <Route
+                path="/login"
+                render={() => <Login login={this.login} />}
+              />
+              <Route path="/admin" component={Admin} />
+              <Route component={NoPage} />
+            </Switch>
           </div>
           <Footer />
         </div>

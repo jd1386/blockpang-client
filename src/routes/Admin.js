@@ -1,5 +1,10 @@
 import React, { Component } from 'react';
-import { Redirect, BrowserRouter as Router, Route } from 'react-router-dom';
+import {
+  Switch,
+  Redirect,
+  BrowserRouter as Router,
+  Route
+} from 'react-router-dom';
 import { Grid } from 'semantic-ui-react';
 import Sidebar from '../components/Admin/Sidebar';
 import '../components/Admin/style.scss';
@@ -7,6 +12,7 @@ import Dashboard from '../components/Admin/Dashboard';
 import Login from '../components/Admin/Login';
 import Settings from '../components/Admin/Settings';
 import Log from '../components/Admin/Log';
+import NoPage from '../routes/NoPage';
 
 class Admin extends Component {
   constructor(props) {
@@ -34,26 +40,30 @@ class Admin extends Component {
               <Sidebar />
             </Grid.Column>
             <Grid.Column width={13}>
-              <Route exact path="/admin" component={Dashboard} />
-              <Route
-                path="/admin/login"
-                render={() => <Redirect to="/admin" />}
-              />
-              <Route path="/admin/settings" component={Settings} />
-              <Route path="/admin/log" component={Log} />
+              <Switch>
+                <Route exact path="/admin" component={Dashboard} />
+                <Route
+                  path="/admin/login"
+                  render={() => <Redirect to="/admin" />}
+                />
+                <Route path="/admin/settings" component={Settings} />
+                <Route path="/admin/log" component={Log} />
+                <Route component={NoPage} />
+              </Switch>
             </Grid.Column>
           </Grid>
         </div>
       </Router>
     ) : (
       <Router>
-        <div>
+        <Switch>
           <Route
             exact
             path="/admin/login"
             render={() => <Login onLogIn={() => this._onLogIn()} />}
           />
-        </div>
+          <Route component={NoPage} />
+        </Switch>
       </Router>
     );
   }
