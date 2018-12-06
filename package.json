@@ -27,6 +27,7 @@
   "scripts": {
     "start": "react-scripts start",
     "build": "babel src/ -d lib/",
+    "build2": "react-scripts build && cp build/index.html build/404.html",
     "test": "react-scripts test",
     "eject": "react-scripts eject",
     "prepublish": "yarn run build"
