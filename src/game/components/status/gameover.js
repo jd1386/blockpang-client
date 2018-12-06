@@ -12,6 +12,15 @@ const gameoverMessages = {
   inputSourceKorean: '재시작하려면 영문 자판으로 변환 후 w를 눌러주세요!'
 };
 
+const GameoverMessage = props => {
+  return (
+    <div className="game-status-main">
+      <div className="header gameover">Game Over</div>
+      <div className="content gameover">{props.children}</div>
+    </div>
+  );
+};
+
 class Gameover extends Component {
   constructor(props) {
     super(props);
@@ -75,49 +84,40 @@ class Gameover extends Component {
   render() {
     return this.state.isLoggedIn ? (
       this.state.walletAddress ? (
-        <div className="game-status-main">
-          <div className="header gameover">Game Over</div>
-          <div className="content gameover">
-            <div className="prize">
-              You've won <span>{this._animateScore(this.props.score)} </span>
-              ICX!
-              <br />
-              Visit my page to view transactions
-            </div>
-            <div className="gameover-message">
-              <div>{gameoverMessages[this.props.reason]}</div>
-              <div className="flash">Press W KEY to restart</div>
-            </div>
-          </div>
-        </div>
-      ) : (
-        <div className="game-status-main">
-          <div className="header gameover">Game Over</div>
-          <div className="content gameover">
-            <div className="prize">
-              Your wallet is not registred. Please register on My Page.
-            </div>
-            <div className="gameover-message">
-              <div className="flash">Press W KEY to restart</div>
-            </div>
-          </div>
-        </div>
-      )
-    ) : (
-      <div className="game-status-main">
-        <div className="header gameover">Game Over</div>
-        <div className="content gameover">
+        <GameoverMessage>
           <div className="prize">
             You've won <span>{this._animateScore(this.props.score)} </span>
             ICX!
             <br />
-            Log in now to claim your ICX
+            Visit my page to view transactions
           </div>
           <div className="gameover-message">
-            <div className="flash">Log in to claim your ICX</div>
+            <div>{gameoverMessages[this.props.reason]}</div>
+            <div className="flash">Press W KEY to restart</div>
           </div>
+        </GameoverMessage>
+      ) : (
+        <GameoverMessage>
+          <div className="prize">
+            Your wallet is not registred. Please register on My Page.
+          </div>
+          <div className="gameover-message">
+            <div className="flash">Press W KEY to restart</div>
+          </div>
+        </GameoverMessage>
+      )
+    ) : (
+      <GameoverMessage>
+        <div className="prize">
+          You've won <span>{this._animateScore(this.props.score)} </span>
+          ICX!
+          <br />
+          Log in now to claim your ICX
         </div>
-      </div>
+        <div className="gameover-message">
+          <div className="flash">Log in to claim your ICX</div>
+        </div>
+      </GameoverMessage>
     );
   }
 }
