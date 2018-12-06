@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import './style.scss';
-import BlockContent from './BlockContent';
+import BlockContent from './BlockContents';
 
 class Block extends Component {
   render() {
