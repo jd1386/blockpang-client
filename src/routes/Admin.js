@@ -6,12 +6,12 @@ import {
   Route
 } from 'react-router-dom';
 import { Container, Grid, Header, Button, Segment } from 'semantic-ui-react';
-import Sidebar from '../components/bdmin/Sidebar';
-import '../components/bdmin/style.scss';
-import Dashboard from '../components/bdmin/Dashboard';
-import Login from '../components/bdmin/Login';
-import Settings from '../components/bdmin/Settings';
-import Log from '../components/bdmin/Log';
+import Sidebar from '../components/Cdmin/Sidebar';
+import '../components/Cdmin/style.scss';
+import Dashboard from '../components/Cdmin/Dashboard';
+import Login from '../components/Cdmin/Login';
+import Settings from '../components/Cdmin/Settings';
+import Log from '../components/Cdmin/Log';
 import util from '../util';
 
 class Admin extends Component {
