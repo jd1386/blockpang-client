@@ -85,7 +85,7 @@ class GameRecord extends Component {
 
   componentDidMount() {
     axios
-      .post(util.API_URLS['admin_stat'], {
+      .post(util.API_URLS['stat'], {
         user: util.userData().email
       })
       .then(res => {

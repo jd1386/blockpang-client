@@ -8,8 +8,8 @@ export default {
   transaction: `${BASE_URL}/db/transaction`,
   totaluser: `${BASE_URL}/db/users`,
   token: `${BASE_URL}/token`,
+  stat: `${BASE_URL}/db/stat`,
   admin_summary: `${BASE_URL}/db/summary`,
-  admin_stat: `${BASE_URL}/admin/stat`,
   admin_get_limit: `${BASE_URL}/admin/get_limit`,
   admin_set_limit: `${BASE_URL}/admin/set_limit`
 };
