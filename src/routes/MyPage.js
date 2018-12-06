@@ -10,10 +10,10 @@ import {
   Menu
 } from 'semantic-ui-react';
 import '../components/MyPage/style.scss';
-import WalletInfo from '../components/MyPage/walletInfo';
-import WalletForm from '../components/MyPage/walletForm';
-import GameRecord from '../components/MyPage/gameRecord';
-import Modal from '../components/MyPage/modal';
+import WalletInfo from '../components/MyPage/WalletInfo';
+import WalletForm from '../components/MyPage/WalletForm';
+import GameRecord from '../components/MyPage/GameRecord';
+import Modal from '../components/MyPage/Modal';
 import axios from 'axios';
 import util from '../util';
 

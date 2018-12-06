@@ -2,7 +2,7 @@ import React from 'react';
 import './style.scss';
 import Status from '../status';
 
-const board = props => {
+const Board = props => {
   const {
     handleKeyDown,
     boardBackground,
@@ -30,4 +30,4 @@ const board = props => {
   );
 };
 
-export default board;
+export default Board;

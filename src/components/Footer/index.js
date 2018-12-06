@@ -1,7 +1,7 @@
 import React from 'react';
 import { Container, Segment, Grid } from 'semantic-ui-react';
 
-const footer = () => {
+const Footer = () => {
   const currentYear = new Date().getFullYear();
 
   return (
@@ -20,4 +20,4 @@ const footer = () => {
   );
 };
 
-export default footer;
+export default Footer;
