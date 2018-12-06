@@ -1,10 +1,5 @@
 import React, { Component } from 'react';
-import {
-  Link,
-  Redirect,
-  BrowserRouter as Router,
-  Route
-} from 'react-router-dom';
+import { Redirect, BrowserRouter as Router, Route } from 'react-router-dom';
 import { Grid } from 'semantic-ui-react';
 import Sidebar from '../components/Admin/Sidebar';
 import '../components/Admin/style.scss';
