@@ -11,7 +11,6 @@ class Leaderboard extends Component {
 
   componentDidMount() {
     axios.get(util.API_URLS['leaderboard']).then(res => {
-      console.log(res.data);
       this.setState({ records: res.data });
     });
   }

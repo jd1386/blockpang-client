@@ -28,6 +28,10 @@ const setWalletAddress = newAddress => {
   localStorage.setItem('walletAddress', newAddress);
 };
 
+const isAdmin = () => {
+  return localStorage.getItem('adminToken') !== null;
+};
+
 const requestTransfer = game_score => {
   const reqBody = {
     user: userData(),
@@ -75,6 +79,7 @@ export default {
   setWalletAddress,
   requestTransfer,
   transferPreviousScore,
+  isAdmin,
   toKoreanTime,
   _providerColor,
   API_URLS
