@@ -1,7 +1,6 @@
 import React, { Component } from 'react';
 import axios from 'axios';
 import util from '../../util';
-import { pick } from 'lodash';
 import { Table, Container, Grid, Button, Loader } from 'semantic-ui-react';
 import {
   BarChart,
@@ -40,7 +39,7 @@ class GameRecord extends Component {
               return (
                 <Table.Row key={index}>
                   <Table.Cell>{util.toKoreanTime(tr.timestamp)}</Table.Cell>
-                  <Table.Cell>{tr.amount * 100}</Table.Cell>
+                  <Table.Cell>{tr.score}</Table.Cell>
                   <Table.Cell>{tr.amount}</Table.Cell>
                 </Table.Row>
               );
@@ -98,7 +97,11 @@ class GameRecord extends Component {
 
         // transaction list
         res.data.transaction_list.forEach(tr => {
-          recentTransfers.push(pick(tr, ['amount', 'timestamp']));
+          recentTransfers.push({
+            amount: Number(tr.amount).toFixed(2),
+            score: tr.gscore,
+            timestamp: tr.timestamp
+          });
         });
 
         // daily transfers
