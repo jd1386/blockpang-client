@@ -32,7 +32,7 @@ class Leaderboard extends Component {
           <Header className="leaderboard-header flash">Highest Score</Header>
         </Grid.Row>
         <Grid.Row className="table-container">
-          <Table basic="very" collapsing>
+          <Table basic="very" collapsing compact>
             <Table.Header>
               <Table.Row>
                 <Table.HeaderCell textAlign="center">Rank</Table.HeaderCell>
@@ -44,7 +44,7 @@ class Leaderboard extends Component {
             <Table.Body>
               {this.props.records.map((record, index) => {
                 return (
-                  <Table.Row key={index}>
+                  <Table.Row key={index} size="small">
                     <Table.Cell textAlign="center">
                       {this._nth(index + 1)}
                     </Table.Cell>
