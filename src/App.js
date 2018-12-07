@@ -6,6 +6,7 @@ import Navbar from './components/Navbar/';
 import Main from './routes/Main';
 import Login from './routes/Login';
 import MyPage from './routes/MyPage';
+import HowToPlay from './routes/HowToPlay';
 import Leaderboard from './routes/Leaderboard';
 import Admin from './routes/Admin';
 import Footer from './components/Footer/';
@@ -63,6 +64,7 @@ class App extends React.Component {
                 path="/mypage"
                 render={() => <MyPage isLoggedIn={this.state.isLoggedIn} />}
               />
+              <Route path="/how-to-play" component={HowToPlay} />
               <Route path="/leaderboard" component={Leaderboard} />
               <Route
                 path="/login"
