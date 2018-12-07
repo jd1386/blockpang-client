@@ -45,7 +45,7 @@ class Login extends Component {
     }
 
     const user = await axios.get(util.API_URLS['totaluser']).then(res => {
-      console.log('res', res.data);
+      // console.log('res', res.data);
       return res.data.find(user => {
         return user.email === userData.email;
       });

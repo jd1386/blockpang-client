@@ -3,6 +3,7 @@ import './style.scss';
 import { Spring } from 'react-spring';
 import PropTypes from 'prop-types';
 import util from '../../../util';
+import { Redirect } from 'react-router-dom';
 
 const gameoverMessages = {
   exceedBlockLimit: '',
@@ -14,7 +15,7 @@ const gameoverMessages = {
 
 const GameoverMessage = props => {
   return (
-    <div className="game-status-main">
+    <div className="game-status-main" onClick={props.onClick}>
       <div className="header gameover">Game Over</div>
       <div className="content gameover">{props.children}</div>
     </div>
@@ -26,9 +27,14 @@ class Gameover extends Component {
     super(props);
     this.state = {
       isLoggedIn: false,
+      isRedirectLogin: false,
       walletAddress: ''
     };
   }
+
+  _redirectLogin = () => {
+    this.setState({ isRedirectLogin: true });
+  };
 
   _animateScore(score) {
     return (
@@ -71,9 +77,15 @@ class Gameover extends Component {
   }
 
   render() {
-    return this.state.isLoggedIn ? (
-      this.state.walletAddress ? (
-        <GameoverMessage>
+    const { isRedirectLogin, isLoggedIn, walletAddress } = this.state;
+
+    if (isRedirectLogin) {
+      return <Redirect to={'/login'} />;
+    }
+
+    return isLoggedIn ? (
+      walletAddress ? (
+        <GameoverMessage onClick={this.props.onClick}>
           <div className="prize">
             You've won <span>{this._animateScore(this.props.score)} </span>
             ICX!
@@ -86,17 +98,19 @@ class Gameover extends Component {
           </div>
         </GameoverMessage>
       ) : (
+        // </div>
         <GameoverMessage>
           <div className="prize">
             Your wallet is not registred. Please register on My Page.
           </div>
-          <div className="gameover-message">
+          <div className="gameover-message" onClick={this.props.onClick}>
             <div className="flash">Press W KEY to restart</div>
           </div>
         </GameoverMessage>
       )
     ) : (
-      <GameoverMessage>
+      // <Link to="/login" style={{ color: 'black', textDecoration: 'none' }}>
+      <GameoverMessage onClick={this._redirectLogin}>
         <div className="prize">
           You've won <span>{this._animateScore(this.props.score)} </span>
           ICX!
@@ -107,6 +121,7 @@ class Gameover extends Component {
           <div className="flash">Log in to claim your ICX</div>
         </div>
       </GameoverMessage>
+      // </Link>
     );
   }
 }

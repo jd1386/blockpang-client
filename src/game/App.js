@@ -360,14 +360,15 @@ class App extends React.Component {
   };
 
   _restartGame = e => {
-    if (this._isKoreanChar(e.key))
+    if (e.type === 'keydown' && this._isKoreanChar(e.key))
       return this.setState({ gameoverReason: 'inputSourceKorean' });
 
-    if (e.keyCode === 32) {
+    if (e.type === 'keydown' && e.keyCode === 32) {
       e.preventDefault();
       return;
     }
-    if (e.key === 'w' || e.key === 'W') {
+
+    if (e.type === 'click' || e.key === 'w' || e.key === 'W') {
       // default state should be now
       // isFirstPlaying: false
       // because the game has been restarted
@@ -401,6 +402,7 @@ class App extends React.Component {
           stage={this.state.currentStage}
         >
           <Status.Gameover
+            onClick={this._restartGame}
             reason={this.state.gameoverReason}
             score={this.state.score}
           />
