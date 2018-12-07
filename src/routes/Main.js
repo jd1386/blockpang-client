@@ -13,11 +13,7 @@ class Main extends Component {
                 <MainPage.Board isPlayingGame={this.props.isPlayingGame} />
               </Grid.Column>
             </Grid.Row>
-            <Grid.Row>
-              <Grid.Column textAlign="center">
-                <MainPage.Instruction />
-              </Grid.Column>
-            </Grid.Row>
+            <Grid.Row />
           </Grid>
         </Segment>
       </div>

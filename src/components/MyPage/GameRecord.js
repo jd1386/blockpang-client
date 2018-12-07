@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import axios from 'axios';
 import util from '../../util';
+import { take } from 'lodash';
 import { Table, Container, Grid, Button, Loader } from 'semantic-ui-react';
 import {
   BarChart,
@@ -30,7 +31,7 @@ class GameRecord extends Component {
             <Table.Row>
               <Table.HeaderCell>Timestamp</Table.HeaderCell>
               <Table.HeaderCell>Score</Table.HeaderCell>
-              <Table.HeaderCell>ICX won</Table.HeaderCell>
+              <Table.HeaderCell>ICX</Table.HeaderCell>
             </Table.Row>
           </Table.Header>
 
@@ -112,7 +113,10 @@ class GameRecord extends Component {
           });
         });
 
-        this.setState({ recentTransfers, dailyTransfers });
+        this.setState({
+          recentTransfers,
+          dailyTransfers: take(dailyTransfers, 7)
+        });
       })
       .catch(err => {
         throw err;
