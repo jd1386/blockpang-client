@@ -3,8 +3,10 @@ import moment from 'moment';
 import API_URLS from './api_urls';
 
 const DATE_FORMATS = {
-  long: 'M-DD-YYYY, h:mm:ss a',
-  short: 'M-DD-YYYY',
+  // long: 'M-DD-YYYY, h:mm:ss a',
+  long: 'YYYY-M-DD, hh:mm:ss',
+  short: 'YYYY-M-DD',
+  // short: 'M-DD-YYYY',
   month: 'YYYY-M'
 };
 

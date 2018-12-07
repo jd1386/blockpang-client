@@ -75,6 +75,16 @@ class Dashboard extends Component {
     });
   }
 
+  // _recentTransferSet = datas => {
+  //   let afterData = [];
+  //   datas.forEach(data => {
+  //     afterData.push({
+
+  //     })
+  //   })
+
+  // }
+
   _graphDataSet = datas => {
     let renamedData = [];
     datas.forEach(data => {
@@ -292,7 +302,8 @@ class Dashboard extends Component {
                       {
                         Header: 'Nickname',
                         accessor: 'nickname',
-                        minWidth: 110,
+                        minWidth: 130,
+                        maxWidth: 150,
                         Cell: props =>
                           props.value ? (
                             <span>{props.value}</span>
@@ -311,8 +322,12 @@ class Dashboard extends Component {
                   {
                     columns: [
                       {
-                        Header: 'Received TEST ICX',
-                        accessor: 'amount'
+                        Header: 'ICX',
+                        accessor: 'amount',
+                        maxWidth: 100,
+                        Cell: props => (
+                          <span>{Number(props.value).toFixed(2)}</span>
+                        )
                       }
                     ]
                   },
@@ -387,6 +402,8 @@ class Dashboard extends Component {
                       {
                         Header: 'Nickname',
                         accessor: 'nickname',
+                        minWidth: 130,
+                        maxWidth: 150,
                         Cell: props =>
                           props.value ? (
                             <span>{props.value}</span>
