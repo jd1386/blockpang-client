@@ -99,7 +99,6 @@ class Settings extends Component {
         break;
 
       case 'resetAdminEmail':
-        console.log(this.state.enteredInputValue);
         axios
           .post(util.API_URLS['admin_update_email'], {
             cmd: 'edit',
@@ -108,7 +107,7 @@ class Settings extends Component {
           })
           .then(res => {
             this.setState({
-              adminEmail: res.data.admin[0],
+              adminEmail: res.data.admin_email,
               openModal: false,
               enteredInputValue: ''
             });
