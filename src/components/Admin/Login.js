@@ -59,7 +59,7 @@ class Login extends Component {
                     fluid
                     icon="user"
                     iconPosition="left"
-                    placeholder="E-mail address"
+                    placeholder="ID"
                     onChange={(e, data) => this._handleOnEmailChange(data)}
                   />
                   <Form.Input
