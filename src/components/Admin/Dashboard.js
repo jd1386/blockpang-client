@@ -75,16 +75,6 @@ class Dashboard extends Component {
     });
   }
 
-  // _recentTransferSet = datas => {
-  //   let afterData = [];
-  //   datas.forEach(data => {
-  //     afterData.push({
-
-  //     })
-  //   })
-
-  // }
-
   _graphDataSet = datas => {
     let renamedData = [];
     datas.forEach(data => {
