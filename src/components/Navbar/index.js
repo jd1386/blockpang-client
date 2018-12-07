@@ -53,6 +53,9 @@ class Navbar extends Component {
               />
               BlockPang
             </Menu.Item>
+            <Menu.Item as={Link} to="/how-to-play">
+              How to Play
+            </Menu.Item>
             <Menu.Item as={Link} to="/leaderboard">
               Leaderboard
             </Menu.Item>
@@ -80,6 +83,9 @@ class Navbar extends Component {
                 style={{ marginRight: '1.5em' }}
               />
               BlockPang
+            </Menu.Item>
+            <Menu.Item as={Link} to="/how-to-play">
+              How to Play
             </Menu.Item>
             <Menu.Item as={Link} to="/leaderboard">
               Leaderboard

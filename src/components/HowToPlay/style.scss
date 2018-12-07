@@ -1,0 +1,33 @@
+@font-face {
+  font-family: 'DungGeunMo';
+  src: local('DungGeunMo'), url('../../assets/font/DungGeunMo.ttf');
+}
+
+.en {
+  // font-family: '8 Bit', sans-serif;
+}
+.ko {
+  font-family: 'DungGeunMo', sans-serif;
+}
+
+.game-instruction {
+  margin-top: 4em;
+
+  .header {
+    font-size: 2.5em;
+    margin-bottom: 1em;
+    vertical-align: center;
+    text-align: center;
+  }
+
+  .toggle-button-container {
+    text-align: center;
+  }
+
+  li {
+    font-size: 1.8em;
+    padding: 0.2em 0;
+    line-height: 1em;
+    text-align: left;
+  }
+}
