@@ -14,7 +14,8 @@ import util from './util';
 
 class App extends React.Component {
   state = {
-    isLoggedIn: false
+    isLoggedIn: false,
+    isAdmin: false
   };
 
   login = () => {
@@ -32,7 +33,13 @@ class App extends React.Component {
     window.localStorage.clear();
   };
 
+  _onAdminLogIn() {
+    this.setState({ isAdmin: true });
+  }
+
   componentDidMount() {
+    this.setState({ isAdmin: util.isAdmin() });
+
     if (util.isLoggedIn()) {
       this.login();
     } else {
@@ -44,7 +51,11 @@ class App extends React.Component {
     return (
       <Router>
         <div id="App">
-          <Navbar isLoggedIn={this.state.isLoggedIn} logout={this.logout} />
+          <Navbar
+            isLoggedIn={this.state.isLoggedIn}
+            logout={this.logout}
+            isAdmin={this.state.isAdmin}
+          />
           <div className="site-content">
             <Switch>
               <Route exact path="/" component={Main} />
@@ -57,7 +68,12 @@ class App extends React.Component {
                 path="/login"
                 render={() => <Login login={this.login} />}
               />
-              <Route path="/admin" component={Admin} />
+              <Route
+                path="/admin"
+                render={() => (
+                  <Admin onAdminLogin={() => this._onAdminLogIn()} />
+                )}
+              />
               <Route component={NoPage} />
             </Switch>
           </div>
