@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { Link } from 'react-router-dom';
-import { Container, Image, Button, Menu } from 'semantic-ui-react';
+import { Container, Image, Button, Menu, Icon } from 'semantic-ui-react';
 import './style.scss';
 import util from '../../util';
 import favicon from '../../assets/img/favicon.ico';
@@ -14,7 +14,17 @@ class Navbar extends Component {
 
     return this.props.isLoggedIn ? (
       <Menu.Item position="right">
-        <Image src={userData.provider_pic} avatar />
+        {userData.provider_pic === undefined ? (
+          <Icon
+            name="user"
+            style={{
+              marginLeft: 'auto',
+              marginRight: 'auto'
+            }}
+          />
+        ) : (
+          <Image src={userData.provider_pic} avatar />
+        )}
         <span style={{ marginRight: '1.5em' }}>{userData.name}</span>
         <Button as={Link} to="/" onClick={this.props.logout} inverted>
           Logout
@@ -22,11 +32,8 @@ class Navbar extends Component {
       </Menu.Item>
     ) : (
       <Menu.Item position="right">
-        <Button as={Link} to="/login" inverted>
+        <Button as={Link} to="/login" primary>
           Log in
-        </Button>
-        <Button as={Link} to="/login" primary style={{ marginLeft: '0.5em' }}>
-          Sign up
         </Button>
       </Menu.Item>
     );

@@ -32,13 +32,13 @@ class LeftSidebar extends Component {
           as={Link}
           to="/admin/settings"
         />
-        <Menu.Item
+        {/* <Menu.Item
           name="log"
           active={activeItem === 'log'}
           onClick={this.handleItemClick}
           as={Link}
           to="/admin/log"
-        />
+        /> */}
       </Menu>
     );
   }
