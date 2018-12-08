@@ -41,14 +41,17 @@ const requestTransfer = game_score => {
     game_score
   };
 
-  axios
-    .post(API_URLS['transfer'], reqBody)
-    .then(res => {
-      console.log(res.data);
-    })
-    .catch(err => {
-      throw err;
-    });
+  return new Promise((resolve, reject) => {
+    axios
+      .post(API_URLS['transfer'], reqBody)
+      .then(res => {
+        console.log(res.data);
+        resolve(res.data);
+      })
+      .catch(err => {
+        reject(err);
+      });
+  });
 };
 
 const transferPreviousScore = () => {
