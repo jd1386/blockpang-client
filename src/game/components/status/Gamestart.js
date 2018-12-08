@@ -8,7 +8,7 @@ const btnMessages = {
   default: 'Get 20 ICX without Play',
   loading: 'Processing...',
   success: 'Success!',
-  fail: 'Fail!'
+  fail: ''
 };
 
 class Gamestart extends Component {
