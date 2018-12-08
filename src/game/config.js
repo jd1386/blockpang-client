@@ -1,8 +1,7 @@
-//TODO: normal에 있고 test에 굳이 적혀 있지 않은 코드는 normal에 존재하는 코드를 계승하도록...
-
-const test = {
+export default {
   time: 30000,
   nextBlockTime: 29500,
+  blockPoint: 20,
   score: 0,
   block: {
     colors: ['#f783ac', '#69db7c', '#4dabf7'],
@@ -27,7 +26,7 @@ const test = {
         ['f', 'f'],
         ['a', 's']
       ],
-      appearanceScoreConditions: 700,
+      appearanceScoreConditions: 1400,
       appearanceProbability: 15,
       bonusTime: 10000
     },
@@ -39,7 +38,7 @@ const test = {
         ['a', 'f'],
         ['s', 'd']
       ],
-      appearanceScoreConditions: 1400,
+      appearanceScoreConditions: 2800,
       appearanceProbability: 15,
       bonusTime: 10000
     },
@@ -51,7 +50,7 @@ const test = {
         ['a', 's', 'd'],
         ['d', 'a', 's']
       ],
-      appearanceScoreConditions: 2100,
+      appearanceScoreConditions: 4200,
       appearanceProbability: 15,
       bonusTime: 10000
     },
@@ -67,8 +66,8 @@ const test = {
         ['i', 'c', 'o', 'n'],
         ['l', 'o', 'v', 'u']
       ],
-      appearanceScoreConditions: 2600,
-      appearanceProbability: 25,
+      appearanceScoreConditions: 5200,
+      appearanceProbability: 10,
       bonusTime: 10000
     },
     6: {
@@ -79,8 +78,8 @@ const test = {
         ['u', 'h', 'v'],
         ['g', 'r', 'e', 'a', 't']
       ],
-      appearanceScoreConditions: 3000,
-      appearanceProbability: 15,
+      appearanceScoreConditions: 6000,
+      appearanceProbability: 13,
       bonusTime: 10000
     },
     7: {
@@ -92,7 +91,7 @@ const test = {
         ['b', 'y'],
         ['t', 'e', 'a', 'm']
       ],
-      appearanceScoreConditions: 3500,
+      appearanceScoreConditions: 7000,
       appearanceProbability: 25,
       bonusTime: 10000
     },
@@ -114,84 +113,4 @@ const test = {
   nextBlockGenerationSpeed: 70, // direct proportion
   nextBlockGenerationInterval: 300,
   allowedKeyCodes: [9, 13, 16, 17, 18, 20, 32, 91] //9tab, 13enter, 16shift, 17ctrl,18alt,20capslock, 32space, 91ctrl,
-};
-
-const normal = {
-  time: 30000,
-  nextBlockTime: 29500,
-  score: 0,
-  block: {
-    colors: ['#f783ac', '#69db7c', '#4dabf7'],
-    keys: ['a', 's', 'd']
-  },
-  eventBlock: {
-    colors: ['lime', 'purple', 'black', 'orange', 'cyan'], //color not used now
-    keys: ['f', 'c']
-  },
-  stage: {
-    1: {
-      multiBlockKeys: [['i']],
-      appearanceScoreConditions: 100,
-      appearanceProbability: 1,
-      bonusTime: 10000
-    },
-    2: {
-      multiBlockKeys: [
-        ['a', 'a'],
-        ['d', 'd'],
-        ['s', 's'],
-        ['f', 'f'],
-        ['a', 's']
-      ],
-      appearanceScoreConditions: 700,
-      appearanceProbability: 15,
-      bonusTime: 10000
-    },
-    3: {
-      multiBlockKeys: [
-        ['a', 's'],
-        ['d', 'f'],
-        ['a', 'd'],
-        ['a', 'f'],
-        ['s', 'd']
-      ],
-      appearanceScoreConditions: 1400,
-      appearanceProbability: 15,
-      bonusTime: 10000
-    },
-    4: {
-      multiBlockKeys: [
-        ['s', 'a'],
-        ['f', 'd'],
-        ['s', 'a'],
-        ['a', 's', 'd'],
-        ['d', 'a', 's']
-      ],
-      appearanceScoreConditions: 2100,
-      appearanceProbability: 15,
-      bonusTime: 10000
-    },
-
-    10: {
-      multiBlockKeys: [['{', '{'], '[', ']', ['{', '}']], // if font doesn't support, this key didn't show.
-      appearanceScoreConditions: 1500,
-      appearanceProbability: 100
-    }
-  },
-
-  // The sum of the three probabilities below and
-  // the appearanceProbability of the stage shall not exceed 100%.
-  // -> No Basic block is created.
-  bonusBlockProbability: 5, // 1~100%
-  iconBlockProbability: 5, // 1~100%
-  bombBlockProbability: 5, // 1~100%
-  ///
-  nextBlockGenerationSpeed: 70, // direct proportion
-  nextBlockGenerationInterval: 300,
-  allowedKeyCodes: [9, 13, 16, 17, 18, 20, 32, 91] //9tab, 13enter, 16shift, 17ctrl,18alt,20capslock, 32space, 91ctrl,
-};
-
-export default {
-  test,
-  normal
 };

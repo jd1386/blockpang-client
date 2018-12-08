@@ -172,7 +172,7 @@ class Settings extends Component {
   render() {
     return (
       <Container>
-        <Segment vertical>
+        <Segment vertical style={{ borderBottom: 0 }}>
           <Grid container stackable verticalAlign="middle">
             <Grid.Row>
               <Header as="h1">Settings</Header>
@@ -181,7 +181,7 @@ class Settings extends Component {
           <Grid columns={2} stackable>
             <Grid.Row>
               <Grid.Column>
-                <Segment>
+                <Segment style={{ paddingBottom: '21px' }}>
                   <Header as="h2">Payout Settings</Header>
                   <Table
                     basic="very"
