@@ -20,10 +20,7 @@
     "react-toastify": "^4.4.3",
     "recharts": "^1.4.1",
     "semantic-ui-css": "^2.4.1",
-    "semantic-ui-react": "^0.83.0",
-    "velocity-animate": "^1.5.2",
-    "velocity-react": "^1.4.1",
-    "webfontloader": "^1.6.28"
+    "semantic-ui-react": "^0.83.0"
   },
   "scripts": {
     "start": "react-scripts start",
