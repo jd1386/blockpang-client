@@ -3,6 +3,12 @@
   src: local('8 Bit'), url('../../assets/font/8bit-font.ttf');
 }
 
+.eight-bit-btn {
+  font-family: '8 Bit' !important;
+  font-size: 0.8em;
+  padding-top: 2px;
+}
+
 .prize {
   font-size: 3vw;
   color: #ffeb00;
@@ -43,6 +49,10 @@
     font-size: 9vw;
     line-height: 18vh;
     padding-top: 10vh;
+  }
+
+  .header:hover {
+    cursor: pointer;
   }
 
   .header.gameover {
@@ -102,7 +112,7 @@
   top: 10vh;
 }
 
-.game-status-main:hover {
+.game-status-main .content:hover {
   cursor: pointer;
 }
 
