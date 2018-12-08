@@ -1,6 +1,4 @@
 import React, { Component } from 'react';
-// import { Link, Redirect } from 'react-router-dom';
-// import { BrowserRouter as Router, Route } from 'react-router-dom';
 import {
   // Container,
   Grid,
@@ -22,7 +20,7 @@ class Log extends Component {
     super(props);
     this.state = {
       loading: false,
-      recentTransfer: []
+      totalUser: []
     };
   }
 
@@ -31,11 +29,10 @@ class Log extends Component {
       loading: true
     });
     axios
-      .get(util.API_URLS['transaction'])
+      .get(util.API_URLS['totaluser'])
       .then(res => {
-        // console.log('res', res.data);
         this.setState({
-          recentTransfer: res.data,
+          totalUser: res.data,
           loading: false
         });
       })
@@ -49,7 +46,7 @@ class Log extends Component {
   }
 
   render() {
-    const { loading, recentTransfer } = this.state;
+    const { loading, totalUser } = this.state;
 
     return loading ? (
       <Loader active inline="centered">
@@ -58,10 +55,9 @@ class Log extends Component {
     ) : (
       <Grid.Row style={{ marginBottom: '40px' }}>
         <Segment vertical textAlign="center">
-          <Header as="h2">Recent Transfer</Header>
-
+          <Header as="h2">Total User</Header>
           <ReactTable
-            data={recentTransfer}
+            data={totalUser}
             getTrProps={(state, rowInfo, column) => {
               return {
                 style: {
@@ -70,11 +66,8 @@ class Log extends Component {
               };
             }}
             filterable
-            defaultFilterMethod={
-              (filter, row) =>
-                // String(row[filter.id]) === filter.value
-                String(row[filter.id]).includes(filter.value)
-              // String(row[filter.id]) === filter.value
+            defaultFilterMethod={(filter, row) =>
+              String(row[filter.id]).includes(filter.value)
             }
             columns={[
               {
@@ -101,8 +94,7 @@ class Log extends Component {
                           name="user"
                           style={{
                             marginLeft: 'auto',
-                            marginRight: 'auto',
-                            textAlign: 'center'
+                            marginRight: 'auto'
                           }}
                         />
                       )
@@ -114,6 +106,8 @@ class Log extends Component {
                   {
                     Header: 'Nickname',
                     accessor: 'nickname',
+                    minWidth: 130,
+                    maxWidth: 150,
                     Cell: props =>
                       props.value ? (
                         <span>{props.value}</span>
@@ -122,59 +116,32 @@ class Log extends Component {
                       )
                   },
                   {
+                    Header: 'Provider',
+                    accessor: 'service_provider',
+                    maxWidth: 100,
+                    Cell: props => (
+                      <Label
+                        style={{
+                          color: 'white',
+                          backgroundColor: util._providerColor(props.value)
+                        }}
+                      >
+                        {props.value}
+                      </Label>
+                    )
+                  },
+                  {
+                    Header: 'Email',
+                    accessor: 'email'
+                  },
+                  {
                     Header: 'Wallet',
                     accessor: 'wallet',
                     minWidth: 280
                   },
-                  // {
-                  //   Header: 'Provider',
-                  //   accessor: 'service_provider',
-                  //   maxWidth: 100,
-                  //   Cell: props => (
-                  //     <Label
-                  //       style={{
-                  //         color: 'white',
-                  //         backgroundColor: util._providerColor(props.value)
-                  //       }}
-                  //     >
-                  //       {props.value}
-                  //     </Label>
-                  //   )
-                  // },
 
                   {
-                    Header: 'Email',
-                    accessor: 'email'
-                  }
-                ]
-              },
-              {
-                columns: [
-                  {
-                    Header: 'ICX',
-                    accessor: 'amount',
-                    maxWidth: 100,
-                    Cell: props =>
-                      props.value > 100 ? (
-                        <span style={{ color: 'red', fontWeight: 'bold' }}>
-                          {Number(props.value).toFixed(2)}
-                        </span>
-                      ) : (
-                        <span>{Number(props.value).toFixed(2)}</span>
-                      ),
-                    sortMethod: (a, b) => {
-                      if (Number(a) === Number(b)) {
-                        return Number(a) > Number(b) ? 1 : -1;
-                      }
-                      return Number(a) > Number(b) ? 1 : -1;
-                    }
-                  }
-                ]
-              },
-              {
-                columns: [
-                  {
-                    Header: 'Time',
+                    Header: 'Signup Time',
                     accessor: 'timestamp',
                     Cell: props => <span>{util.toKoreanTime(props.value)}</span>
                   }

@@ -6,3 +6,13 @@
 .ui.primary.button:hover {
   background-color: #24c2d4f2;
 }
+
+.rt-th {
+  padding: 0 !important;
+  background-color: #ffffff;
+}
+
+.ReactTable .rt-thead.-header {
+  font-size: large;
+  font-weight: bold;
+}

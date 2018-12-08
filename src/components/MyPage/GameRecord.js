@@ -50,12 +50,24 @@ class GameRecord extends Component {
                 {
                   Header: 'Score',
                   accessor: 'score',
-                  Cell: props => <span>{props.value}</span>
+                  Cell: props => <span>{props.value}</span>,
+                  sortMethod: (a, b) => {
+                    if (Number(a) === Number(b)) {
+                      return Number(a) > Number(b) ? 1 : -1;
+                    }
+                    return Number(a) > Number(b) ? 1 : -1;
+                  }
                 },
                 {
                   Header: 'ICX',
                   accessor: 'amount',
-                  Cell: props => <span>{props.value}</span>
+                  Cell: props => <span>{props.value}</span>,
+                  sortMethod: (a, b) => {
+                    if (Number(a) === Number(b)) {
+                      return Number(a) > Number(b) ? 1 : -1;
+                    }
+                    return Number(a) > Number(b) ? 1 : -1;
+                  }
                 }
               ]
             }
