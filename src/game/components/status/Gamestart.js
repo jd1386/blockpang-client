@@ -66,7 +66,7 @@ class Gamestart extends Component {
   }
 
   _renderRequestBtn() {
-    return (
+    return util.isLoggedIn() ? (
       <div style={{ marginBottom: '3vh' }}>
         <div className="eight-bit-div" onClick={() => this._onClickBtn()}>
           <div className="btn-inner">
@@ -76,6 +76,19 @@ class Gamestart extends Component {
             {this._renderBtnIcon(this.state.btnStatus)}
           </div>
         </div>
+      </div>
+    ) : (
+      <div style={{ marginBottom: '3vh' }}>
+        <a href="/login">
+          <div className="eight-bit-div">
+            <div className="btn-inner">
+              <span className="btn-message">
+                {btnMessages[this.state.btnStatus]} {this.state.extraBtnMessage}
+              </span>
+              {this._renderBtnIcon(this.state.btnStatus)}
+            </div>
+          </div>
+        </a>
       </div>
     );
   }
