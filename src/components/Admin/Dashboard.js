@@ -120,7 +120,7 @@ class Dashboard extends Component {
           <Grid.Row>
             <Grid.Column width={15}>
               <Card.Group>
-                <Card style={{ padding: '8px 0px 15px' }}>
+                <Card style={{ padding: '8px 0px 15px', width: '32%' }}>
                   <Card.Content>
                     <Card.Header
                       style={{
@@ -147,7 +147,7 @@ class Dashboard extends Component {
                   </Card.Content>
                 </Card>
 
-                <Card style={{ padding: '8px 0px 15px' }}>
+                <Card style={{ padding: '8px 0px 15px', width: '32%' }}>
                   <Card.Content>
                     <Card.Header
                       style={{
@@ -173,7 +173,7 @@ class Dashboard extends Component {
                   </Card.Content>
                 </Card>
 
-                <Card style={{ padding: '8px 0px 15px' }}>
+                <Card style={{ padding: '8px 0px 15px', width: '32%' }}>
                   <Card.Content>
                     <Card.Header
                       style={{
