@@ -22,6 +22,7 @@ class MyPage extends Component {
     super(props);
     this.state = {
       walletAddress: util.walletAddress(),
+      walletBalance: '',
       walletKey: '',
       activeMenu: 'Manage Wallet',
       isEditingWallet: false,
@@ -33,11 +34,16 @@ class MyPage extends Component {
     this.setState({ isWalletCreated: false });
   }
 
+  _handleCancelEditWallet() {
+    this.setState({ isEditingWallet: false });
+  }
+
   _toggleModal() {
     return this.state.isWalletCreated ? (
       <React.Fragment>
         <WalletInfo
           walletAddress={this.state.walletAddress}
+          walletBalance={this.state.walletBalance}
           handleEditWallet={() => this._handleEditWallet()}
         />
         <Modal
@@ -49,6 +55,7 @@ class MyPage extends Component {
     ) : (
       <WalletInfo
         walletAddress={this.state.walletAddress}
+        walletBalance={this.state.walletBalance}
         handleEditWallet={() => this._handleEditWallet()}
       />
     );
@@ -59,9 +66,9 @@ class MyPage extends Component {
       <div>
         {this.state.isEditingWallet ? (
           <WalletForm
-            walletAddress={this.state.walletAddress}
             handleEditWallet={() => this._handleEditWallet()}
             updateWalletAddress={arg => this._updateWalletAddress(arg)}
+            cancelEditWallet={() => this._handleCancelEditWallet()}
           />
         ) : (
           this._toggleModal()
@@ -99,10 +106,8 @@ class MyPage extends Component {
   _handleMenuClick = (e, { name }) => this.setState({ activeMenu: name });
 
   _handleEditWallet() {
-    console.log('handleEditWallet called');
-    console.log('before', this.state.isEditingWallet);
     this.setState(prevState => ({
-      isEditingWallet: !prevState.isEditingWallet
+      isEditingWallet: true
     }));
   }
 
@@ -122,12 +127,11 @@ class MyPage extends Component {
       service_provider: provider,
       user_pid: provider_id
     };
-    console.log('reqBody', JSON.stringify(reqBody));
+
     // API call to create a new wallet
     axios
       .post(util.API_URLS['create_wallet'], JSON.stringify(reqBody))
       .then(res => {
-        console.log('reqBody', reqBody);
         // save address to localStorage
         util.setWalletAddress(res.data.address);
 
@@ -191,13 +195,18 @@ class MyPage extends Component {
         this.setState({ walletAddress: userFromDB.wallet });
         util.setWalletAddress(userFromDB.wallet);
       }
+    } else {
+      const { data } = await axios.post(util.API_URLS['wallet_balance'], {
+        wallet: this.state.walletAddress
+      });
+
+      this.setState({ walletBalance: data.wallet_balance });
     }
   }
 
   render() {
     const { activeMenu } = this.state;
 
-    // FIXME: fix the following auth logic below
     if (!this.props.isLoggedIn) {
       if (!util.isLoggedIn()) {
         return <Redirect to={'/'} />;
