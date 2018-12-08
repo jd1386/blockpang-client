@@ -5,20 +5,22 @@ class WalletInfo extends Component {
   render() {
     return (
       <div>
-        Your wallet address: {this.props.walletAddress}
-        <Button
-          onClick={() => {
-            console.log('clicked');
-            this.props.handleEditWallet();
-          }}
-          style={{
-            backgroundColor: '#1aaaba',
-            color: '#FFFFFF',
-            float: 'right'
-          }}
-        >
-          Edit Wallet
-        </Button>
+        <div>
+          Your wallet address: <b>{this.props.walletAddress}</b>
+          <Button
+            onClick={this.props.handleEditWallet}
+            style={{
+              backgroundColor: '#1aaaba',
+              color: '#FFFFFF',
+              float: 'right'
+            }}
+          >
+            Edit Wallet
+          </Button>
+        </div>
+        <div>
+          Your wallet balance: <b>{this.props.walletBalance} ICX</b>
+        </div>
       </div>
     );
   }

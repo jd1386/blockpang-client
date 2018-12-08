@@ -1,14 +1,11 @@
 import React, { Component } from 'react';
-import { Input, Label } from 'semantic-ui-react';
-import WalletInfo from './WalletInfo';
+import { Input, Label, Button } from 'semantic-ui-react';
 import util from '../../util';
 
 class WalletForm extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      // finishedEditing: false,
-      walletAddress: this.props.walletAddress,
       enteredWalletAddress: '',
       isValidWalletAddress: false
     };
@@ -59,16 +56,11 @@ class WalletForm extends Component {
   }
 
   render() {
-    return this.state.walletAddress ? (
-      <WalletInfo
-        walletAddress={this.state.walletAddress}
-        handleEditWallet={() => this.setState({ walletAddress: '' })}
-      />
-    ) : (
+    return (
       <div>
         <Input
           size="tiny"
-          style={{ width: '90%', color: 'teal' }}
+          style={{ width: '80%', color: 'teal' }}
           icon="chain"
           iconPosition="left"
           focus
@@ -83,6 +75,12 @@ class WalletForm extends Component {
             onClick: () => this._handleOnClick(this.state.enteredWalletAddress)
           }}
         />
+        <Button
+          onClick={() => this.props.cancelEditWallet()}
+          style={{ float: 'right' }}
+        >
+          Cancel Edit
+        </Button>
 
         {this.state.isValidWalletAddress
           ? this._alertValidWallet()
