@@ -422,7 +422,7 @@ class Dashboard extends Component {
                       },
 
                       {
-                        Header: 'SIGNUP DATE',
+                        Header: 'Signup Time',
                         accessor: 'timestamp',
                         Cell: props => (
                           <span>{util.toKoreanTime(props.value)}</span>

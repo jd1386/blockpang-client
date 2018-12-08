@@ -205,8 +205,8 @@ class MyPage extends Component {
     }
 
     return (
-      <Container>
-        <Segment style={{ padding: '8em 0em' }} vertical>
+      <Container style={{ paddingTop: '5em' }}>
+        <Segment vertical>
           <Grid container stackable verticalAlign="middle">
             <Grid.Row>
               <Header as="h1">My Page</Header>
@@ -219,8 +219,8 @@ class MyPage extends Component {
                   onClick={this._handleMenuClick}
                 />
                 <Menu.Item
-                  name="Game Record"
-                  active={activeMenu === 'Game Record'}
+                  name="Transfer Records"
+                  active={activeMenu === 'Transfer Records'}
                   onClick={this._handleMenuClick}
                 />
               </Menu>

@@ -10,7 +10,8 @@ import {
   YAxis,
   CartesianGrid,
   Tooltip,
-  Legend
+  Legend,
+  ResponsiveContainer
 } from 'recharts';
 
 class GameRecord extends Component {
@@ -29,7 +30,7 @@ class GameRecord extends Component {
         <Table basic="very" celled collapsing style={{ width: '100%' }}>
           <Table.Header>
             <Table.Row>
-              <Table.HeaderCell>Timestamp</Table.HeaderCell>
+              <Table.HeaderCell>Time</Table.HeaderCell>
               <Table.HeaderCell>Score</Table.HeaderCell>
               <Table.HeaderCell>ICX</Table.HeaderCell>
             </Table.Row>
@@ -56,18 +57,19 @@ class GameRecord extends Component {
 
   _renderGraph() {
     return this.state.dailyTransfers.length ? (
-      <BarChart
-        width={400}
-        height={400}
-        data={this.state.dailyTransfers.reverse()}
-      >
-        <XAxis dataKey="timestamp" />
-        <YAxis />
-        <Tooltip />
-        <CartesianGrid strokeDasharray="3 3" />
-        <Legend />
-        <Bar dataKey="amount" fill="#24c2d4f2" />
-      </BarChart>
+      <ResponsiveContainer width="100%" height="80%">
+        <BarChart
+          data={this.state.dailyTransfers.reverse()}
+          margin={{ top: 20, right: 50, left: 0, bottom: 0 }}
+        >
+          <XAxis dataKey="timestamp" />
+          <YAxis />
+          <Tooltip />
+          <CartesianGrid strokeDasharray="3 3" />
+          <Legend />
+          <Bar dataKey="amount" fill="#24c2d4f2" />
+        </BarChart>
+      </ResponsiveContainer>
     ) : (
       <div style={{ textAlign: 'center' }}>No data available yet</div>
     );
@@ -129,14 +131,14 @@ class GameRecord extends Component {
         <Grid columns={2} stackable>
           <Grid.Row>
             <Grid.Column>
-              <div style={{ textAlign: 'center', marginBottom: '1em' }}>
-                <h2>Recent Transfer</h2>
+              <div style={{ textAlign: 'center', marginBottom: '2em' }}>
+                <h2>Recent Transfers</h2>
               </div>
               {this._renderTable()}
             </Grid.Column>
             <Grid.Column>
-              <div style={{ textAlign: 'center', marginBottom: '1em' }}>
-                <h2>Daily ICX Transfer</h2>
+              <div style={{ textAlign: 'center', marginBottom: '2em' }}>
+                <h2>Daily Transfers</h2>
               </div>
               {this._renderGraph()}
             </Grid.Column>

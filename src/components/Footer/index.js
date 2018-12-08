@@ -1,5 +1,6 @@
 import React from 'react';
 import { Container, Segment, Grid } from 'semantic-ui-react';
+import './style.scss';
 
 const Footer = () => {
   const currentYear = new Date().getFullYear();
