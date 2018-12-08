@@ -1,3 +1,4 @@
+/* eslint-disable default-case */
 import React, { Component } from 'react';
 import './style.scss';
 import { Spring } from 'react-spring';
@@ -10,7 +11,7 @@ const gameoverMessages = {
   // exceedBlockLimit: 'You have too many blocks',
   missInput: 'You must type the right key',
   timeover: 'time over',
-  inputSourceKorean: '재시작하려면 영문 자판으로 변환 후 w를 눌러주세요!'
+  inputSourceKorean: '재시작하려면 영문 자판으로 변환 후 W키를 눌러주세요!'
 };
 
 const GameoverMessage = props => {
@@ -28,7 +29,10 @@ class Gameover extends Component {
     this.state = {
       isLoggedIn: false,
       isRedirectLogin: false,
-      walletAddress: ''
+      walletAddress: '',
+      transferStatus: 'default',
+      transferResultMessage: '',
+      transferAmount: 0
     };
   }
 
@@ -44,6 +48,25 @@ class Gameover extends Component {
         }}
       </Spring>
     );
+  }
+
+  _renderTransferStatus() {
+    return (
+      <div>{this._transferResponseMessages(this.state.transferStatus)}</div>
+    );
+  }
+
+  _transferResponseMessages(status) {
+    switch (status) {
+      case 'default':
+        return 'Requesting transfer...';
+      case 'success':
+        return `Successfully transferred ${
+          this.state.transferAmount
+        } ICX to your wallet`;
+      case 'fail':
+        return this.state.transferResultMessage;
+    }
   }
 
   componentDidMount() {
@@ -70,8 +93,22 @@ class Gameover extends Component {
     // use setTimeout to give more room between
     // render and _requestTransfer call
     if (userData.wallet && userData.game_score > 0) {
-      setTimeout(() => {
-        util.requestTransfer(userData.game_score);
+      setTimeout(async () => {
+        const res = await util.requestTransfer(userData.game_score);
+        switch (res.transaction_result) {
+          case 'success':
+            this.setState({
+              transferStatus: 'success',
+              transferAmount: res.transfer_icx
+            });
+            break;
+          case 'fail':
+            this.setState({
+              transferStatus: 'fail',
+              transferResultMessage: res.message
+            });
+            break;
+        }
       }, 0);
     }
   }
@@ -87,10 +124,10 @@ class Gameover extends Component {
       walletAddress ? (
         <GameoverMessage onClick={this.props.onClick}>
           <div className="prize">
-            You've won <span>{this._animateScore(this.props.score)} </span>
+            {/* You've won <span>{this._animateScore(this.props.score)} </span>
             ICX!
-            <br />
-            Visit my page to view transactions
+            <br /> */}
+            {this._renderTransferStatus(this.state.transferStatus)}
           </div>
           <div className="gameover-message">
             <div>{gameoverMessages[this.props.reason]}</div>
@@ -98,10 +135,9 @@ class Gameover extends Component {
           </div>
         </GameoverMessage>
       ) : (
-        // </div>
         <GameoverMessage>
           <div className="prize">
-            Your wallet is not registred. Please register on My Page.
+            Your wallet is not registered. Please register on My Page.
           </div>
           <div className="gameover-message" onClick={this.props.onClick}>
             <div className="flash">Press W KEY to restart</div>
@@ -109,7 +145,6 @@ class Gameover extends Component {
         </GameoverMessage>
       )
     ) : (
-      // <Link to="/login" style={{ color: 'black', textDecoration: 'none' }}>
       <GameoverMessage onClick={this._redirectLogin}>
         <div className="prize">
           You've won <span>{this._animateScore(this.props.score)} </span>
@@ -121,7 +156,6 @@ class Gameover extends Component {
           <div className="flash">Log in to claim your ICX</div>
         </div>
       </GameoverMessage>
-      // </Link>
     );
   }
 }

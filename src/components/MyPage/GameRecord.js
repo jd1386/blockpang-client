@@ -109,6 +109,8 @@ class GameRecord extends Component {
         user: util.userData().email
       })
       .then(res => {
+        console.log(res.data);
+
         let recentTransfers = [];
         let dailyTransfers = [];
 

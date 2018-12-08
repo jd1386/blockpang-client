@@ -7,7 +7,7 @@ import { Button, Icon } from 'semantic-ui-react';
 const btnMessages = {
   default: 'Get 20 ICX without Play',
   loading: 'Processing...',
-  success: 'Success!',
+  success: 'Success',
   fail: ''
 };
 
@@ -31,7 +31,7 @@ class Gamestart extends Component {
         this.setState({ btnStatus: 'success' });
         setTimeout(() => {
           this.setState({ isBtnVisible: false });
-        }, 3000);
+        }, 3500);
         break;
       case 'fail':
         this.setState({
