@@ -6,12 +6,9 @@ import BlockList from './components/block/BlockList';
 import Status from './components/status';
 import { Image } from 'semantic-ui-react';
 import Util from './utils';
-import gameConfig from './config';
+import config from './config';
 import coinImage from './assets/img/coin.gif';
 import bombImage from './assets/img/bomb.png';
-
-const config = gameConfig.test;
-// const config = gameConfig.normal;
 
 const defaultState = {
   time: config.time,
@@ -130,7 +127,7 @@ class App extends React.Component {
       });
       this._resetGameMessage();
 
-      this._updateScore(10);
+      this._updateScore(config.blockPoint);
 
       if (keepBonusScore) {
         // add bonus score
@@ -165,10 +162,10 @@ class App extends React.Component {
     currentBlocks.forEach(block => {
       // if event block, add its bonusScore
       if (block.bonusScore) {
-        sum += 10 + block.bonusScore;
+        sum += config.blockPoint + block.bonusScore;
       } else {
-        // if regular block, add 10
-        sum += 10;
+        // if regular block, add blockPoint
+        sum += config.blockPoint;
       }
     });
     return sum;
@@ -276,7 +273,7 @@ class App extends React.Component {
       blockImage: <Image size="mini" src={coinImage} className="block-image" />,
       color: `${Util.getRandColor(4)}`,
       key: config.eventBlock.keys[randomKeyIndex].slice(),
-      bonusScore: random(1, 30)
+      bonusScore: random(2, 60)
     };
   }
 
@@ -288,7 +285,7 @@ class App extends React.Component {
       ),
       color: '#1aaaba',
       key: config.eventBlock.keys[randomKeyIndex].slice(),
-      bonusScore: random(51, 100)
+      bonusScore: random(101, 200)
     };
   }
 

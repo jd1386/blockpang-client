@@ -3,6 +3,7 @@ const BASE_URL = 'http://54.180.96.35:8000';
 export default {
   create_wallet: `${BASE_URL}/wallet/create`,
   update_wallet: `${BASE_URL}/wallet/update`,
+  wallet_balance: `${BASE_URL}/wallet/balance`,
   transfer: `${BASE_URL}/transfer`,
   leaderboard: `${BASE_URL}/db/leaderboard`,
   transaction: `${BASE_URL}/db/transaction`,
