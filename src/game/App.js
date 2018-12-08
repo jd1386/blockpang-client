@@ -130,7 +130,7 @@ class App extends React.Component {
       });
       this._resetGameMessage();
 
-      this._updateScore(10);
+      this._updateScore(config.blockPoint);
 
       if (keepBonusScore) {
         // add bonus score
@@ -165,10 +165,10 @@ class App extends React.Component {
     currentBlocks.forEach(block => {
       // if event block, add its bonusScore
       if (block.bonusScore) {
-        sum += 10 + block.bonusScore;
+        sum += config.blockPoint + block.bonusScore;
       } else {
-        // if regular block, add 10
-        sum += 10;
+        // if regular block, add blockPoint
+        sum += config.blockPoint;
       }
     });
     return sum;
