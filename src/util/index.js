@@ -4,7 +4,7 @@ import API_URLS from './api_urls';
 
 const DATE_FORMATS = {
   // long: 'M-DD-YYYY, h:mm:ss a',
-  long: 'YYYY-M-DD, hh:mm:ss',
+  long: 'YYYY-M-DD, HH:mm:ss',
   short: 'YYYY-M-DD',
   // short: 'M-DD-YYYY',
   month: 'YYYY-M'
