@@ -1,4 +1,5 @@
 body {
+  height: 100%;
   margin: 0;
   padding: 0;
   font-size: 16px;
@@ -7,5 +8,11 @@ body {
 }
 
 .site-content {
-  min-height: calc(100vh - 47px);
+  min-height: 100vh;
+  margin-bottom: -47px;
+}
+
+.site-content:after {
+  content: '';
+  // display: block;
 }
