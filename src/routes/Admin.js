@@ -12,6 +12,7 @@ import Dashboard from '../components/Admin/Dashboard';
 import Login from '../components/Admin/Login';
 import Settings from '../components/Admin/Settings';
 import Log from '../components/Admin/Log';
+import Totaluser from '../components/Admin/Totaluser';
 import NoPage from '../routes/NoPage';
 
 class Admin extends Component {
@@ -48,6 +49,7 @@ class Admin extends Component {
                 />
                 <Route exact path="/admin/settings" component={Settings} />
                 <Route exact path="/admin/log" component={Log} />
+                <Route exact path="/admin/totaluser" component={Totaluser} />
                 <Route component={NoPage} />
               </Switch>
             </Grid.Column>

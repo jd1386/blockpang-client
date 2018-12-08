@@ -58,9 +58,7 @@ class Dashboard extends Component {
     const fourthRequest = await axios.post(util.API_URLS['stat'], {
       user: '*'
     });
-    let monthlyData = await this._graphDataSet(
-      fourthRequest.data.monthly.reverse()
-    );
+    let monthlyData = await this._graphDataSet(fourthRequest.data.monthly);
 
     await this.setStateAsync({
       loading: false,
@@ -71,7 +69,6 @@ class Dashboard extends Component {
       totalSignups: firstRequest.data.total_user,
       recentTransfer: secondRequest.data,
       totalUser: thirdRequest.data,
-      // totalUser: thirdRequest.data.reverse(),
       monthlyData: monthlyData
     });
   }
@@ -123,7 +120,7 @@ class Dashboard extends Component {
           <Grid.Row>
             <Grid.Column width={15}>
               <Card.Group>
-                <Card style={{ padding: '8px 0px 15px' }}>
+                <Card style={{ padding: '8px 0px 15px', width: '32%' }}>
                   <Card.Content>
                     <Card.Header
                       style={{
@@ -150,7 +147,7 @@ class Dashboard extends Component {
                   </Card.Content>
                 </Card>
 
-                <Card style={{ padding: '8px 0px 15px' }}>
+                <Card style={{ padding: '8px 0px 15px', width: '32%' }}>
                   <Card.Content>
                     <Card.Header
                       style={{
@@ -167,7 +164,6 @@ class Dashboard extends Component {
                         fontSize:
                           totalIcxTransfer.length > 9 ? '2rem' : '3.3rem',
                         fontWeight: 'bold',
-                        // fontSize: '4rem',
                         textAlign: 'center',
                         color: '#1b1c1d'
                       }}
@@ -177,7 +173,7 @@ class Dashboard extends Component {
                   </Card.Content>
                 </Card>
 
-                <Card style={{ padding: '8px 0px 15px' }}>
+                <Card style={{ padding: '8px 0px 15px', width: '32%' }}>
                   <Card.Content>
                     <Card.Header
                       style={{
@@ -318,9 +314,20 @@ class Dashboard extends Component {
                         Header: 'ICX',
                         accessor: 'amount',
                         maxWidth: 100,
-                        Cell: props => (
-                          <span>{Number(props.value).toFixed(2)}</span>
-                        )
+                        Cell: props =>
+                          props.value > 100 ? (
+                            <span style={{ color: 'red', fontWeight: 'bold' }}>
+                              {Number(props.value).toFixed(2)}
+                            </span>
+                          ) : (
+                            <span>{Number(props.value).toFixed(2)}</span>
+                          ),
+                        sortMethod: (a, b) => {
+                          if (Number(a) === Number(b)) {
+                            return Number(a) > Number(b) ? 1 : -1;
+                          }
+                          return Number(a) > Number(b) ? 1 : -1;
+                        }
                       }
                     ]
                   },
@@ -343,7 +350,14 @@ class Dashboard extends Component {
           </Grid.Row>
           <Grid.Row>
             <Grid.Column width={15}>
-              <Header as="h2">Total User</Header>
+              <Header as="h2">
+                <Link
+                  to="/admin/totaluser"
+                  style={{ color: 'black', textDecoration: 'none!important' }}
+                >
+                  Total User
+                </Link>
+              </Header>
               <ReactTable
                 data={totalUser}
                 getTrProps={(state, rowInfo, column) => {
@@ -434,6 +448,12 @@ class Dashboard extends Component {
                   }
                 ]}
                 defaultPageSize={5}
+                // defaultSorted={[
+                //   {
+                //     id: 'timestamp',
+                //     desc: true
+                //   }
+                // ]}
               />
             </Grid.Column>
           </Grid.Row>
