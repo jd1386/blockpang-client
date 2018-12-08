@@ -3,6 +3,31 @@
   src: local('8 Bit'), url('../../assets/font/8bit-font.ttf');
 }
 
+.eight-bit-div {
+  display: flex;
+  justify-content: center;
+}
+
+.btn-inner {
+  font-family: '8 Bit' !important;
+  text-align: center;
+  font-size: 0.5em;
+  background: rgba(0, 0, 0, 0.65) !important;
+  padding: 9px 8px 7px 15px;
+  color: white;
+  border-radius: 5px;
+  display: flex;
+  align-items: center;
+}
+
+.btn-inner:hover {
+  cursor: pointer;
+}
+
+.btn-message {
+  padding-right: 3px;
+}
+
 .prize {
   font-size: 3vw;
   color: #ffeb00;
@@ -42,7 +67,11 @@
   .header {
     font-size: 9vw;
     line-height: 18vh;
-    padding-top: 10vh;
+    padding-top: 5vh;
+  }
+
+  .header:hover {
+    cursor: pointer;
   }
 
   .header.gameover {
@@ -102,7 +131,7 @@
   top: 10vh;
 }
 
-.game-status-main:hover {
+.game-status-main .content:hover {
   cursor: pointer;
 }
 

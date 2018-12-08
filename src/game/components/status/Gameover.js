@@ -72,7 +72,7 @@ class Gameover extends Component {
     if (userData.wallet && userData.game_score > 0) {
       setTimeout(() => {
         util.requestTransfer(userData.game_score);
-      }, 1000);
+      }, 0);
     }
   }
 
