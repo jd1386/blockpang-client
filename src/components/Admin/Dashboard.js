@@ -33,10 +33,10 @@ class Dashboard extends Component {
     this.state = {
       loading: false,
       totalTransfer: '',
-      totalTransferAmount: '',
-      totalSignup: '',
+      totalIcxTransfer: '',
+      totalSignups: '',
       default_score: '',
-      currentBalance: '',
+      adminWalletBalance: '',
       recentTransfer: [],
       totalUser: []
     };
@@ -64,10 +64,11 @@ class Dashboard extends Component {
 
     await this.setStateAsync({
       loading: false,
-      totalTransfer: firstRequest.data.total_transfer,
-      totalTransferAmount: firstRequest.data.total_transfer_amount,
-      totalSignup: firstRequest.data.total_user,
-      currentBalance: firstRequest.data.current_balance,
+      adminWalletBalance: Number(firstRequest.data.current_balance).toFixed(2),
+      totalIcxTransfer: Number(firstRequest.data.total_transfer_amount).toFixed(
+        2
+      ),
+      totalSignups: firstRequest.data.total_user,
       recentTransfer: secondRequest.data,
       totalUser: thirdRequest.data,
       // totalUser: thirdRequest.data.reverse(),
@@ -90,9 +91,9 @@ class Dashboard extends Component {
   render() {
     const {
       loading,
-      currentBalance,
-      totalTransferAmount,
-      totalSignup,
+      adminWalletBalance,
+      totalIcxTransfer,
+      totalSignups,
       recentTransfer,
       totalUser,
       monthlyData
@@ -106,10 +107,10 @@ class Dashboard extends Component {
       <Segment vertical>
         <Grid container stackable verticalAlign="middle">
           <Grid.Row>
-            <Grid.Column width={13}>
+            <Grid.Column width={15}>
               <Header as="h1">Dashboard</Header>
             </Grid.Column>
-            <Grid.Column width={3}>
+            {/* <Grid.Column width={3}>
               <Breadcrumb>
                 <Breadcrumb.Section>Admin</Breadcrumb.Section>
                 <Breadcrumb.Divider icon="right angle" />
@@ -117,13 +118,12 @@ class Dashboard extends Component {
                   <a href="/admin">Dashboard</a>
                 </Breadcrumb.Section>
               </Breadcrumb>
-            </Grid.Column>
+            </Grid.Column> */}
           </Grid.Row>
-
           <Grid.Row>
             <Grid.Column width={15}>
               <Card.Group>
-                <Card>
+                <Card style={{ padding: '8px 0px 15px' }}>
                   <Card.Content>
                     <Card.Header
                       style={{
@@ -137,17 +137,20 @@ class Dashboard extends Component {
                     <Card.Description
                       style={{
                         fontFamily: `Lato,'Helvetica Neue',Arial,Helvetica,sans-serif`,
-                        fontSize: currentBalance.length > 9 ? '2rem' : '4rem',
+                        fontSize:
+                          adminWalletBalance.length > 9 ? '2rem' : '3.3rem',
+                        fontWeight: 'bold',
                         textAlign: 'center',
+
                         color: '#1b1c1d'
                       }}
                     >
-                      {currentBalance}
+                      {adminWalletBalance}
                     </Card.Description>
                   </Card.Content>
                 </Card>
 
-                <Card>
+                <Card style={{ padding: '8px 0px 15px' }}>
                   <Card.Content>
                     <Card.Header
                       style={{
@@ -162,18 +165,19 @@ class Dashboard extends Component {
                       style={{
                         fontFamily: `Lato,'Helvetica Neue',Arial,Helvetica,sans-serif`,
                         fontSize:
-                          totalTransferAmount.length > 9 ? '2rem' : '4rem',
+                          totalIcxTransfer.length > 9 ? '2rem' : '3.3rem',
+                        fontWeight: 'bold',
                         // fontSize: '4rem',
                         textAlign: 'center',
                         color: '#1b1c1d'
                       }}
                     >
-                      {totalTransferAmount}
+                      {totalIcxTransfer}
                     </Card.Description>
                   </Card.Content>
                 </Card>
 
-                <Card>
+                <Card style={{ padding: '8px 0px 15px' }}>
                   <Card.Content>
                     <Card.Header
                       style={{
@@ -187,21 +191,21 @@ class Dashboard extends Component {
                     <Card.Description
                       style={{
                         fontFamily: `Lato,'Helvetica Neue',Arial,Helvetica,sans-serif`,
-                        fontSize: '4rem',
+                        fontSize: '3.3rem',
+                        fontWeight: 'bold',
                         textAlign: 'center',
                         color: '#1b1c1d'
                       }}
                     >
-                      {totalSignup}
+                      {totalSignups}
                     </Card.Description>
                   </Card.Content>
                 </Card>
               </Card.Group>
             </Grid.Column>
           </Grid.Row>
-
-          <Grid.Row style={{ marginBottom: 30 }}>
-            <Grid.Column width={14}>
+          <Grid.Row>
+            <Grid.Column width={15}>
               <Segment>
                 <Header as="h2" floated="left" style={{ marginBottom: 50 }}>
                   {'Number/Amount of Monthly ICX Transaction'}
@@ -230,9 +234,8 @@ class Dashboard extends Component {
               </Segment>
             </Grid.Column>
           </Grid.Row>
-
           <Grid.Row>
-            <Grid.Column width={16}>
+            <Grid.Column width={15}>
               <Header as="h2">
                 <Link
                   to="/admin/log"
@@ -338,9 +341,8 @@ class Dashboard extends Component {
               />
             </Grid.Column>
           </Grid.Row>
-
           <Grid.Row>
-            <Grid.Column width={16}>
+            <Grid.Column width={15}>
               <Header as="h2">Total User</Header>
               <ReactTable
                 data={totalUser}
@@ -435,6 +437,8 @@ class Dashboard extends Component {
               />
             </Grid.Column>
           </Grid.Row>
+          <Grid.Row />
+          <Grid.Row />
         </Grid>
       </Segment>
     );

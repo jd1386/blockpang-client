@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Link } from 'react-router-dom';
+import { NavLink, Link } from 'react-router-dom';
 import { Container, Image, Button, Menu, Icon } from 'semantic-ui-react';
 import './style.scss';
 import util from '../../util';
@@ -44,7 +44,13 @@ class Navbar extends Component {
       <React.Fragment>
         <Menu fixed="top" inverted>
           <Container>
-            <Menu.Item as={Link} to="/" header id="logo">
+            <Menu.Item
+              as={Link}
+              to="/"
+              header
+              id="logo"
+              onClick={this.forceUpdate}
+            >
               <Image
                 className="app-logo"
                 size="mini"
