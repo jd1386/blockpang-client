@@ -13,6 +13,7 @@ import {
   Legend,
   ResponsiveContainer
 } from 'recharts';
+import ReactTable from 'react-table';
 
 class GameRecord extends Component {
   state = {
@@ -25,30 +26,43 @@ class GameRecord extends Component {
   }
 
   _renderTable() {
-    return this.state.recentTransfers.length ? (
+    const { recentTransfers } = this.state;
+    return recentTransfers.length ? (
       <React.Fragment>
-        <Table basic="very" celled collapsing style={{ width: '100%' }}>
-          <Table.Header>
-            <Table.Row>
-              <Table.HeaderCell>Time</Table.HeaderCell>
-              <Table.HeaderCell>Score</Table.HeaderCell>
-              <Table.HeaderCell>ICX</Table.HeaderCell>
-            </Table.Row>
-          </Table.Header>
-
-          <Table.Body>
-            {this.state.recentTransfers.map((tr, index) => {
-              return (
-                <Table.Row key={index}>
-                  <Table.Cell>{util.toKoreanTime(tr.timestamp)}</Table.Cell>
-                  <Table.Cell>{tr.score}</Table.Cell>
-                  <Table.Cell>{tr.amount}</Table.Cell>
-                </Table.Row>
-              );
-            })}
-          </Table.Body>
-        </Table>
-        {this._moreTransactionsBtn()}
+        <ReactTable
+          data={recentTransfers}
+          showPageSizeOptions={false}
+          getTrProps={(state, rowInfo, column) => {
+            return {
+              style: {
+                textAlign: 'center'
+              }
+            };
+          }}
+          columns={[
+            {
+              columns: [
+                {
+                  Header: 'Time',
+                  accessor: 'timestamp',
+                  Cell: props => <span>{util.toKoreanTime(props.value)}</span>
+                },
+                {
+                  Header: 'Score',
+                  accessor: 'score',
+                  Cell: props => <span>{props.value}</span>
+                },
+                {
+                  Header: 'ICX',
+                  accessor: 'amount',
+                  Cell: props => <span>{props.value}</span>
+                }
+              ]
+            }
+          ]}
+          defaultPageSize={10}
+          className="-striped -highlight"
+        />
       </React.Fragment>
     ) : (
       <div style={{ textAlign: 'center' }}>No data available yet</div>
