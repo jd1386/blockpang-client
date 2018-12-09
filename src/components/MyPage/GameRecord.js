@@ -72,7 +72,7 @@ class GameRecord extends Component {
               ]
             }
           ]}
-          defaultPageSize={10}
+          defaultPageSize={8}
           className="-striped -highlight"
         />
       </React.Fragment>
