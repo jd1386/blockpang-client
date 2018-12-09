@@ -119,7 +119,7 @@ class Dashboard extends Component {
           </Grid.Row>
           <Grid.Row>
             <Grid.Column width={15}>
-              <Card.Group>
+              <Card.Group style={{ flexWrap: 'nowrap' }}>
                 <Card style={{ padding: '8px 0px 15px', width: '32%' }}>
                   <Card.Content>
                     <Card.Header
@@ -134,8 +134,9 @@ class Dashboard extends Component {
                     <Card.Description
                       style={{
                         fontFamily: `Lato,'Helvetica Neue',Arial,Helvetica,sans-serif`,
-                        fontSize:
-                          adminWalletBalance.length > 9 ? '2rem' : '3.3rem',
+                        // fontSize:
+                        //   adminWalletBalance.length > 9 ? '2rem' : '3.3rem',
+                        fontSize: 'calc(16px + 2.3vw)',
                         fontWeight: 'bold',
                         textAlign: 'center',
 
@@ -161,8 +162,9 @@ class Dashboard extends Component {
                     <Card.Description
                       style={{
                         fontFamily: `Lato,'Helvetica Neue',Arial,Helvetica,sans-serif`,
-                        fontSize:
-                          totalIcxTransfer.length > 9 ? '2rem' : '3.3rem',
+                        // fontSize:
+                        //   totalIcxTransfer.length > 9 ? '2rem' : '3.3rem',
+                        fontSize: 'calc(16px + 2.3vw)',
                         fontWeight: 'bold',
                         textAlign: 'center',
                         color: '#1b1c1d'
@@ -187,7 +189,8 @@ class Dashboard extends Component {
                     <Card.Description
                       style={{
                         fontFamily: `Lato,'Helvetica Neue',Arial,Helvetica,sans-serif`,
-                        fontSize: '3.3rem',
+                        // fontSize: '3.3rem',
+                        fontSize: 'calc(16px + 2.3vw)',
                         fontWeight: 'bold',
                         textAlign: 'center',
                         color: '#1b1c1d'
