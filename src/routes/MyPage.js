@@ -56,6 +56,7 @@ class MyPage extends Component {
       <WalletInfo
         walletAddress={this.state.walletAddress}
         walletBalance={this.state.walletBalance}
+        isEditingWallet={this.state.isEditingWallet}
         handleEditWallet={() => this._handleEditWallet()}
       />
     );
@@ -68,6 +69,7 @@ class MyPage extends Component {
           <WalletForm
             handleEditWallet={() => this._handleEditWallet()}
             updateWalletAddress={arg => this._updateWalletAddress(arg)}
+            isEditingWallet={this.state.isEditingWallet}
             cancelEditWallet={() => this._handleCancelEditWallet()}
           />
         ) : (

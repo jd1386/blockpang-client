@@ -75,12 +75,14 @@ class WalletForm extends Component {
             onClick: () => this._handleOnClick(this.state.enteredWalletAddress)
           }}
         />
-        <Button
-          onClick={() => this.props.cancelEditWallet()}
-          style={{ float: 'right' }}
-        >
-          Cancel Edit
-        </Button>
+        {this.props.isEditingWallet && (
+          <Button
+            onClick={() => this.props.cancelEditWallet()}
+            style={{ float: 'right' }}
+          >
+            Cancel Edit
+          </Button>
+        )}
 
         {this.state.isValidWalletAddress
           ? this._alertValidWallet()
