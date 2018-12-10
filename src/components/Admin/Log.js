@@ -33,14 +33,13 @@ class Log extends Component {
     axios
       .get(util.API_URLS['transaction'])
       .then(res => {
-        // console.log('res', res.data);
         this.setState({
           recentTransfer: res.data,
           loading: false
         });
       })
       .catch(err => {
-        console.log('err', err);
+        throw err;
       });
   }
 
@@ -70,11 +69,8 @@ class Log extends Component {
               };
             }}
             filterable
-            defaultFilterMethod={
-              (filter, row) =>
-                // String(row[filter.id]) === filter.value
-                String(row[filter.id]).includes(filter.value)
-              // String(row[filter.id]) === filter.value
+            defaultFilterMethod={(filter, row) =>
+              String(row[filter.id]).includes(filter.value)
             }
             columns={[
               {
@@ -126,22 +122,6 @@ class Log extends Component {
                     accessor: 'wallet',
                     minWidth: 280
                   },
-                  // {
-                  //   Header: 'Provider',
-                  //   accessor: 'service_provider',
-                  //   maxWidth: 100,
-                  //   Cell: props => (
-                  //     <Label
-                  //       style={{
-                  //         color: 'white',
-                  //         backgroundColor: util._providerColor(props.value)
-                  //       }}
-                  //     >
-                  //       {props.value}
-                  //     </Label>
-                  //   )
-                  // },
-
                   {
                     Header: 'Email',
                     accessor: 'email'

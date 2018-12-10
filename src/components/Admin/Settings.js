@@ -173,14 +173,14 @@ class Settings extends Component {
     return (
       <Container>
         <Segment vertical style={{ borderBottom: 0 }}>
-          <Grid container stackable verticalAlign="middle">
+          <Grid container verticalAlign="middle">
             <Grid.Row>
               <Header as="h1">Settings</Header>
             </Grid.Row>
           </Grid>
           <Grid columns={2} stackable>
             <Grid.Row>
-              <Grid.Column>
+              <Grid.Column width={8}>
                 <Segment style={{ paddingBottom: '21px' }}>
                   <Header as="h2">Payout Settings</Header>
                   <Table
@@ -226,17 +226,25 @@ class Settings extends Component {
                   </Table>
                 </Segment>
               </Grid.Column>
-              <Grid.Column>
+              <Grid.Column width={8}>
                 <Segment>
                   <Header as="h2">Faucet Information</Header>
-                  <div>Score: {this.state.scoreAddress} </div>
+                  <div style={{ wordWrap: 'break-word' }}>
+                    Score: {this.state.scoreAddress}{' '}
+                  </div>
                   <div>
                     Balance: <strong>{this.state.currentBalance}</strong>
                   </div>
                 </Segment>
                 <Segment>
                   <Header as="h2">Current Admin</Header>
-                  <div>
+                  <div
+                    style={{
+                      wordWrap: 'break-word',
+                      display: 'flex',
+                      justifyContent: 'space-between'
+                    }}
+                  >
                     Email: {this.state.adminEmail}
                     <Button
                       size="tiny"

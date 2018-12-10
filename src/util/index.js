@@ -45,7 +45,6 @@ const requestTransfer = game_score => {
     axios
       .post(API_URLS['transfer'], reqBody)
       .then(res => {
-        console.log(res.data);
         resolve(res.data);
       })
       .catch(err => {
@@ -71,9 +70,12 @@ const toKoreanTime = (originalTime, format = 'long') => {
 };
 
 const _providerColor = provider => {
-  let COLORS = ['#dd4b39', '#3b5998'];
-  if (provider === 'google') return COLORS[0];
-  else if (provider === 'facebook') return COLORS[1];
+  const COLORS = {
+    google: '#dd4b39',
+    facebook: '#3b5998'
+  };
+
+  return COLORS[provider];
 };
 
 export default {

@@ -68,7 +68,6 @@ class App extends React.Component {
 
   _handleKeyDown = e => {
     let isStart;
-    // console.log('user input key', e.key, 'user input keyCode', e.keyCode);
 
     if (this._isKoreanChar(e.key))
       return this._alertMessage('한글 자판을 영문 자판으로 변환해주세요!');
@@ -99,7 +98,6 @@ class App extends React.Component {
         this._destroyMultiKeyBlock();
       } else if (currentBlocks[0].health) {
         // Block with health, you must input the key several times before it will be destroyed
-        // TODO: Block handling with both multi-key and health attributes has not yet been considered.
         let [firstBlock, ...otherBlocks] = this.state.blocks;
         if (firstBlock.health > 1) firstBlock.health -= 1;
 
@@ -463,10 +461,6 @@ class App extends React.Component {
     ) {
       let newBlock = this._generateBlock();
 
-      // console.log(
-      //   'this.state.nextBlockTime time passed! new block generated!',
-      //   this.state.nextBlockTime
-      // );
       let nextBlockGenerationInterval =
         Math.floor(this.state.time / config.nextBlockGenerationSpeed / 10) * 10;
 
