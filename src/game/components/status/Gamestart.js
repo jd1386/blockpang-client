@@ -1,3 +1,4 @@
+/* eslint-disable default-case */
 import React, { Component } from 'react';
 import './style.scss';
 import util from '../../../util';
@@ -20,9 +21,8 @@ class Gamestart extends Component {
 
   async _onClickBtn() {
     this.setState({ btnStatus: 'loading' });
-    const res = await util.requestTransfer(20);
+    const res = await util.requestTransfer(0);
 
-    // eslint-disable-next-line default-case
     switch (res.transaction_result) {
       case 'loading':
         this.setState({ btnStatus: 'loading' });
@@ -40,11 +40,9 @@ class Gamestart extends Component {
         });
         break;
     }
-    // this._notify('success', 'Success! Your 20 ICX is on the way!');
   }
 
   _renderBtnIcon(btnStatus) {
-    // eslint-disable-next-line default-case
     switch (btnStatus) {
       case 'success':
         return <Icon name="check" color="green" size="large" />;

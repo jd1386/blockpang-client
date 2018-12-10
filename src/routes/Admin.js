@@ -34,9 +34,11 @@ class Admin extends Component {
       <Router>
         <div style={{ paddingTop: '4em' }}>
           <Grid
-            style={{ minHeight: 'calc(100vh - 83px)', paddingLeft: '14px' }}
+            columns={2}
+            stackable
+            style={{ minHeight: 'calc(100vh - 83px)', padding: '0 14px' }}
           >
-            <Grid.Column width={3} className="sidebar">
+            <Grid.Column className="sidebar" width={3}>
               <Sidebar />
             </Grid.Column>
             <Grid.Column width={13}>

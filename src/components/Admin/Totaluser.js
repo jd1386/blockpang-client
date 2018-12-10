@@ -1,9 +1,7 @@
 import React, { Component } from 'react';
 import {
-  // Container,
   Grid,
   Header,
-  // Button,
   Segment,
   Image,
   Icon,
@@ -37,7 +35,7 @@ class Log extends Component {
         });
       })
       .catch(err => {
-        console.log('err', err);
+        throw err;
       });
   }
 

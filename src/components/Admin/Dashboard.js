@@ -107,15 +107,6 @@ class Dashboard extends Component {
             <Grid.Column width={15}>
               <Header as="h1">Dashboard</Header>
             </Grid.Column>
-            {/* <Grid.Column width={3}>
-              <Breadcrumb>
-                <Breadcrumb.Section>Admin</Breadcrumb.Section>
-                <Breadcrumb.Divider icon="right angle" />
-                <Breadcrumb.Section active>
-                  <a href="/admin">Dashboard</a>
-                </Breadcrumb.Section>
-              </Breadcrumb>
-            </Grid.Column> */}
           </Grid.Row>
           <Grid.Row>
             <Grid.Column width={15}>
@@ -134,8 +125,6 @@ class Dashboard extends Component {
                     <Card.Description
                       style={{
                         fontFamily: `Lato,'Helvetica Neue',Arial,Helvetica,sans-serif`,
-                        // fontSize:
-                        //   adminWalletBalance.length > 9 ? '2rem' : '3.3rem',
                         fontSize: 'calc(16px + 2.3vw)',
                         fontWeight: 'bold',
                         textAlign: 'center',
@@ -162,8 +151,6 @@ class Dashboard extends Component {
                     <Card.Description
                       style={{
                         fontFamily: `Lato,'Helvetica Neue',Arial,Helvetica,sans-serif`,
-                        // fontSize:
-                        //   totalIcxTransfer.length > 9 ? '2rem' : '3.3rem',
                         fontSize: 'calc(16px + 2.3vw)',
                         fontWeight: 'bold',
                         textAlign: 'center',
@@ -189,7 +176,6 @@ class Dashboard extends Component {
                     <Card.Description
                       style={{
                         fontFamily: `Lato,'Helvetica Neue',Arial,Helvetica,sans-serif`,
-                        // fontSize: '3.3rem',
                         fontSize: 'calc(16px + 2.3vw)',
                         fontWeight: 'bold',
                         textAlign: 'center',
@@ -205,8 +191,8 @@ class Dashboard extends Component {
           </Grid.Row>
           <Grid.Row>
             <Grid.Column width={15}>
-              <Segment>
-                <Header as="h2" floated="left" style={{ marginBottom: 50 }}>
+              <Segment style={{ display: 'flex', flexDirection: 'column' }}>
+                <Header as="h2" floated="left" style={{ marginBottom: 15 }}>
                   {'Number/Amount of Monthly ICX Transaction'}
                 </Header>
                 <Divider hidden />

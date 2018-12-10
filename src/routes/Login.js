@@ -1,3 +1,4 @@
+/* eslint-disable default-case */
 import React, { Component } from 'react';
 import { Redirect } from 'react-router-dom';
 import {
@@ -45,7 +46,6 @@ class Login extends Component {
     }
 
     const user = await axios.get(util.API_URLS['totaluser']).then(res => {
-      // console.log('res', res.data);
       return res.data.find(user => {
         return user.email === userData.email;
       });
@@ -65,12 +65,10 @@ class Login extends Component {
   }
 
   _responseGoogle = res => {
-    // console.log('google-res', res);
     this._signup(res, 'google');
   };
 
   _responseFacebook = res => {
-    // console.log('facebook-res', res);
     this._signup(res, 'facebook');
   };
 
@@ -79,7 +77,6 @@ class Login extends Component {
   };
 
   _notify(type, message) {
-    // eslint-disable-next-line default-case
     switch (type) {
       case 'success':
         toast.info(message);
