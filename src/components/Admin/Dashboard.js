@@ -125,10 +125,13 @@ class Dashboard extends Component {
                     <Card.Description
                       style={{
                         fontFamily: `Lato,'Helvetica Neue',Arial,Helvetica,sans-serif`,
-                        fontSize: 'calc(16px + 2.3vw)',
+                        fontSize:
+                          adminWalletBalance.length > 9
+                            ? '1.8em'
+                            : 'calc(16px + 2vw)',
                         fontWeight: 'bold',
                         textAlign: 'center',
-
+                        wordBreak: 'break-word',
                         color: '#1b1c1d'
                       }}
                     >
@@ -151,9 +154,13 @@ class Dashboard extends Component {
                     <Card.Description
                       style={{
                         fontFamily: `Lato,'Helvetica Neue',Arial,Helvetica,sans-serif`,
-                        fontSize: 'calc(16px + 2.3vw)',
+                        fontSize:
+                          totalIcxTransfer.length > 9
+                            ? '1.8em'
+                            : 'calc(16px + 2vw)',
                         fontWeight: 'bold',
                         textAlign: 'center',
+                        wordBreak: 'break-word',
                         color: '#1b1c1d'
                       }}
                     >
@@ -176,9 +183,11 @@ class Dashboard extends Component {
                     <Card.Description
                       style={{
                         fontFamily: `Lato,'Helvetica Neue',Arial,Helvetica,sans-serif`,
-                        fontSize: 'calc(16px + 2.3vw)',
+                        fontSize:
+                          totalSignups.length > 9 ? '2rem' : 'calc(16px + 2vw)',
                         fontWeight: 'bold',
                         textAlign: 'center',
+                        wordBreak: 'break-word',
                         color: '#1b1c1d'
                       }}
                     >
