@@ -1,10 +1,9 @@
 .sidebar {
-  background: #1b1c1d;
-  background-image: url('../../assets/img/space.jpg');
-}
+  background: white;
 
-a.item.menu-item {
-  color: #fff;
+  .ui.secondary.vertical.pointing.menu .active.item {
+    border-color: #1aaaba;
+  }
 }
 
 /* override */

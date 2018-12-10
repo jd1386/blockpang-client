@@ -17,14 +17,19 @@ class LeftSidebar extends Component {
     const { activeItem } = this.state;
 
     return (
-      <Menu fluid pointing secondary vertical style={{ background: '#fff' }}>
+      <Menu
+        fluid
+        pointing
+        secondary
+        vertical
+        style={{ background: '#fff', fontSize: '1.2em' }}
+      >
         <Menu.Item
           name="dashboard"
           active={activeItem === 'dashboard'}
           onClick={this.handleItemClick}
           as={Link}
           to="/admin/"
-          style={{ fontSize: 'calc(8px + 1vw)' }}
         />
         <Menu.Item
           name="settings"
@@ -32,7 +37,6 @@ class LeftSidebar extends Component {
           onClick={this.handleItemClick}
           as={Link}
           to="/admin/settings"
-          style={{ fontSize: 'calc(8px + 1vw)' }}
         />
       </Menu>
     );
