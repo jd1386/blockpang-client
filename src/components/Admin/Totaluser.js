@@ -27,7 +27,7 @@ class Log extends Component {
       loading: true
     });
     axios
-      .get(util.API_URLS['totaluser'])
+      .get(util.API_URLS['totaluser'], util.adminToken())
       .then(res => {
         this.setState({
           totalUser: res.data,

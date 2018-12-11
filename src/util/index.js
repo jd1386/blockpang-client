@@ -34,6 +34,14 @@ const isAdmin = () => {
   return localStorage.getItem('adminToken') !== null;
 };
 
+const adminToken = () => {
+  return {
+    headers: {
+      Authorization: localStorage.getItem('adminToken')
+    }
+  };
+};
+
 const requestTransfer = game_score => {
   const reqBody = {
     user: userData(),
@@ -87,6 +95,7 @@ export default {
   requestTransfer,
   transferPreviousScore,
   isAdmin,
+  adminToken,
   toKoreanTime,
   _providerColor,
   API_URLS
