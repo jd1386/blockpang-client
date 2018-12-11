@@ -19,7 +19,7 @@ class Log extends Component {
       loading: true
     });
     axios
-      .get(util.API_URLS['transaction'])
+      .get(util.API_URLS['transaction'], util.adminToken())
       .then(res => {
         this.setState({
           recentTransfer: res.data,

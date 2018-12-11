@@ -55,10 +55,14 @@ class Settings extends Component {
       case 'resetAmountLimit':
         // API call to reset amount limit
         axios
-          .post(util.API_URLS['admin_set_limit'], {
-            amount_limit: this.state.enteredInputValue,
-            block_limit: this.state.blockLimit
-          })
+          .post(
+            util.API_URLS['admin_set_limit'],
+            {
+              amount_limit: this.state.enteredInputValue,
+              block_limit: this.state.blockLimit
+            },
+            util.adminToken()
+          )
           .then(res => {
             // setState so that the page re-renders
             this.setState({
@@ -78,10 +82,14 @@ class Settings extends Component {
       case 'resetBlockLimit':
         // API call to reset block limit
         axios
-          .post(util.API_URLS['admin_set_limit'], {
-            amount_limit: this.state.amountLimit,
-            block_limit: this.state.enteredInputValue
-          })
+          .post(
+            util.API_URLS['admin_set_limit'],
+            {
+              amount_limit: this.state.amountLimit,
+              block_limit: this.state.enteredInputValue
+            },
+            util.adminToken()
+          )
           .then(res => {
             // setState so that the page re-renders
             this.setState({
@@ -100,11 +108,15 @@ class Settings extends Component {
 
       case 'resetAdminEmail':
         axios
-          .post(util.API_URLS['admin_update_email'], {
-            cmd: 'edit',
-            username: 'sungun',
-            email: this.state.enteredInputValue
-          })
+          .post(
+            util.API_URLS['admin_update_email'],
+            {
+              cmd: 'edit',
+              username: 'sungun',
+              email: this.state.enteredInputValue
+            },
+            util.adminToken()
+          )
           .then(res => {
             this.setState({
               adminEmail: res.data.admin_email,
@@ -152,7 +164,7 @@ class Settings extends Component {
 
   componentDidMount() {
     // admin_summary
-    axios.get(util.API_URLS['admin_summary']).then(res => {
+    axios.get(util.API_URLS['admin_summary'], util.adminToken()).then(res => {
       this.setState({
         adminEmail: res.data.admin_email,
         scoreAddress: res.data.score_address,
@@ -160,8 +172,8 @@ class Settings extends Component {
       });
     });
 
-    // set_limit
-    axios.get(util.API_URLS['admin_get_limit']).then(res => {
+    // get_limit
+    axios.get(util.API_URLS['admin_get_limit'], util.adminToken()).then(res => {
       this.setState({
         amountLimit: res.data.amountlimit,
         blockLimit: res.data.blocklimit
