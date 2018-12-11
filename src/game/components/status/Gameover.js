@@ -8,7 +8,6 @@ import { Redirect } from 'react-router-dom';
 
 const gameoverMessages = {
   exceedBlockLimit: '',
-  // exceedBlockLimit: 'You have too many blocks',
   missInput: 'You must type the right key',
   timeover: 'time over',
   inputSourceKorean: '재시작하려면 영문 자판으로 변환 후 W키를 눌러주세요!'
@@ -76,6 +75,8 @@ class Gameover extends Component {
       game_score: this.props.score
     };
 
+    console.log(userData);
+
     if (userData.user) {
       if (userData.wallet) {
         this.setState({ isLoggedIn: true, walletAddress: userData.wallet });
@@ -92,7 +93,7 @@ class Gameover extends Component {
 
     // use setTimeout to give more room between
     // render and _requestTransfer call
-    if (userData.wallet && userData.game_score > 0) {
+    if (userData.wallet) {
       setTimeout(async () => {
         const res = await util.requestTransfer(userData.game_score);
         switch (res.transaction_result) {
@@ -124,9 +125,6 @@ class Gameover extends Component {
       walletAddress ? (
         <GameoverMessage onClick={this.props.onClick}>
           <div className="prize">
-            {/* You've won <span>{this._animateScore(this.props.score)} </span>
-            ICX!
-            <br /> */}
             {this._renderTransferStatus(this.state.transferStatus)}
           </div>
           <div className="gameover-message">
