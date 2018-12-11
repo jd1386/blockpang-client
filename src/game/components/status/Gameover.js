@@ -143,8 +143,7 @@ class Gameover extends Component {
     ) : (
       <GameoverMessage onClick={this._redirectLogin}>
         <div className="prize">
-          You've won <span>{this._animateScore(this.props.score)} </span>
-          ICX!
+          You've scored <span>{this._animateScore(this.props.score)}!</span>
           <br />
           Log in now to claim your ICX
         </div>
