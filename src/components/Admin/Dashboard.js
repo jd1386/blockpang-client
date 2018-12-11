@@ -74,6 +74,14 @@ class Dashboard extends Component {
 
   _graphDataSet = datas => {
     let renamedData = [];
+
+    renamedData.push({
+      // it's mock data for demo test. must delete this.
+      month: '2018-11',
+      number: '10',
+      amount: '100'
+    });
+
     datas.forEach(data => {
       renamedData.push({
         month: util.toKoreanTime(data.date_trunc, 'month'),
