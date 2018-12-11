@@ -6,7 +6,7 @@ import PropTypes from 'prop-types';
 import { Button, Icon } from 'semantic-ui-react';
 
 const btnMessages = {
-  default: 'Get 20 ICX without Play',
+  default: 'Get 30 ICX without Play',
   loading: 'Processing...',
   success: 'Success',
   fail: ''
