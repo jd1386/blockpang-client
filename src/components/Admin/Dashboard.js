@@ -1,11 +1,9 @@
 import React, { Component } from 'react';
 import { Link } from 'react-router-dom';
-// import { BrowserRouter as Router, Route } from 'react-router-dom';
 import {
   Grid,
   Header,
   Image,
-  Breadcrumb,
   Segment,
   Card,
   Icon,
@@ -27,6 +25,7 @@ import axios from 'axios';
 import ReactTable from 'react-table';
 import 'react-table/react-table.css';
 import util from '../../util';
+
 class Dashboard extends Component {
   constructor(props) {
     super(props);

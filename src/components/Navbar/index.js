@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { NavLink, Link } from 'react-router-dom';
+import { Link } from 'react-router-dom';
 import { Container, Image, Button, Menu, Icon } from 'semantic-ui-react';
 import './style.scss';
 import util from '../../util';

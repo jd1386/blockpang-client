@@ -1,17 +1,5 @@
 import React, { Component } from 'react';
-// import { Link, Redirect } from 'react-router-dom';
-// import { BrowserRouter as Router, Route } from 'react-router-dom';
-import {
-  // Container,
-  Grid,
-  Header,
-  // Button,
-  Segment,
-  Image,
-  Icon,
-  Label,
-  Loader
-} from 'semantic-ui-react';
+import { Grid, Header, Segment, Image, Icon, Loader } from 'semantic-ui-react';
 import axios from 'axios';
 import ReactTable from 'react-table';
 import 'react-table/react-table.css';
