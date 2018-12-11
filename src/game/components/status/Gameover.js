@@ -75,8 +75,6 @@ class Gameover extends Component {
       game_score: this.props.score
     };
 
-    console.log(userData);
-
     if (userData.user) {
       if (userData.wallet) {
         this.setState({ isLoggedIn: true, walletAddress: userData.wallet });
