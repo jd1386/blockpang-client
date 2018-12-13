@@ -14,7 +14,7 @@
 importScripts("https://storage.googleapis.com/workbox-cdn/releases/3.6.3/workbox-sw.js");
 
 importScripts(
-  "/blockpang-client/precache-manifest.1f35925330a2fcde84e9ff774107fde1.js"
+  "/blockpang-client/precache-manifest.f317590fea9732b1e20847c2855ee8db.js"
 );
 
 workbox.clientsClaim();
