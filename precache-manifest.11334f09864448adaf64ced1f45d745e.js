@@ -4,7 +4,7 @@ self.__precacheManifest = [
     "url": "/blockpang-client/static/media/outline-icons.cd6c777f.woff2"
   },
   {
-    "revision": "c02c677e644e7b12710b",
+    "revision": "aa75cbe5bc467bc96336",
     "url": "/blockpang-client/static/css/main.c772056e.chunk.css"
   },
   {
@@ -48,28 +48,32 @@ self.__precacheManifest = [
     "url": "/blockpang-client/static/media/icons.faff9214.woff"
   },
   {
+    "revision": "9c74e172f87984c48ddf5c8108cabe67",
+    "url": "/blockpang-client/static/media/flags.9c74e172.png"
+  },
+  {
     "revision": "b87b9ba532ace76ae9f6edfe9f72ded2",
     "url": "/blockpang-client/static/media/icons.b87b9ba5.ttf"
   },
   {
-    "revision": "701ae6abd4719e9c2ada3535a497b341",
-    "url": "/blockpang-client/static/media/outline-icons.701ae6ab.eot"
-  },
-  {
-    "revision": "c02c677e644e7b12710b",
-    "url": "/blockpang-client/static/js/main.c02c677e.chunk.js"
+    "revision": "aa75cbe5bc467bc96336",
+    "url": "/blockpang-client/static/js/main.aa75cbe5.chunk.js"
   },
   {
     "revision": "ef60a4f6c25ef7f39f2d25a748dbecfe",
     "url": "/blockpang-client/static/media/outline-icons.ef60a4f6.woff"
   },
   {
-    "revision": "ad97afd3337e8cda302d10ff5a4026b8",
-    "url": "/blockpang-client/static/media/outline-icons.ad97afd3.ttf"
+    "revision": "701ae6abd4719e9c2ada3535a497b341",
+    "url": "/blockpang-client/static/media/outline-icons.701ae6ab.eot"
   },
   {
     "revision": "962a1bf31c081691065fe333d9fa8105",
     "url": "/blockpang-client/static/media/icons.962a1bf3.svg"
+  },
+  {
+    "revision": "ad97afd3337e8cda302d10ff5a4026b8",
+    "url": "/blockpang-client/static/media/outline-icons.ad97afd3.ttf"
   },
   {
     "revision": "82f60bd0b94a1ed68b1e6e309ce2e8c3",
@@ -96,10 +100,6 @@ self.__precacheManifest = [
     "url": "/blockpang-client/static/media/brand-icons.a1a749e8.svg"
   },
   {
-    "revision": "9c74e172f87984c48ddf5c8108cabe67",
-    "url": "/blockpang-client/static/media/flags.9c74e172.png"
-  },
-  {
     "revision": "d656e3515e5d83ae594817b3d4284ccb",
     "url": "/blockpang-client/static/media/DungGeunMo.d656e351.ttf"
   },
@@ -108,7 +108,7 @@ self.__precacheManifest = [
     "url": "/blockpang-client/static/css/1.e08267ef.chunk.css"
   },
   {
-    "revision": "03172d09d465dc9c684ff02af8aba21d",
+    "revision": "0457071abac35f7c194b73659611cf10",
     "url": "/blockpang-client/index.html"
   }
 ];
