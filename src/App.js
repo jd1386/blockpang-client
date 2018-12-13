@@ -50,7 +50,7 @@ class App extends React.Component {
 
   render() {
     return (
-      <Router>
+      <Router basename={process.env.PUBLIC_URL}>
         <div id="App">
           <Navbar
             isLoggedIn={this.state.isLoggedIn}
@@ -59,19 +59,19 @@ class App extends React.Component {
           />
           <div className="site-content">
             <Switch>
-              <Route exact path="/" component={Main} />
+              <Route exact path={`/`} component={Main} />
               <Route
-                path="/mypage"
+                path={`/mypage`}
                 render={() => <MyPage isLoggedIn={this.state.isLoggedIn} />}
               />
-              <Route path="/how-to-play" component={HowToPlay} />
-              <Route path="/leaderboard" component={Leaderboard} />
+              <Route path={`/how-to-play`} component={HowToPlay} />
+              <Route path={`/leaderboard`} component={Leaderboard} />
               <Route
-                path="/login"
+                path={`/login`}
                 render={() => <Login login={this.login} />}
               />
               <Route
-                path="/admin"
+                path={`/admin`}
                 render={() => (
                   <Admin onAdminLogin={() => this._onAdminLogIn()} />
                 )}

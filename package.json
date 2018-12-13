@@ -25,6 +25,8 @@
   "scripts": {
     "start": "react-scripts start",
     "build": "react-scripts build && cp build/index.html build/404.html",
+    "predeploy": "npm run build",
+    "deploy": "gh-pages -d build",
     "test": "react-scripts test",
     "eject": "react-scripts eject",
     "prepublish": "yarn run build"
@@ -47,6 +49,8 @@
     "@babel/preset-react": "^7.0.0",
     "babel-preset-flow": "^6.23.0",
     "flow-bin": "^0.86.0",
+    "gh-pages": "^2.0.1",
     "react-hot-loader": "^4.0.0"
-  }
+  },
+  "homepage": "https://jd1386.github.io/blockpang-client"
 }
