@@ -81,7 +81,13 @@ class Navbar extends Component {
       <React.Fragment>
         <Menu fixed="top" inverted>
           <Container>
-            <Menu.Item as={Link} to="/" header id="logo">
+            <Menu.Item
+              as={Link}
+              to="/"
+              header
+              id="logo"
+              onClick={this.forceUpdate}
+            >
               <Image
                 className="app-logo"
                 size="mini"

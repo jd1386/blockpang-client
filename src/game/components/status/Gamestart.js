@@ -1,6 +1,7 @@
 /* eslint-disable default-case */
 import React, { Component } from 'react';
 import './style.scss';
+import { Link } from 'react-router-dom';
 import util from '../../../util';
 import PropTypes from 'prop-types';
 import { Button, Icon } from 'semantic-ui-react';
@@ -77,7 +78,7 @@ class Gamestart extends Component {
       </div>
     ) : (
       <div style={{ marginBottom: '3vh' }}>
-        <a href="/login">
+        <Link to={'/login'}>
           <div className="eight-bit-div">
             <div className="btn-inner">
               <span className="btn-message">
@@ -86,7 +87,7 @@ class Gamestart extends Component {
               {this._renderBtnIcon(this.state.btnStatus)}
             </div>
           </div>
-        </a>
+        </Link>
       </div>
     );
   }
