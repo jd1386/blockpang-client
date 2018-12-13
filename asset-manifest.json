@@ -1,7 +1,7 @@
 {
   "main.css": "/blockpang-client/static/css/main.c772056e.chunk.css",
-  "main.js": "/blockpang-client/static/js/main.aa75cbe5.chunk.js",
-  "main.js.map": "/blockpang-client/static/js/main.aa75cbe5.chunk.js.map",
+  "main.js": "/blockpang-client/static/js/main.1a8a16b7.chunk.js",
+  "main.js.map": "/blockpang-client/static/js/main.1a8a16b7.chunk.js.map",
   "static/css/1.e08267ef.chunk.css": "/blockpang-client/static/css/1.e08267ef.chunk.css",
   "static/js/1.4009da4e.chunk.js": "/blockpang-client/static/js/1.4009da4e.chunk.js",
   "static/js/1.4009da4e.chunk.js.map": "/blockpang-client/static/js/1.4009da4e.chunk.js.map",
@@ -14,6 +14,6 @@
   "static/css/main.c772056e.chunk.css.map": "/blockpang-client/static/css/main.c772056e.chunk.css.map",
   "static/css/1.e08267ef.chunk.css.map": "/blockpang-client/static/css/1.e08267ef.chunk.css.map",
   "index.html": "/blockpang-client/index.html",
-  "precache-manifest.2f6e21cfbfa2a23e5b14737a04ad13b0.js": "/blockpang-client/precache-manifest.2f6e21cfbfa2a23e5b14737a04ad13b0.js",
+  "precache-manifest.a6a4ac5c143b1711bfc0c54d1ee484bf.js": "/blockpang-client/precache-manifest.a6a4ac5c143b1711bfc0c54d1ee484bf.js",
   "service-worker.js": "/blockpang-client/service-worker.js"
 }

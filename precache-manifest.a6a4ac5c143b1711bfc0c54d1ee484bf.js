@@ -1,10 +1,10 @@
 self.__precacheManifest = [
   {
-    "revision": "cd6c777f1945164224dee082abaea03a",
-    "url": "/blockpang-client/static/media/outline-icons.cd6c777f.woff2"
+    "revision": "ef60a4f6c25ef7f39f2d25a748dbecfe",
+    "url": "/blockpang-client/static/media/outline-icons.ef60a4f6.woff"
   },
   {
-    "revision": "aa75cbe5bc467bc96336",
+    "revision": "1a8a16b7a721bc48f474",
     "url": "/blockpang-client/static/css/main.c772056e.chunk.css"
   },
   {
@@ -36,12 +36,12 @@ self.__precacheManifest = [
     "url": "/blockpang-client/static/media/favicon.57a88d12.ico"
   },
   {
-    "revision": "8e3c7f5520f5ae906c6cf6d7f3ddcd19",
-    "url": "/blockpang-client/static/media/icons.8e3c7f55.eot"
-  },
-  {
     "revision": "0ab54153eeeca0ce03978cc463b257f7",
     "url": "/blockpang-client/static/media/icons.0ab54153.woff2"
+  },
+  {
+    "revision": "8e3c7f5520f5ae906c6cf6d7f3ddcd19",
+    "url": "/blockpang-client/static/media/icons.8e3c7f55.eot"
   },
   {
     "revision": "faff92145777a3cbaf8e7367b4807987",
@@ -56,16 +56,16 @@ self.__precacheManifest = [
     "url": "/blockpang-client/static/media/icons.b87b9ba5.ttf"
   },
   {
-    "revision": "aa75cbe5bc467bc96336",
-    "url": "/blockpang-client/static/js/main.aa75cbe5.chunk.js"
+    "revision": "1a8a16b7a721bc48f474",
+    "url": "/blockpang-client/static/js/main.1a8a16b7.chunk.js"
+  },
+  {
+    "revision": "cd6c777f1945164224dee082abaea03a",
+    "url": "/blockpang-client/static/media/outline-icons.cd6c777f.woff2"
   },
   {
     "revision": "701ae6abd4719e9c2ada3535a497b341",
     "url": "/blockpang-client/static/media/outline-icons.701ae6ab.eot"
-  },
-  {
-    "revision": "ef60a4f6c25ef7f39f2d25a748dbecfe",
-    "url": "/blockpang-client/static/media/outline-icons.ef60a4f6.woff"
   },
   {
     "revision": "ad97afd3337e8cda302d10ff5a4026b8",
@@ -76,20 +76,20 @@ self.__precacheManifest = [
     "url": "/blockpang-client/static/media/icons.962a1bf3.svg"
   },
   {
-    "revision": "82f60bd0b94a1ed68b1e6e309ce2e8c3",
-    "url": "/blockpang-client/static/media/outline-icons.82f60bd0.svg"
-  },
-  {
-    "revision": "e8c322de9658cbeb8a774b6624167c2c",
-    "url": "/blockpang-client/static/media/brand-icons.e8c322de.woff2"
-  },
-  {
     "revision": "13db00b7a34fee4d819ab7f9838cc428",
     "url": "/blockpang-client/static/media/brand-icons.13db00b7.eot"
   },
   {
+    "revision": "82f60bd0b94a1ed68b1e6e309ce2e8c3",
+    "url": "/blockpang-client/static/media/outline-icons.82f60bd0.svg"
+  },
+  {
     "revision": "a046592bac8f2fd96e994733faf3858c",
     "url": "/blockpang-client/static/media/brand-icons.a046592b.woff"
+  },
+  {
+    "revision": "e8c322de9658cbeb8a774b6624167c2c",
+    "url": "/blockpang-client/static/media/brand-icons.e8c322de.woff2"
   },
   {
     "revision": "c5ebe0b32dc1b5cc449a76c4204d13bb",
@@ -108,7 +108,7 @@ self.__precacheManifest = [
     "url": "/blockpang-client/static/css/1.e08267ef.chunk.css"
   },
   {
-    "revision": "0457071abac35f7c194b73659611cf10",
+    "revision": "7b7c757d2b0bf9a5342e283889dbac50",
     "url": "/blockpang-client/index.html"
   }
 ];
