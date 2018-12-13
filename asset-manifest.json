@@ -1,19 +1,19 @@
 {
   "main.css": "/blockpang-client/static/css/main.c772056e.chunk.css",
-  "main.js": "/blockpang-client/static/js/main.2a73bed6.chunk.js",
-  "main.js.map": "/blockpang-client/static/js/main.2a73bed6.chunk.js.map",
+  "main.js": "/blockpang-client/static/js/main.e77fd51c.chunk.js",
+  "main.js.map": "/blockpang-client/static/js/main.e77fd51c.chunk.js.map",
   "static/css/1.e08267ef.chunk.css": "/blockpang-client/static/css/1.e08267ef.chunk.css",
   "static/js/1.4009da4e.chunk.js": "/blockpang-client/static/js/1.4009da4e.chunk.js",
   "static/js/1.4009da4e.chunk.js.map": "/blockpang-client/static/js/1.4009da4e.chunk.js.map",
   "runtime~main.js": "/blockpang-client/static/js/runtime~main.609a2885.js",
   "runtime~main.js.map": "/blockpang-client/static/js/runtime~main.609a2885.js.map",
-  "static/media/semantic.min.css": "/blockpang-client/static/media/flags.9c74e172.png",
+  "static/media/semantic.min.css": "/blockpang-client/static/media/brand-icons.a1a749e8.svg",
   "static/media/style.scss": "/blockpang-client/static/media/PressStart2P-Regular.ccb1dfce.ttf",
   "static/media/favicon.ico": "/blockpang-client/static/media/favicon.57a88d12.ico",
   "static/media/coin.gif": "/blockpang-client/static/media/coin.305862fd.gif",
   "static/css/main.c772056e.chunk.css.map": "/blockpang-client/static/css/main.c772056e.chunk.css.map",
   "static/css/1.e08267ef.chunk.css.map": "/blockpang-client/static/css/1.e08267ef.chunk.css.map",
   "index.html": "/blockpang-client/index.html",
-  "precache-manifest.d0741cee77445be51b61c0bad25ffbbf.js": "/blockpang-client/precache-manifest.d0741cee77445be51b61c0bad25ffbbf.js",
+  "precache-manifest.1f35925330a2fcde84e9ff774107fde1.js": "/blockpang-client/precache-manifest.1f35925330a2fcde84e9ff774107fde1.js",
   "service-worker.js": "/blockpang-client/service-worker.js"
 }
