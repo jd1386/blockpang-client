@@ -4,7 +4,7 @@ self.__precacheManifest = [
     "url": "/blockpang-client/static/media/outline-icons.701ae6ab.eot"
   },
   {
-    "revision": "3a469fa23fd6dddc25c5",
+    "revision": "52cde0a6f5fe54acfd30",
     "url": "/blockpang-client/static/css/main.c772056e.chunk.css"
   },
   {
@@ -40,36 +40,36 @@ self.__precacheManifest = [
     "url": "/blockpang-client/static/media/flags.9c74e172.png"
   },
   {
-    "revision": "0ab54153eeeca0ce03978cc463b257f7",
-    "url": "/blockpang-client/static/media/icons.0ab54153.woff2"
-  },
-  {
     "revision": "8e3c7f5520f5ae906c6cf6d7f3ddcd19",
     "url": "/blockpang-client/static/media/icons.8e3c7f55.eot"
+  },
+  {
+    "revision": "0ab54153eeeca0ce03978cc463b257f7",
+    "url": "/blockpang-client/static/media/icons.0ab54153.woff2"
   },
   {
     "revision": "faff92145777a3cbaf8e7367b4807987",
     "url": "/blockpang-client/static/media/icons.faff9214.woff"
   },
   {
-    "revision": "ef60a4f6c25ef7f39f2d25a748dbecfe",
-    "url": "/blockpang-client/static/media/outline-icons.ef60a4f6.woff"
-  },
-  {
-    "revision": "3a469fa23fd6dddc25c5",
-    "url": "/blockpang-client/static/js/main.3a469fa2.chunk.js"
-  },
-  {
     "revision": "b87b9ba532ace76ae9f6edfe9f72ded2",
     "url": "/blockpang-client/static/media/icons.b87b9ba5.ttf"
   },
   {
-    "revision": "962a1bf31c081691065fe333d9fa8105",
-    "url": "/blockpang-client/static/media/icons.962a1bf3.svg"
+    "revision": "52cde0a6f5fe54acfd30",
+    "url": "/blockpang-client/static/js/main.52cde0a6.chunk.js"
   },
   {
     "revision": "cd6c777f1945164224dee082abaea03a",
     "url": "/blockpang-client/static/media/outline-icons.cd6c777f.woff2"
+  },
+  {
+    "revision": "ef60a4f6c25ef7f39f2d25a748dbecfe",
+    "url": "/blockpang-client/static/media/outline-icons.ef60a4f6.woff"
+  },
+  {
+    "revision": "962a1bf31c081691065fe333d9fa8105",
+    "url": "/blockpang-client/static/media/icons.962a1bf3.svg"
   },
   {
     "revision": "ad97afd3337e8cda302d10ff5a4026b8",
@@ -108,7 +108,7 @@ self.__precacheManifest = [
     "url": "/blockpang-client/static/css/1.e08267ef.chunk.css"
   },
   {
-    "revision": "3b757eb8b95fc4eea659cbfe06bb226b",
+    "revision": "4719e1e4d86906149d9bdb856fdb372d",
     "url": "/blockpang-client/index.html"
   }
 ];
