@@ -1,4 +1,4 @@
-const BASE_URL = 'http://54.180.96.35:8000';
+const BASE_URL = 'http://54.180.98.67:8000';
 
 export default {
   create_wallet: `${BASE_URL}/wallet/create`,
